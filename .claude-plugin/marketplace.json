@@ -1,5 +1,5 @@
 {
-  "name": "shopify-plugin",
+  "name": "shopify-ai-toolkit",
   "owner": {
     "name": "Shopify"
   },
@@ -14,7 +14,7 @@
       "version": "1.0.0",
       "author": { "name": "Shopify" },
       "license": "MIT",
-      "homepage": "https://github.com/shopify-playground/Shopify-AI-Toolkit",
+      "homepage": "https://github.com/Shopify/Shopify-AI-Toolkit",
       "keywords": ["shopify", "mcp", "graphql", "liquid", "storefront", "admin-api"]
     }
   ]
