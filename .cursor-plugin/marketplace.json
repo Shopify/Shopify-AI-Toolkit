@@ -1,0 +1,21 @@
+{
+  "name": "shopify-ai-toolkit",
+  "owner": {
+    "name": "Shopify"
+  },
+  "metadata": {
+    "description": "Shopify AI toolkit plugins for Cursor"
+  },
+  "plugins": [
+    {
+      "name": "shopify-plugin",
+      "source": "./plugins/shopify-plugin",
+      "description": "Search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code",
+      "version": "1.0.0",
+      "author": { "name": "Shopify" },
+      "license": "MIT",
+      "homepage": "https://shopify.dev/docs/apps/build/devmcp",
+      "keywords": ["shopify", "mcp", "graphql", "liquid", "storefront", "admin-api"]
+    }
+  ]
+}

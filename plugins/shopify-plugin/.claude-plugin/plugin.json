@@ -1,0 +1,8 @@
+{
+  "name": "shopify-plugin",
+  "description": "Shopify developer tools for Claude Code — search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code",
+  "version": "1.0.0",
+  "author": { "name": "Shopify" },
+  "license": "MIT",
+  "keywords": ["shopify", "mcp", "graphql", "liquid", "storefront", "admin-api"]
+}

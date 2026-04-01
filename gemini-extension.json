@@ -1,0 +1,14 @@
+{
+  "name": "shopify-mcp",
+  "version": "1.0.0",
+  "mcpServers": {
+    "shopify-mcp": {
+      "command": "npx",
+      "args": ["-y", "@shopify/dev-mcp@latest"],
+      "env": {
+        "POLARIS_UNIFIED": "true",
+        "LIQUID": "true"
+      }
+    }
+  }
+}

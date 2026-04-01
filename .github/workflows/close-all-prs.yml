@@ -1,0 +1,36 @@
+name: Close All PRs
+
+on:
+  pull_request_target:
+    types: [opened, reopened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  close-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close PR and comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+
+            // Add comment to PR
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `Thanks for your interest but we don't accept pull requests. Any pull requests will be automatically closed.\n\nIf you have feedback or suggestions, please share them in the [Shopify Developer Community](https://community.shopify.dev/).\n\nIf you are a Shopify employee, please reach out to Dev Tools: Dev Experience team at help-dev-platform.`
+            });
+
+            // Close the PR
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              state: 'closed'
+            });
+
+            console.log(`Closed PR #${prNumber}`);
