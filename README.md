@@ -2,7 +2,7 @@
 
 Connect your AI tools to the Shopify platform. 
 
-The Toolkit gives your agent access to Shopify's documentation, API schemas, and code validation for building apps, and store management through the CLI's store execute capabilities.
+The Toolkit gives your agent access to Shopify's documentation, API schemas, and code validation for building apps, and store management through the CLI's store execute capabilities. For more info, [see the docs](https://shopify.dev/docs/apps/build/ai-toolkit).
 
 ## Install
 
@@ -37,6 +37,4 @@ The Toolkit gives your agent access to Shopify's documentation, API schemas, and
 
 ## Other install methods
 
-If your platform doesn't support plugins, you can install agent skills or the Dev MCP server directly. 
-
-For full documentation, see [shopify.dev/docs/apps/build/ai-toolkit](https://shopify.dev/docs/apps/build/ai-toolkit).
+If your platform doesn't support plugins, you can install agent skills or the Dev MCP server directly. For instructions, see [shopify.dev/docs/apps/build/ai-toolkit](https://shopify.dev/docs/apps/build/ai-toolkit).
