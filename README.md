@@ -1,4 +1,4 @@
-# Shopify AI Toolkit
+# Shopify Dev MCP - AI Agent Plugin
 
 Connect your AI tools to the Shopify platform. 
 
@@ -38,3 +38,9 @@ The Toolkit gives your agent access to Shopify's documentation, API schemas, and
 ## Other install methods
 
 If your platform doesn't support plugins, you can install agent skills or the Dev MCP server directly. For instructions, see [shopify.dev/docs/apps/build/ai-toolkit](https://shopify.dev/docs/apps/build/ai-toolkit).
+
+## Contributing
+
+Thanks for your interest but we don't accept pull requests. Any pull requests will be automatically closed.
+
+If you are a Shopify employee, please open your pull request at [Shopify/dev-mcp](https://github.com/Shopify/dev-mcp).

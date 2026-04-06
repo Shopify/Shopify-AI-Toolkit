@@ -8,7 +8,7 @@
       "name": "shopify-plugin",
       "source": {
         "source": "local",
-        "path": "./plugins/shopify-plugin"
+        "path": "./"
       }
     }
   ]

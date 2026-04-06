@@ -1,4 +1,4 @@
-name: Close External PRs
+name: Close All PRs
 
 on:
   pull_request_target:
@@ -8,42 +8,10 @@ permissions:
   pull-requests: write
 
 jobs:
-  close-external-pr:
+  close-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if PR author is from Shopify
-        id: check-author
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const author = context.payload.pull_request.user.login;
-            const association = context.payload.pull_request.author_association;
-
-            // author_association is unreliable when org membership is private
-            // (returns CONTRIBUTOR instead of MEMBER), so also check the
-            // repo permission level which works regardless of visibility
-            const trustedAssociations = ['MEMBER', 'OWNER', 'COLLABORATOR'];
-            let isTrusted = trustedAssociations.includes(association);
-
-            if (!isTrusted) {
-              try {
-                const { data } = await github.rest.repos.getCollaboratorPermissionLevel({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  username: author,
-                });
-                isTrusted = ['write', 'admin'].includes(data.permission);
-                console.log(`${author} repo permission: ${data.permission}`);
-              } catch (error) {
-                console.log(`Permission check failed for ${author}: ${error.message}`);
-              }
-            }
-
-            console.log(`${author} author_association: ${association}, trusted: ${isTrusted}`);
-            core.setOutput('is-shopify', isTrusted ? 'true' : 'false');
-
       - name: Close PR and comment
-        if: steps.check-author.outputs.is-shopify == 'false'
         uses: actions/github-script@v7
         with:
           script: |
@@ -65,4 +33,4 @@ jobs:
               state: 'closed'
             });
 
-            console.log(`Closed PR #${prNumber} from external contributor`);
+            console.log(`Closed PR #${prNumber}`);
