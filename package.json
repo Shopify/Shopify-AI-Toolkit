@@ -1,9 +1,17 @@
 {
-  "name": "shopify-plugin",
+  "name": "@shopify/shopify-ai-toolkit",
   "version": "1.0.0",
-  "private": true,
-  "description": "AI agent plugin manifests for the Shopify Dev MCP server",
+  "description": "AI agent skills for building Shopify apps — GraphQL, Liquid, Hydrogen, UI Extensions, and more",
   "author": "Shopify",
   "license": "MIT",
-  "keywords": ["shopify", "mcp", "graphql", "liquid", "storefront", "admin-api", "plugin"]
+  "keywords": ["shopify", "agent-skills", "graphql", "liquid", "storefront", "admin-api", "hydrogen", "polaris"],
+  "files": [
+    "skills/",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shopify/shopify-ai-toolkit.git"
+  },
+  "homepage": "https://github.com/Shopify/shopify-ai-toolkit#readme"
 }
