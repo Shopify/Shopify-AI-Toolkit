@@ -1,80 +1,43 @@
 # Shopify Dev MCP - AI Agent Plugin
 
-This plugin connects AI coding agents to the Shopify Dev MCP server, giving them access to Shopify's dev docs, API schemas, and development guidance. Ask questions and build on top of Shopify APIs without leaving your editor or terminal.
+Connect your AI tools to the Shopify platform. 
 
-**What you get:**
+The Toolkit gives your agent access to Shopify's documentation, API schemas, and code validation for building apps, and store management through the CLI's store execute capabilities. For more info, [see the docs](https://shopify.dev/docs/apps/build/ai-toolkit).
 
-- Search Shopify docs and API schemas on the fly
-- Generate code for GraphQL Admin API, Storefront API, Functions, Liquid, and more
-- Validate components, GraphQL, and theme files to ensure they're free of hallucinations
-- Build Shopify apps faster with context-aware assistance
+## Install
 
-## Requirements
+* **For Claude Code**: Run these two commands in a chat:
 
-* Node.js 18+ with npm/npx available
-* One of the supported agents below
+    ```
+    /plugin marketplace add Shopify/shopify-ai-toolkit
+    /plugin install shopify-plugin@shopify-ai-toolkit
+    ```
 
-> **First-run note:** On first use, npx will download the `@shopify/dev-mcp` package and its dependencies (~3 MB). This takes a few seconds and only happens once per machine.
+* **For Cursor**: Install from the [Cursor Marketplace](https://cursor.com/marketplace/shopify).
+* **For Gemini CLI**: Run this command in your terminal:
 
-## Installation
+    ```
+    gemini extensions install https://github.com/Shopify/shopify-ai-toolkit
+    ```
 
-### GitHub Copilot (VS Code)
+* **For VS Code**: Open the Command Palette (`CMD+SHIFT+P`) and run **Chat: Install Plugin From Source**. 
 
-Open the Command Palette (`Cmd+Shift+P`) and run:
+    Then paste:
 
-```
-Chat: Install Plugin From Source
-```
+    ```
+    https://github.com/Shopify/shopify-ai-toolkit
+    ```
 
-Enter the repository URL: `https://github.com/Shopify/Shopify-AI-Toolkit`
+## What you get
 
-Or use the Copilot CLI:
+- **Docs and API schemas**: Search Shopify's documentation and API schemas without leaving your editor
+- **Code validation**: Validate GraphQL queries, Liquid templates, and UI extensions against Shopify's schemas
+- **Store management**: Manage your Shopify store through the CLI's store execute capabilities
+- **Auto-updates**: The plugin updates automatically as new capabilities are released
 
-```bash
-copilot plugin install Shopify/Shopify-AI-Toolkit
-```
+## Other install methods
 
-### Gemini CLI
-
-```bash
-gemini extensions install https://github.com/Shopify/Shopify-AI-Toolkit
-```
-
-### Claude Code
-
-```bash
-/plugin marketplace add Shopify/Shopify-AI-Toolkit
-/plugin install shopify-plugin@shopify-ai-toolkit
-```
-
-### Cursor
-
-Install via **Dashboard → Settings → Plugins → Team Marketplaces → Import** and paste:
-
-```
-https://github.com/Shopify/Shopify-AI-Toolkit
-```
-
-Or browse for it on [cursor.directory](https://cursor.directory).
-
-We also recommend [installing the Shopify CLI](https://shopify.dev/docs/api/shopify-cli#installation) to make it easier to build and test your app.
-
-## Usage
-
-Once installed, you can ask questions and give tasks like:
-
-- "Create a validation Function requiring minimum 5 items in cart before checkout."
-- "How do I create a product using the Admin API?"
-- "Show me an example of a webhook subscription."
-- "What fields are available on the Order object?"
-
-The MCP server automatically searches Shopify's documentation to provide accurate responses.
-
-## Resources
-
-- [Shopify Dev MCP documentation](https://shopify.dev/docs/apps/build/devmcp)
-- [Get started with Shopify apps](https://shopify.dev/docs/apps/getting-started)
-- [Scaffold a Shopify app](https://shopify.dev/docs/apps/build/scaffold-app)
+If your platform doesn't support plugins, you can install agent skills or the Dev MCP server directly. For instructions, see [shopify.dev/docs/apps/build/ai-toolkit](https://shopify.dev/docs/apps/build/ai-toolkit).
 
 ## Contributing
 
