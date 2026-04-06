@@ -1,11 +1,8 @@
 {
   "name": "shopify-plugin",
-  "description": "Shopify developer tools for VS Code — search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code",
+  "description": "Shopify developer tools for GitHub Copilot — search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code",
   "version": "1.0.0",
   "author": { "name": "Shopify" },
-  "logo": "assets/shopify_glyph.svg",
-  "homepage": "https://shopify.dev/docs/apps/build/devmcp",
-  "repository": "https://github.com/Shopify/Shopify-AI-Toolkit",
   "license": "MIT",
-  "keywords": ["shopify", "mcp", "graphql", "liquid", "storefront", "admin-api"]
+  "keywords": ["shopify", "mcp", "graphql", "liquid", "storefront", "admin-api", "plugin"]
 }
