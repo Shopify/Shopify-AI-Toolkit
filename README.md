@@ -44,7 +44,7 @@ gemini extensions install https://github.com/Shopify/Shopify-AI-Toolkit
 
 ```bash
 /plugin marketplace add Shopify/Shopify-AI-Toolkit
-/plugin install shopify-plugin@shopify-plugin
+/plugin install shopify-plugin@shopify-ai-toolkit
 ```
 
 ### Cursor
