@@ -1,6 +1,3 @@
-<!-- AUTO-GENERATED — do not edit directly.
-     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
-     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 ---
 name: shopify-partner
 description: "The Partner API lets you programmatically access data about your Partner Dashboard, including your apps, themes, and affiliate referrals."
@@ -8,6 +5,9 @@ compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
 ---
+<!-- AUTO-GENERATED — do not edit directly.
+     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
+     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 
 ## Required Tool Calls (do not skip)
 

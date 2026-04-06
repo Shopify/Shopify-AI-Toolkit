@@ -1,6 +1,3 @@
-<!-- AUTO-GENERATED — do not edit directly.
-     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
-     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 ---
 name: shopify-dev
 description: "Search Shopify developer documentation across all APIs. Use only when no API-specific skill applies."
@@ -8,6 +5,9 @@ compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
 ---
+<!-- AUTO-GENERATED — do not edit directly.
+     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
+     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 
 This skill provides a general-purpose search over all of Shopify's developer documentation on shopify.dev.
 

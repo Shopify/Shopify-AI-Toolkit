@@ -1,6 +1,3 @@
-<!-- AUTO-GENERATED — do not edit directly.
-     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
-     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 ---
 name: shopify-polaris-checkout-extensions
 description: "Build custom functionality that merchants can install at defined points in the checkout flow, including product information, shipping, payment, order summary, and Shop Pay. Checkout UI Extensions also supports scaffolding new checkout extensions using Shopify CLI commands."
@@ -8,6 +5,9 @@ compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
 ---
+<!-- AUTO-GENERATED — do not edit directly.
+     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
+     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 
 ## Required Tool Calls (do not skip)
 

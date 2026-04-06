@@ -1,6 +1,3 @@
-<!-- AUTO-GENERATED — do not edit directly.
-     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
-     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 ---
 name: shopify-functions
 description: "Shopify Functions allow developers to customize the backend logic that powers parts of Shopify. Available APIs: Discount, Cart and Checkout Validation, Cart Transform, Pickup Point Delivery Option Generator, Delivery Customization, Fulfillment Constraints, Local Pickup Delivery Option Generator, Order Routing Location Rule, Payment Customization"
@@ -8,6 +5,9 @@ compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
 ---
+<!-- AUTO-GENERATED — do not edit directly.
+     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
+     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 
 ## Required Tool Calls (do not skip)
 
