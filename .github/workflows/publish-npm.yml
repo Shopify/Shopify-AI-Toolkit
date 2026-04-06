@@ -2,26 +2,35 @@ name: Publish to npm
 
 on:
   release:
-    types: [published]
+    types: [created]
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
+    runs-on: shopify-ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Set version from release tag
-        run: npm version --no-git-tag-version "${GITHUB_REF_NAME#v}"
+      - name: Verify version matches release tag
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+
+          echo "Package version: $PACKAGE_VERSION"
+          echo "Tag version:     $TAG_VERSION"
+
+          if [ "$PACKAGE_VERSION" != "$TAG_VERSION" ]; then
+            echo "Version mismatch: package.json ($PACKAGE_VERSION) != tag ($TAG_VERSION)"
+            exit 1
+          fi
 
       - name: Publish
         run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
