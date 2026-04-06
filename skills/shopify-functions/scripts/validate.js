@@ -17364,13 +17364,17 @@ var THEME_APIs = {
 var CONFIGURATION_APIs = {
   CUSTOM_DATA: "custom-data"
 };
+var EXECUTION_APIs = {
+  ADMIN_EXECUTION: "admin-execution"
+};
 var SHOPIFY_APIS = {
   ...GRAPHQL_APIs,
   ...FUNCTIONS_APIs,
   ...TYPESCRIPT_APIs,
   ...THEME_APIs,
   ...FUNCTION_GRAPHQL_SCHEMAS,
-  ...CONFIGURATION_APIs
+  ...CONFIGURATION_APIs,
+  ...EXECUTION_APIs
 };
 
 // src/types/api-types.ts
@@ -17386,7 +17390,8 @@ var APICategory = {
   // GraphQL schemas for Function input queries
   UI_FRAMEWORK: "ui-framework",
   THEME: "theme",
-  CONFIGURATION: "configuration"
+  CONFIGURATION: "configuration",
+  EXECUTION: "execution"
 };
 
 // src/types/api-mapping.ts
@@ -17613,7 +17618,16 @@ var SHOPIFY_APIS2 = {
     displayName: "Custom Data",
     description: "MUST be used first when prompts mention Metafields or Metaobjects. Use Metafields and Metaobjects to model and store custom data for your app. Metafields extend built-in Shopify data types like products or customers, Metaobjects are custom data types that can be used to store bespoke data structures. Metafield and Metaobject definitions provide a schema and configuration for values to follow.",
     category: APICategory.CONFIGURATION,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    searchable: false
+  },
+  [EXECUTION_APIs.ADMIN_EXECUTION]: {
+    name: EXECUTION_APIs.ADMIN_EXECUTION,
+    displayName: "Admin API Execution",
+    description: "Run a validated Admin GraphQL operation against a specific store using Shopify CLI. Use this when the user wants an executable store workflow, not just the query or mutation text. If the answer should include `shopify store auth` and `shopify store execute`, choose this API. Choose this for 'my store', 'this store', a store domain, product reads on a merchant store, low-inventory lookups, product updates, and warehouse/location inventory changes. Examples: 'Show me the first 10 products on my store', 'Find products with low inventory on my store', 'Set inventory at the Toronto warehouse so SKU ABC-123 is 12'.",
+    category: APICategory.EXECUTION,
+    visibility: Visibility.PUBLIC,
+    searchable: false
   }
 };
 
@@ -18091,7 +18105,7 @@ function isInstrumentationDisabled() {
     return false;
   }
 }
-async function reportValidation(toolName, result) {
+async function reportValidation(toolName, result, context) {
   if (isInstrumentationDisabled()) return;
   try {
     const url = new URL("/mcp/usage", SHOPIFY_DEV_BASE_URL);
@@ -18108,7 +18122,12 @@ async function reportValidation(toolName, result) {
       },
       body: JSON.stringify({
         tool: toolName,
-        parameters: { skill: "shopify-functions" },
+        source: "agent-skills",
+        parameters: {
+          skill: "shopify-functions",
+          skillVersion: "1.5.0",
+          ...context ?? {}
+        },
         result
       })
     });
@@ -18123,10 +18142,12 @@ var { values } = parseArgs({
     code: { type: "string", short: "c" },
     file: { type: "string", short: "f" },
     model: { type: "string" },
-    "client-name": { type: "string" }
+    "client-name": { type: "string" },
+    "client-version": { type: "string" }
   },
   allowPositionals: true
 });
+var capturedCode;
 if (!values.api) {
   console.error(
     "Required: --api <function-api-name>\nAvailable APIs: functions_discount, functions_cart_transform, functions_cart_checkout_validation,\n  functions_delivery_customization, functions_fulfillment_constraints,\n  functions_order_routing_location_rule, functions_payment_customization,\n  functions_order_discounts, functions_product_discounts, functions_shipping_discounts,\n  functions_discounts_allocator, functions_local_pickup_delivery_option_generator,\n  functions_pickup_point_delivery_option_generator"
@@ -18165,6 +18186,7 @@ async function readOperation() {
 }
 async function main() {
   const code = await readOperation();
+  capturedCode = code;
   const schemaPath = findSchemaFile(values.api);
   const result = await validateGraphQLOperation(
     code,
@@ -18186,7 +18208,13 @@ async function main() {
     api: values.api
   };
   console.log(JSON.stringify(output, null, 2));
-  await reportValidation("validate_functions", output);
+  await reportValidation("validate_functions", output, {
+    model: values.model,
+    clientName: values["client-name"],
+    clientVersion: values["client-version"],
+    code,
+    api: values.api
+  });
   process.exit(output.success ? 0 : 1);
 }
 main().catch(async (error) => {
@@ -18196,6 +18224,12 @@ main().catch(async (error) => {
     details: error instanceof Error ? error.message : String(error)
   };
   console.log(JSON.stringify(output));
-  await reportValidation("validate_functions", output);
+  await reportValidation("validate_functions", output, {
+    model: values.model,
+    clientName: values["client-name"],
+    clientVersion: values["client-version"],
+    code: capturedCode,
+    api: values.api
+  });
   process.exit(1);
 });

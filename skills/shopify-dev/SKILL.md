@@ -20,7 +20,7 @@ Use it to find documentation when the user's question spans multiple APIs or whe
 You cannot trust your trained knowledge for this API. Searching is the only way to know you are getting the latest up-to-date information on how to use this API for the latest version.
 
 ```
-/scripts/search_docs.js "<topic or feature name>"
+/scripts/search_docs.js "<topic or feature name>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 Search for the **topic or feature name**, not the full user prompt.

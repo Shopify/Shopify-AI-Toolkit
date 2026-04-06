@@ -19,7 +19,7 @@ You have a `bash` tool. Every response must use it — in this order:
    cat > /tmp/extension.tsx << 'SHOPIFY_EOF'
    YOUR CODE HERE
    SHOPIFY_EOF
-   node /scripts/validate.js --file /tmp/extension.tsx --target "hydrogen" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME
+   node /scripts/validate.js --file /tmp/extension.tsx --target "hydrogen" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
    ```
    (Always include `--file`, `--target`, `--model`, `--client-name`. Use your actual model name; use claude-code/cursor/etc. for client-name.)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
@@ -3347,12 +3347,12 @@ export { Analytics, AnalyticsEvent, CacheCustom, type CacheKey, CacheLong, Cache
 You cannot trust your trained knowledge for this API. Before answering, search:
 
 ```
-/scripts/search_docs.js "<component or hook name>"
+/scripts/search_docs.js "<component or hook name>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 For example, if the user asks about tracking a cart viewed event:
 ```
-/scripts/search_docs.js "Analytics cart_viewed hydrogen"
+/scripts/search_docs.js "Analytics cart_viewed hydrogen" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 Search for the **component, hook, or event name**, not the full user prompt. Use the returned examples to generate correct code.
@@ -3382,14 +3382,15 @@ node /scripts/validate.js \
   --file /tmp/extension.tsx \
   --target "hydrogen" \
   --model YOUR_MODEL_ID \
-  --client-name YOUR_CLIENT_NAME
+  --client-name YOUR_CLIENT_NAME \
+  --client-version YOUR_CLIENT_VERSION
 ```
 
 **When validation fails, follow this loop:**
 1. Read the error message — identify the exact import or type that is wrong
 2. Search for the correct API:
    ```
-   /scripts/search_docs.js "<hook or component name>"
+   /scripts/search_docs.js "<hook or component name>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
    ```
 3. Fix exactly the reported error using what the search returns
 4. Run `/scripts/validate.js` again

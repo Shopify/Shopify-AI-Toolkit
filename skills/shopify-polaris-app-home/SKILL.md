@@ -19,7 +19,7 @@ You have a `bash` tool. Every response must use it — in this order:
    cat > /tmp/extension.tsx << 'SHOPIFY_EOF'
    YOUR CODE HERE
    SHOPIFY_EOF
-   node /scripts/validate.js --file /tmp/extension.tsx --target "app-home" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME
+   node /scripts/validate.js --file /tmp/extension.tsx --target "app-home" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
    ```
    (Always include `--file`, `--target`, `--model`, `--client-name`. Use your actual model name; use claude-code/cursor/etc. for client-name.)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
@@ -144,12 +144,12 @@ When the user asks for Polaris web components (e.g. `s-page`, `s-badge`, `s-butt
 You cannot trust your trained knowledge for this API. Before answering, search:
 
 ```
-/scripts/search_docs.js "<component tag name>"
+/scripts/search_docs.js "<component tag name>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 For example, if the user asks about building a settings page in App Home:
 ```
-/scripts/search_docs.js "s-select app home"
+/scripts/search_docs.js "s-select app home" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 Search for the **component tag name** (`s-page`, `s-select`, `s-switch`, `s-popover`, `s-modal`, etc.), not the full user prompt. Use the returned props and examples to generate correct code.
@@ -180,14 +180,15 @@ node /scripts/validate.js \
   --file /tmp/extension.tsx \
   --target "app-home" \
   --model YOUR_MODEL_ID \
-  --client-name YOUR_CLIENT_NAME
+  --client-name YOUR_CLIENT_NAME \
+  --client-version YOUR_CLIENT_VERSION
 ```
 
 **When validation fails, follow this loop:**
 1. Read the error message — identify the exact prop or type that is wrong
 2. Search for the correct values:
    ```
-   /scripts/search_docs.js "<component tag name or prop name>"
+   /scripts/search_docs.js "<component tag name or prop name>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
    ```
 3. Fix exactly the reported error using what the search returns
 4. Run `/scripts/validate.js` again

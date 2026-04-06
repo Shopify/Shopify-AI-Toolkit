@@ -14,7 +14,7 @@ metadata:
 You have a `bash` tool. Every response must use it — in this order:
 1. Call `bash` with `node /scripts/search_docs.js "<function type or operation>"` — search before writing code
 2. Write the code using the search results
-3. Call `bash` with `node /scripts/validate.js --code '...' --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME` — validate before returning
+3. Call `bash` with `node /scripts/validate.js --code '...' --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION` — validate before returning
    (Always include these flags. Use your actual model name for YOUR_MODEL_ID; use claude-code/cursor/etc. for YOUR_CLIENT_NAME)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
 5. Return code only after validation passes
@@ -303,8 +303,9 @@ fn main() {
     process::exit(1);
 }
 ```
+
+Ensure examples follow best practices, correct enum usage, and proper handling of optional fields.
 </system-instructions>
- requested. Ensure examples follow best practices, correct enum usage, and proper handling of optional fields.
 
 ### Always use Shopify CLI
 
@@ -429,12 +430,12 @@ export SHOPIFY_HTTP_PROXY=http://username:password@proxy.com:8080
 You cannot trust your trained knowledge for this API. Before answering, search:
 
 ```
-/scripts/search_docs.js "<function type or operation>"
+/scripts/search_docs.js "<function type or operation>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 For example, if the user asks about a product discount function:
 ```
-/scripts/search_docs.js "product discount function input query"
+/scripts/search_docs.js "product discount function input query" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 Search for the **function type and input/output types**, not the full user prompt. Use the returned schema to write correct field names and return types.
@@ -468,14 +469,15 @@ node /scripts/validate.js \
   }
 ' \
   --model YOUR_MODEL_ID \
-  --client-name YOUR_CLIENT_NAME
+  --client-name YOUR_CLIENT_NAME \
+  --client-version YOUR_CLIENT_VERSION
 ```
 
 **When validation fails, follow this loop:**
 1. Read the error message — identify the exact field, argument, or type that is wrong
 2. Search for the correct values:
    ```
-   /scripts/search_docs.js "<function type input field>"
+   /scripts/search_docs.js "<function type input field>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
    ```
 3. Fix exactly the reported error using what the search returns
 4. Run `/scripts/validate.js` again

@@ -15,7 +15,7 @@ You have a `bash` tool. Every response must use it — in this order:
 1. Call `bash` with `node /scripts/search_docs.js "<tag, filter, or object name>"` — search before writing code
    **Search limit: max 2 searches. If both return `[]`, skip to step 2 using your built-in Liquid knowledge.**
 2. Write the code using the search results (or built-in knowledge if search returned nothing)
-3. Call `bash` with `node /scripts/validate.js --filename <file.liquid> --filetype <sections|snippets|blocks|...> --code '<content>' --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME` — validate before returning
+3. Call `bash` with `node /scripts/validate.js --filename <file.liquid> --filetype <sections|snippets|blocks|...> --code '<content>' --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION` — validate before returning
    (Always include these flags. Use your actual model name for YOUR_MODEL_ID; use claude-code/cursor/etc. for YOUR_CLIENT_NAME)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
 5. Return code only after validation passes
@@ -1662,12 +1662,12 @@ export SHOPIFY_HTTP_PROXY=http://username:password@proxy.com:8080
 You cannot trust your trained knowledge for this API. Before answering, search:
 
 ```
-/scripts/search_docs.js "<object, filter, or tag name>"
+/scripts/search_docs.js "<object, filter, or tag name>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 For example, if the user asks about rendering product metafields in a section:
 ```
-/scripts/search_docs.js "product metafields liquid section"
+/scripts/search_docs.js "product metafields liquid section" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 Search for the **Liquid object, filter, or tag name**, not the full user prompt. Use the returned examples and schema settings to generate correct section code with accurate schema blocks.
@@ -1697,7 +1697,8 @@ node /scripts/validate.js \
 {% endschema %}
 ' \
   --model YOUR_MODEL_ID \
-  --client-name YOUR_CLIENT_NAME
+  --client-name YOUR_CLIENT_NAME \
+  --client-version YOUR_CLIENT_VERSION
 ```
 
 Use `--filetype sections`, `--filetype snippets`, `--filetype blocks`, etc. to match the file type. Always set `--filename` to the actual filename (e.g. `hero-banner.liquid`).
@@ -1706,7 +1707,7 @@ Use `--filetype sections`, `--filetype snippets`, `--filetype blocks`, etc. to m
 1. Read the error message — identify the exact syntax error or invalid tag
 2. Search for the correct syntax:
    ```
-   /scripts/search_docs.js "<tag or object name from the error>"
+   /scripts/search_docs.js "<tag or object name from the error>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
    ```
 3. Fix exactly the reported error
 4. Run `/scripts/validate.js` again

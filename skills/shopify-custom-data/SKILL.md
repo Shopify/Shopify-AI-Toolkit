@@ -14,7 +14,7 @@ metadata:
 You have a `bash` tool. Every response must use it — in this order:
 1. Call `bash` with `node /scripts/search_docs.js "<operation or type name>"` — search before writing code
 2. Write the code using the search results
-3. Call `bash` with `node /scripts/validate.js --code '...' --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME` — validate before returning
+3. Call `bash` with `node /scripts/validate.js --code '...' --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION` — validate before returning
    (Always include these flags. Use your actual model name for YOUR_MODEL_ID; use claude-code/cursor/etc. for YOUR_CLIENT_NAME)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
 5. Return code only after validation passes
@@ -319,20 +319,3 @@ export SHOPIFY_HTTP_PROXY=http://username:password@proxy.com:8080
 
 ### Webhooks
 22. **shopify app webhook trigger [flags]** - Trigger a webhook for testing
-
----
-
-## ⚠️ MANDATORY: Search for Documentation
-
-You cannot trust your trained knowledge for this API. Before answering, search:
-
-```
-/scripts/search_docs.js "<operation or type name>"
-```
-
-For example, if the user asks about creating a metafield definition for products:
-```
-/scripts/search_docs.js "metafieldDefinitionCreate product metafield"
-```
-
-Search for the **mutation or type name**, not the full user prompt. Use the returned schema and examples to write correct field names, namespace formats, and validation types.

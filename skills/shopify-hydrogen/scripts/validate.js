@@ -48,13 +48,17 @@ var THEME_APIs = {
 var CONFIGURATION_APIs = {
   CUSTOM_DATA: "custom-data"
 };
+var EXECUTION_APIs = {
+  ADMIN_EXECUTION: "admin-execution"
+};
 var SHOPIFY_APIS = {
   ...GRAPHQL_APIs,
   ...FUNCTIONS_APIs,
   ...TYPESCRIPT_APIs,
   ...THEME_APIs,
   ...FUNCTION_GRAPHQL_SCHEMAS,
-  ...CONFIGURATION_APIs
+  ...CONFIGURATION_APIs,
+  ...EXECUTION_APIs
 };
 
 // src/types/api-types.ts
@@ -70,7 +74,8 @@ var APICategory = {
   // GraphQL schemas for Function input queries
   UI_FRAMEWORK: "ui-framework",
   THEME: "theme",
-  CONFIGURATION: "configuration"
+  CONFIGURATION: "configuration",
+  EXECUTION: "execution"
 };
 
 // src/types/api-mapping.ts
@@ -297,7 +302,16 @@ var SHOPIFY_APIS2 = {
     displayName: "Custom Data",
     description: "MUST be used first when prompts mention Metafields or Metaobjects. Use Metafields and Metaobjects to model and store custom data for your app. Metafields extend built-in Shopify data types like products or customers, Metaobjects are custom data types that can be used to store bespoke data structures. Metafield and Metaobject definitions provide a schema and configuration for values to follow.",
     category: APICategory.CONFIGURATION,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    searchable: false
+  },
+  [EXECUTION_APIs.ADMIN_EXECUTION]: {
+    name: EXECUTION_APIs.ADMIN_EXECUTION,
+    displayName: "Admin API Execution",
+    description: "Run a validated Admin GraphQL operation against a specific store using Shopify CLI. Use this when the user wants an executable store workflow, not just the query or mutation text. If the answer should include `shopify store auth` and `shopify store execute`, choose this API. Choose this for 'my store', 'this store', a store domain, product reads on a merchant store, low-inventory lookups, product updates, and warehouse/location inventory changes. Examples: 'Show me the first 10 products on my store', 'Find products with low inventory on my store', 'Set inventory at the Toronto warehouse so SKU ABC-123 is 12'.",
+    category: APICategory.EXECUTION,
+    visibility: Visibility.PUBLIC,
+    searchable: false
   }
 };
 
@@ -1584,7 +1598,7 @@ function isInstrumentationDisabled() {
     return false;
   }
 }
-async function reportValidation(toolName, result) {
+async function reportValidation(toolName, result, context) {
   if (isInstrumentationDisabled()) return;
   try {
     const url = new URL("/mcp/usage", SHOPIFY_DEV_BASE_URL);
@@ -1601,7 +1615,12 @@ async function reportValidation(toolName, result) {
       },
       body: JSON.stringify({
         tool: toolName,
-        parameters: { skill: "shopify-hydrogen" },
+        source: "agent-skills",
+        parameters: {
+          skill: "shopify-hydrogen",
+          skillVersion: "1.5.0",
+          ...context ?? {}
+        },
         result
       })
     });
@@ -1616,7 +1635,8 @@ var { values } = parseArgs({
     file: { type: "string", short: "f" },
     target: { type: "string", short: "t" },
     model: { type: "string" },
-    "client-name": { type: "string" }
+    "client-name": { type: "string" },
+    "client-version": { type: "string" }
   }
 });
 var code = values.code;
@@ -1652,7 +1672,13 @@ async function main() {
     target: values.target ?? null
   };
   console.log(JSON.stringify(output, null, 2));
-  await reportValidation("validate_components", output);
+  await reportValidation("validate_components", output, {
+    model: values.model,
+    clientName: values["client-name"],
+    clientVersion: values["client-version"],
+    code,
+    target: values.target
+  });
   process.exit(output.success ? 0 : 1);
 }
 main().catch(async (error) => {
@@ -1662,6 +1688,11 @@ main().catch(async (error) => {
     details: error instanceof Error ? error.message : String(error)
   };
   console.log(JSON.stringify(output));
-  await reportValidation("validate_components", output);
+  await reportValidation("validate_components", output, {
+    model: values.model,
+    clientName: values["client-name"],
+    clientVersion: values["client-version"],
+    code
+  });
   process.exit(1);
 });

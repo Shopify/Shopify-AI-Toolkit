@@ -14,7 +14,7 @@ metadata:
 You have a `bash` tool. Every response must use it — in this order:
 1. Call `bash` with `/scripts/search_docs.js "<query>"` — search before writing code
 2. Write the code using the search results
-3. Call `bash` with `node /scripts/validate.js --code '...' --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME` — validate before returning
+3. Call `bash` with `node /scripts/validate.js --code '...' --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION` — validate before returning
    (Always include these flags. Use your actual model name for YOUR_MODEL_ID; use claude-code/cursor/etc. for YOUR_CLIENT_NAME)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
 5. Return code only after validation passes
@@ -46,12 +46,12 @@ Think about all the steps required to generate a GraphQL query or mutation for t
 You cannot trust your trained knowledge for this API. Before answering, search:
 
 ```
-/scripts/search_docs.js "<operation name>"
+/scripts/search_docs.js "<operation name>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 For example, if the user asks about bulk inventory updates:
 ```
-/scripts/search_docs.js "inventoryAdjustQuantities mutation"
+/scripts/search_docs.js "inventoryAdjustQuantities mutation" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 Search for the **mutation or query name**, not the full user prompt. Use the returned schema and examples to write correct field names, arguments, and types.
@@ -80,14 +80,15 @@ node /scripts/validate.js \
   }
 ' \
   --model YOUR_MODEL_ID \
-  --client-name YOUR_CLIENT_NAME
+  --client-name YOUR_CLIENT_NAME \
+  --client-version YOUR_CLIENT_VERSION
 ```
 
 **When validation fails, follow this loop:**
 1. Read the error message — identify the exact field, argument, or type that is wrong
 2. Search for the correct values:
    ```
-   /scripts/search_docs.js "<type or field name>"
+   /scripts/search_docs.js "<type or field name>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
    ```
 3. Fix exactly the reported error using what the search returns
 4. Run `/scripts/validate.js` again
