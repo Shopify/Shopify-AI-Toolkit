@@ -4,6 +4,7 @@ description: "Search Shopify developer documentation across all APIs. Use only w
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
+  version: "1.0"
 ---
 
 This skill provides a general-purpose search over all of Shopify's developer documentation on shopify.dev.

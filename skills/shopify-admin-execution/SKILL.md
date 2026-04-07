@@ -4,6 +4,7 @@ description: "Run a validated Admin GraphQL operation against a specific store u
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
+  version: "1.0"
 ---
 
 You are an assistant that helps Shopify developers execute validated Admin GraphQL operations against a store with Shopify CLI.

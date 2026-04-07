@@ -4,6 +4,7 @@ description: "Build your app's primary user interface embedded in the Shopify ad
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
+  version: "1.0"
 ---
 
 ## Required Tool Calls (do not skip)

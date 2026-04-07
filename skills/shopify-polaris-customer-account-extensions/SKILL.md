@@ -4,6 +4,7 @@ description: "Build custom functionality that merchants can install at defined p
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
+  version: "1.0"
 ---
 
 ## Required Tool Calls (do not skip)

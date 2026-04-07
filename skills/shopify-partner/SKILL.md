@@ -4,6 +4,7 @@ description: "The Partner API lets you programmatically access data about your P
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
+  version: "1.0"
 ---
 
 ## Required Tool Calls (do not skip)

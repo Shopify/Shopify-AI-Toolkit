@@ -4,6 +4,7 @@ description: "The Admin GraphQL API lets you build apps and integrations that ex
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
+  version: "1.0"
 ---
 
 ## Required Tool Calls (do not skip)

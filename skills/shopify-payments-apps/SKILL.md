@@ -4,6 +4,7 @@ description: "The Payments Apps API enables payment providers to integrate their
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
+  version: "1.0"
 ---
 
 ## Required Tool Calls (do not skip)

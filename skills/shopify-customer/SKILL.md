@@ -4,6 +4,7 @@ description: "The Customer Account API allows customers to access their own data
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
+  version: "1.0"
 ---
 
 ## Required Tool Calls (do not skip)
