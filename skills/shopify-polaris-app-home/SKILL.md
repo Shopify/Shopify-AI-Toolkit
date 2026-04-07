@@ -1,3 +1,6 @@
+<!-- AUTO-GENERATED — do not edit directly.
+     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
+     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 ---
 name: shopify-polaris-app-home
 description: "Build your app's primary user interface embedded in the Shopify admin. If the prompt just mentions `Polaris` and you can't tell based off of the context what API they meant, assume they meant this API."

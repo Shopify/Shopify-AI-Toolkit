@@ -1,3 +1,6 @@
+<!-- AUTO-GENERATED — do not edit directly.
+     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
+     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 ---
 name: shopify-storefront-graphql
 description: "Use for custom storefronts requiring direct GraphQL queries/mutations for data fetching and cart operations. Choose this when you need full control over data fetching and rendering your own UI. NOT for Web Components - if the prompt mentions HTML tags like <shopify-store>, <shopify-cart>, use storefront-web-components instead."

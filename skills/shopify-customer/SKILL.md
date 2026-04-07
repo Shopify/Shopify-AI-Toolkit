@@ -1,3 +1,6 @@
+<!-- AUTO-GENERATED — do not edit directly.
+     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
+     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 ---
 name: shopify-customer
 description: "The Customer Account API allows customers to access their own data including orders, payment methods, and addresses."

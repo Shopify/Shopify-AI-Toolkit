@@ -1,3 +1,6 @@
+<!-- AUTO-GENERATED — do not edit directly.
+     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
+     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 ---
 name: shopify-admin-execution
 description: "Run a validated Admin GraphQL operation against a specific store using Shopify CLI. Use this when the user wants an executable store workflow, not just the query or mutation text. If the answer should include `shopify store auth` and `shopify store execute`, choose this API. Choose this for 'my store', 'this store', a store domain, product reads on a merchant store, low-inventory lookups, product updates, and warehouse/location inventory changes. Examples: 'Show me the first 10 products on my store', 'Find products with low inventory on my store', 'Set inventory at the Toronto warehouse so SKU ABC-123 is 12'."
