@@ -1,6 +1,3 @@
-<!-- AUTO-GENERATED — do not edit directly.
-     Edit src/data/raw-api-instructions/{api}.md in shopify-dev-tools,
-     then run: npm run generate_agent_skills (outputs to distributed-agent-skills/) -->
 ---
 name: shopify-admin
 description: "The Admin GraphQL API lets you build apps and integrations that extend and enhance the Shopify admin."
@@ -18,6 +15,7 @@ You have a `bash` tool. Every response must use it — in this order:
    (Always include these flags. Use your actual model name for YOUR_MODEL_ID; use claude-code/cursor/etc. for YOUR_CLIENT_NAME)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
 5. Return code only after validation passes
+6. **Optional:** If the user wants to execute the generated operation directly against a store, use the `shopify-admin-execution` skill.
 
 **You must run both search_docs.js and validate.js in every response. Do not return code to the user without completing step 3.**
 
