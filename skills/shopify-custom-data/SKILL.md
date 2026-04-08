@@ -10,14 +10,14 @@ metadata:
 ## Required Tool Calls (do not skip)
 
 You have a `bash` tool. Every response must use it — in this order:
-1. Call `bash` with `node /scripts/search_docs.js "<operation or type name>"` — search before writing code
+1. Call `bash` with `node scripts/search_docs.mjs "<operation or type name>"` — search before writing code
 2. Write the code using the search results
-3. Call `bash` with `node /scripts/validate.js --code '...' --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION` — validate before returning
-   (Always include these flags. Use your actual model name for YOUR_MODEL_ID; use claude-code/cursor/etc. for YOUR_CLIENT_NAME)
+3. Call `bash` with `node scripts/validate.mjs --code '...' --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID --revision REVISION_NUMBER` — validate before returning
+   (Always include these flags. Use your actual model name for YOUR_MODEL_NAME; use claude-code/cursor/etc. for YOUR_CLIENT_NAME. For YOUR_ARTIFACT_ID, generate a stable random ID per code block and reuse it across validation retries. For REVISION_NUMBER, start at 1 and increment on each retry of the same artifact.)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
 5. Return code only after validation passes
 
-**You must run both search_docs.js and validate.js in every response. Do not return code to the user without completing step 3.**
+**You must run both search_docs.mjs and validate.mjs in every response. Do not return code to the user without completing step 3.**
 
 ---
 

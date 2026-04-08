@@ -10,21 +10,22 @@ metadata:
 ## Required Tool Calls (do not skip)
 
 You have a `bash` tool. Every response must use it — in this order:
-1. Call `bash` with `node /scripts/search_docs.js "<component tag name>"` — search before writing code
+1. Call `bash` with `node scripts/search_docs.mjs "<component tag name>"` — search before writing code
 2. Write the code using the search results
 3. Write code to a temp file, then validate with `--file` — **do not use `--code "..."` inline** (JSX attribute strings break shell quoting):
    ```
    cat > /tmp/extension.tsx << 'SHOPIFY_EOF'
    YOUR CODE HERE
    SHOPIFY_EOF
-   node /scripts/validate.js --file /tmp/extension.tsx --target "<target>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+   node scripts/validate.mjs --file /tmp/extension.tsx --target "<target>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID \
+  --revision REVISION_NUMBER
    ```
-   (Always include `--file`, `--target`, `--model`, `--client-name`. Use your actual model name; use claude-code/cursor/etc. for client-name.)
+   (Always include `--file`, `--target`, `--model`, `--client-name`, `--artifact-id`. Use your actual model name; use claude-code/cursor/etc. for client-name. For artifact-id, generate a stable random ID per code block and reuse it across retries. For revision, start at 1 and increment on each retry of the same artifact.)
    **Do NOT include HTML comments (`<!-- ... -->`) in the code — the validator treats them as invalid custom components.**
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
 5. Return code only after validation passes
 
-**You must run both search_docs.js and validate.js in every response. Do not return code to the user without completing step 3.**
+**You must run both search_docs.mjs and validate.mjs in every response. Do not return code to the user without completing step 3.**
 
 ---
 
@@ -293,12 +294,12 @@ When the user asks for Polaris web components (e.g. `s-badge`, `s-banner`, `s-bu
 You cannot trust your trained knowledge for this API. Before answering, search the docs to determine the correct extension target and component props:
 
 ```
-/scripts/search_docs.js "<component tag name or target name>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+scripts/search_docs.mjs "<component tag name or target name>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 For example, if the user asks about displaying a banner in a POS modal:
 ```
-/scripts/search_docs.js "s-banner POS extension" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+scripts/search_docs.mjs "s-banner POS extension" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 Search for the **component tag name** or **target name**, not the full user prompt. Use the returned supported components list and prop definitions to generate correct code.
@@ -307,7 +308,7 @@ Search for the **component tag name** or **target name**, not the full user prom
 
 ## ⚠️ MANDATORY: Validate Before Returning Code
 
-DO NOT return code to the user until `/scripts/validate.js` exits 0. DO NOT ask the user to run this.
+DO NOT return code to the user until `scripts/validate.mjs` exits 0. DO NOT ask the user to run this.
 
 **Run this with your bash tool — do not skip this step. Write code to a temp file first — do NOT use `--code "..."` inline (JSX attribute strings break shell quoting).**
 ```bash
@@ -327,26 +328,28 @@ export default function Extension() {
   );
 }
 SHOPIFY_EOF
-node /scripts/validate.js \
+node scripts/validate.mjs \
   --file /tmp/extension.tsx \
   --target "pos.home.modal.render" \
-  --model YOUR_MODEL_ID \
+  --model YOUR_MODEL_NAME \
   --client-name YOUR_CLIENT_NAME \
-  --client-version YOUR_CLIENT_VERSION
+  --client-version YOUR_CLIENT_VERSION \
+  --artifact-id YOUR_ARTIFACT_ID \
+  --revision REVISION_NUMBER
 ```
 
 **When validation fails, follow this loop:**
 1. Read the error message — identify the exact prop or type that is wrong
 2. Search for the correct values:
    ```
-   /scripts/search_docs.js "<component tag name or prop name>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+   scripts/search_docs.mjs "<component tag name or prop name>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
    ```
 3. Fix exactly the reported error using what the search returns
-4. Run `/scripts/validate.js` again
+4. Run `scripts/validate.mjs` again
 5. Retry up to 3 times total; after 3 failures, return the best attempt with an explanation
 
 **Do not guess at valid values — always search first when the error names a type you don't know.**
 
 ---
 
-> **Privacy notice:** `/scripts/validate.js` reports anonymized validation results (pass/fail and skill name) to Shopify to help improve these tools. Set `OPT_OUT_INSTRUMENTATION=true` in your environment to opt out.
+> **Privacy notice:** `scripts/validate.mjs` reports anonymized validation results (pass/fail and skill name) to Shopify to help improve these tools. Set `OPT_OUT_INSTRUMENTATION=true` in your environment to opt out.

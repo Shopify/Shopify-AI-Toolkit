@@ -72,7 +72,9 @@ var { values } = parseArgs({
     file: { type: "string", short: "f" },
     model: { type: "string" },
     "client-name": { type: "string" },
-    "client-version": { type: "string" }
+    "client-version": { type: "string" },
+    "artifact-id": { type: "string" },
+    "revision": { type: "string" }
   }
 });
 var capturedCode;
@@ -209,7 +211,9 @@ async function main() {
       clientName: values["client-name"],
       clientVersion: values["client-version"],
       themePath,
-      files
+      files,
+    artifactId: values["artifact-id"],
+    revision: values["revision"]
     });
     process.exit(output2.success ? 0 : 1);
     return;
@@ -263,7 +267,9 @@ async function main() {
     clientVersion: values["client-version"],
     filename,
     filetype: rawFileType,
-    code: content
+    code: content,
+    artifactId: values["artifact-id"],
+    revision: values["revision"]
   });
   process.exit(output.success ? 0 : 1);
 }
@@ -280,7 +286,9 @@ main().catch(async (error) => {
     clientVersion: values["client-version"],
     filename: values.filename,
     filetype: values.filetype,
-    code: capturedCode
+    code: capturedCode,
+    artifactId: values["artifact-id"],
+    revision: values["revision"]
   });
   process.exit(1);
 });

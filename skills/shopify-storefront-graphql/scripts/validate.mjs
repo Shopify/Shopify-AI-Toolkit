@@ -18141,7 +18141,9 @@ var { values } = parseArgs({
     file: { type: "string", short: "f" },
     model: { type: "string" },
     "client-name": { type: "string" },
-    "client-version": { type: "string" }
+    "client-version": { type: "string" },
+    "artifact-id": { type: "string" },
+    "revision": { type: "string" }
   },
   allowPositionals: true
 });
@@ -18190,7 +18192,9 @@ async function main() {
     model: values.model,
     clientName: values["client-name"],
     clientVersion: values["client-version"],
-    code
+    code,
+    artifactId: values["artifact-id"],
+    revision: values["revision"]
   });
   process.exit(output.success ? 0 : 1);
 }
@@ -18205,7 +18209,9 @@ main().catch(async (error) => {
     model: values.model,
     clientName: values["client-name"],
     clientVersion: values["client-version"],
-    code: capturedCode
+    code: capturedCode,
+    artifactId: values["artifact-id"],
+    revision: values["revision"]
   });
   process.exit(1);
 });

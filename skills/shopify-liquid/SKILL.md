@@ -10,15 +10,15 @@ metadata:
 ## Required Tool Calls (do not skip)
 
 You have a `bash` tool. Every response must use it — in this order:
-1. Call `bash` with `node /scripts/search_docs.js "<tag, filter, or object name>"` — search before writing code
+1. Call `bash` with `node scripts/search_docs.mjs "<tag, filter, or object name>"` — search before writing code
    **Search limit: max 2 searches. If both return `[]`, skip to step 2 using your built-in Liquid knowledge.**
 2. Write the code using the search results (or built-in knowledge if search returned nothing)
-3. Call `bash` with `node /scripts/validate.js --filename <file.liquid> --filetype <sections|snippets|blocks|...> --code '<content>' --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION` — validate before returning
-   (Always include these flags. Use your actual model name for YOUR_MODEL_ID; use claude-code/cursor/etc. for YOUR_CLIENT_NAME)
+3. Call `bash` with `node scripts/validate.mjs --filename <file.liquid> --filetype <sections|snippets|blocks|...> --code '<content>' --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID --revision REVISION_NUMBER` — validate before returning
+   (Always include these flags. Use your actual model name for YOUR_MODEL_NAME; use claude-code/cursor/etc. for YOUR_CLIENT_NAME. For YOUR_ARTIFACT_ID, generate a stable random ID per code block and reuse it across validation retries. For REVISION_NUMBER, start at 1 and increment on each retry of the same artifact.)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
 5. Return code only after validation passes
 
-**You must run both search_docs.js and validate.js in every response. Do not return code to the user without completing step 3.**
+**You must run both search_docs.mjs and validate.mjs in every response. Do not return code to the user without completing step 3.**
 
 ---
 
@@ -1660,12 +1660,12 @@ export SHOPIFY_HTTP_PROXY=http://username:password@proxy.com:8080
 You cannot trust your trained knowledge for this API. Before answering, search:
 
 ```
-/scripts/search_docs.js "<object, filter, or tag name>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+scripts/search_docs.mjs "<object, filter, or tag name>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 For example, if the user asks about rendering product metafields in a section:
 ```
-/scripts/search_docs.js "product metafields liquid section" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+scripts/search_docs.mjs "product metafields liquid section" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
 Search for the **Liquid object, filter, or tag name**, not the full user prompt. Use the returned examples and schema settings to generate correct section code with accurate schema blocks.
@@ -1676,11 +1676,11 @@ If search returns empty results, proceed with your built-in Liquid knowledge aft
 
 ## ⚠️ MANDATORY: Validate Before Returning Code
 
-DO NOT return Liquid code to the user until `/scripts/validate.js` exits 0. DO NOT ask the user to run this.
+DO NOT return Liquid code to the user until `scripts/validate.mjs` exits 0. DO NOT ask the user to run this.
 
 **Run this with your bash tool — do not skip this step.**
 ```bash
-node /scripts/validate.js \
+node scripts/validate.mjs \
   --filename featured-collection.liquid \
   --filetype sections \
   --code '
@@ -1694,9 +1694,11 @@ node /scripts/validate.js \
 }
 {% endschema %}
 ' \
-  --model YOUR_MODEL_ID \
+  --model YOUR_MODEL_NAME \
   --client-name YOUR_CLIENT_NAME \
-  --client-version YOUR_CLIENT_VERSION
+  --client-version YOUR_CLIENT_VERSION \
+  --artifact-id YOUR_ARTIFACT_ID \
+  --revision REVISION_NUMBER
 ```
 
 Use `--filetype sections`, `--filetype snippets`, `--filetype blocks`, etc. to match the file type. Always set `--filename` to the actual filename (e.g. `hero-banner.liquid`).
@@ -1705,12 +1707,12 @@ Use `--filetype sections`, `--filetype snippets`, `--filetype blocks`, etc. to m
 1. Read the error message — identify the exact syntax error or invalid tag
 2. Search for the correct syntax:
    ```
-   /scripts/search_docs.js "<tag or object name from the error>" --model YOUR_MODEL_ID --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+   scripts/search_docs.mjs "<tag or object name from the error>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
    ```
 3. Fix exactly the reported error
-4. Run `/scripts/validate.js` again
+4. Run `scripts/validate.mjs` again
 5. Retry up to 3 times total; after 3 failures, return the best attempt with an explanation
 
 ---
 
-> **Privacy notice:** `/scripts/validate.js` reports anonymized validation results (pass/fail and skill name) to Shopify to help improve these tools. Set `OPT_OUT_INSTRUMENTATION=true` in your environment to opt out.
+> **Privacy notice:** `scripts/validate.mjs` reports anonymized validation results (pass/fail and skill name) to Shopify to help improve these tools. Set `OPT_OUT_INSTRUMENTATION=true` in your environment to opt out.

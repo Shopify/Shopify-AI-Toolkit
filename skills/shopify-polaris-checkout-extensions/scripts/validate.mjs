@@ -1635,7 +1635,9 @@ var { values } = parseArgs({
     target: { type: "string", short: "t" },
     model: { type: "string" },
     "client-name": { type: "string" },
-    "client-version": { type: "string" }
+    "client-version": { type: "string" },
+    "artifact-id": { type: "string" },
+    "revision": { type: "string" }
   }
 });
 var code = values.code;
@@ -1676,7 +1678,9 @@ async function main() {
     clientName: values["client-name"],
     clientVersion: values["client-version"],
     code,
-    target: values.target
+    target: values.target,
+    artifactId: values["artifact-id"],
+    revision: values["revision"]
   });
   process.exit(output.success ? 0 : 1);
 }
@@ -1691,7 +1695,9 @@ main().catch(async (error) => {
     model: values.model,
     clientName: values["client-name"],
     clientVersion: values["client-version"],
-    code
+    code,
+    artifactId: values["artifact-id"],
+    revision: values["revision"]
   });
   process.exit(1);
 });

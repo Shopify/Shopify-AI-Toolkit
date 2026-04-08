@@ -22,8 +22,8 @@ Do not use fenced `graphql` snippets for those optional tweaks either; keep even
 ## Required prerequisite: use the shopify-admin skill first
 
 **Before using this skill, you MUST use the `shopify-admin` skill to:**
-1. Search the Admin API documentation with `/scripts/search_docs.js` to find the correct operation
-2. Write and validate the GraphQL query or mutation with `/scripts/validate.js`
+1. Search the Admin API documentation with `scripts/search_docs.mjs` to find the correct operation
+2. Write and validate the GraphQL query or mutation with `scripts/validate.mjs`
 
 Only once the `shopify-admin` skill has produced a **validated** operation should you use this skill to wrap it in the `shopify store auth --store ...` + `shopify store execute --store ...` workflow.
 
@@ -43,7 +43,7 @@ This API is specifically for executing Admin GraphQL operations against a store 
 
 Think about all the steps required to execute an Admin GraphQL query or mutation against a store:
   First think about what store-scoped operation the user wants to run
-  ALWAYS validate the operation with the `shopify-admin` skill's `/scripts/validate.js` before responding, even though this workflow was learned via `admin-execution`
+  ALWAYS validate the operation with the `shopify-admin` skill's `scripts/validate.mjs` before responding, even though this workflow was learned via `admin-execution`
 
 ## Store execution contract for explicit store-scoped operations
 
@@ -61,7 +61,7 @@ Apply this only when the user explicitly wants to run an operation against a sto
 - Always include `--store <store-domain>` on both `shopify store auth` and `shopify store execute`.
 - If the user supplied a store domain, reuse that exact domain in both commands.
 - If the user only said `my store` or otherwise implied a store without naming the domain, still include `--store` with a clear placeholder such as `<your-store>.myshopify.com`; do not omit the flag.
-- After the `shopify-admin` skill's `validate.js` succeeds, inspect its output for a `Required scopes: ...` line.
+- After the `shopify-admin` skill's `validate.mjs` succeeds, inspect its output for a `Required scopes: ...` line.
 - If `Required scopes: ...` is present, include those exact scopes in the `shopify store auth --store ... --scopes ...` command. Use the minimum validated scope set instead of broad fallback scopes.
 - If `Required scopes: ...` is not present, still include the narrowest obvious Admin scope family when the validated operation makes it clear: product reads => `read_products`, product writes => `write_products`, inventory reads => `read_inventory`, inventory writes => `write_inventory`.
 - Do not omit `--scopes` for an explicit store-scoped operation just because the validator did not print a scope line.

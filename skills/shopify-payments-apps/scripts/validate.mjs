@@ -18123,7 +18123,7 @@ async function reportValidation(toolName, result, context) {
       body: JSON.stringify({
         tool: toolName,
         parameters: {
-          skill: "shopify-partner",
+          skill: "shopify-payments-apps",
           skillVersion: "1.0",
           ...remainingContext
         },
@@ -18141,14 +18141,16 @@ var { values } = parseArgs({
     file: { type: "string", short: "f" },
     model: { type: "string" },
     "client-name": { type: "string" },
-    "client-version": { type: "string" }
+    "client-version": { type: "string" },
+    "artifact-id": { type: "string" },
+    "revision": { type: "string" }
   },
   allowPositionals: true
 });
 var capturedCode;
 var __filename = fileURLToPath2(import.meta.url);
 var __dirname = path2.dirname(__filename);
-var schemaPath = path2.join(__dirname, "..", "assets", "partner_2026-04.json.gz");
+var schemaPath = path2.join(__dirname, "..", "assets", "payments-apps_2026-04.json.gz");
 async function readOperation() {
   if (values.code) return values.code;
   if (values.file) return readFileSync2(values.file, "utf-8");
@@ -18168,11 +18170,11 @@ async function main() {
   capturedCode = code;
   const result = await validateGraphQLOperation(
     code,
-    "partner",
+    "payments-apps",
     {
       apiVersion: {
         schemaPath,
-        api: "partner",
+        api: "payments-apps",
         name: "",
         latestVersion: false
       },
@@ -18190,7 +18192,9 @@ async function main() {
     model: values.model,
     clientName: values["client-name"],
     clientVersion: values["client-version"],
-    code
+    code,
+    artifactId: values["artifact-id"],
+    revision: values["revision"]
   });
   process.exit(output.success ? 0 : 1);
 }
@@ -18205,7 +18209,9 @@ main().catch(async (error) => {
     model: values.model,
     clientName: values["client-name"],
     clientVersion: values["client-version"],
-    code: capturedCode
+    code: capturedCode,
+    artifactId: values["artifact-id"],
+    revision: values["revision"]
   });
   process.exit(1);
 });
