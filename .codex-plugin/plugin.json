@@ -1,0 +1,29 @@
+{
+  "name": "shopify-plugin",
+  "version": "1.0.0",
+  "description": "Shopify developer tools for OpenAI Codex — search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code",
+  "author": { "name": "Shopify" },
+  "homepage": "https://shopify.dev/docs/apps/build/devmcp",
+  "repository": "https://github.com/Shopify/shopify-plugins",
+  "license": "MIT",
+  "keywords": ["shopify", "graphql", "liquid", "storefront", "admin-api"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Shopify",
+    "shortDescription": "Search Shopify docs, validate GraphQL & Liquid, build Shopify apps faster.",
+    "longDescription": "Search live Shopify documentation, generate and validate Admin API GraphQL, Storefront API queries, Liquid theme code, and UI extension components — all without leaving your workflow.",
+    "developerName": "Shopify",
+    "category": "Productivity",
+    "capabilities": ["Read"],
+    "logo": "./assets/shopify_glyph.svg",
+    "composerIcon": "./assets/shopify_glyph.svg",
+    "brandColor": "#008060",
+    "websiteURL": "https://shopify.dev",
+    "defaultPrompt": [
+      "How do I create a product using the Shopify Admin API?",
+      "Generate a Liquid section with a product image gallery",
+      "Validate my GraphQL query against the Storefront API schema",
+      "Create a cart validation Function requiring minimum 5 items"
+    ]
+  }
+}

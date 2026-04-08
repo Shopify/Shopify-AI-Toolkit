@@ -20,6 +20,8 @@ The Toolkit gives your agent access to Shopify's documentation, API schemas, and
     gemini extensions install https://github.com/Shopify/shopify-ai-toolkit
     ```
 
+* **For OpenAI Codex**: In the Codex CLI, run `/plugins`, search for **Shopify**, and select **Add to Codex**.
+
 * **For VS Code**: Open the Command Palette (`CMD+SHIFT+P`) and run **Chat: Install Plugin From Source**. 
 
     Then paste:
