@@ -1,5 +1,5 @@
 ---
-name: shopify-merchant-onboarding
+name: shopify-onboarding-merchant
 description: >
   Set up and connect a Shopify store from your AI assistant. Use when the user
   wants to: set up my Shopify store, connect my store, install Shopify plugin,
