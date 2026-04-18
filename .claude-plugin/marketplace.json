@@ -9,7 +9,10 @@
   "plugins": [
     {
       "name": "shopify-plugin",
-      "source": "./",
+      "source": {
+        "source": "github",
+        "repo": "Shopify/Shopify-AI-Toolkit"
+      },
       "description": "Search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code",
       "version": "1.0.0",
       "author": { "name": "Shopify" },
