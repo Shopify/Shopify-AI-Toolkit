@@ -11,11 +11,18 @@
       "name": "shopify-plugin",
       "source": "./",
       "description": "Search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": { "name": "Shopify" },
       "license": "MIT",
       "homepage": "https://shopify.dev/docs/apps/build/devmcp",
-      "keywords": ["shopify", "mcp", "graphql", "liquid", "storefront", "admin-api"]
+      "keywords": [
+        "shopify",
+        "mcp",
+        "graphql",
+        "liquid",
+        "storefront",
+        "admin-api"
+      ]
     }
   ]
 }

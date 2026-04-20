@@ -1,7 +1,7 @@
 {
   "name": "shopify-plugin",
   "description": "Shopify developer tools for Cursor — search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": { "name": "Shopify" },
   "logo": "../assets/shopify_glyph.svg",
   "homepage": "https://shopify.dev/docs/apps/build/devmcp",

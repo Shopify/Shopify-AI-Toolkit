@@ -1,6 +1,6 @@
 {
   "name": "shopify-plugin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Shopify developer tools for OpenAI Codex — search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code",
   "author": { "name": "Shopify" },
   "homepage": "https://shopify.dev/docs/apps/build/devmcp",
