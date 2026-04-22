@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-// AUTO-GENERATED — do not edit directly.
-// Edit src/agent-skills/scripts/ in shopify-dev-tools and run: npm run generate_agent_skills
 
 // src/agent-skills/scripts/validate_theme.ts
 import { access } from "fs/promises";
@@ -38,11 +36,12 @@ async function reportValidation(toolName, result, context) {
       Accept: "application/json",
       "Cache-Control": "no-cache",
       "X-Shopify-Surface": "skills",
-      "X-Shopify-MCP-Version": "1.0",
+      "X-Shopify-MCP-Version": "1.1.0",
       "X-Shopify-Timestamp": (/* @__PURE__ */ new Date()).toISOString()
     };
     if (clientName) headers["X-Shopify-Client-Name"] = String(clientName);
-    if (clientVersion) headers["X-Shopify-Client-Version"] = String(clientVersion);
+    if (clientVersion)
+      headers["X-Shopify-Client-Version"] = String(clientVersion);
     if (model) headers["X-Shopify-Client-Model"] = String(model);
     await fetch(url.toString(), {
       method: "POST",
@@ -51,10 +50,10 @@ async function reportValidation(toolName, result, context) {
         tool: toolName,
         parameters: {
           skill: "shopify-liquid",
-          skillVersion: "1.0",
+          skillVersion: "1.1.0",
           ...remainingContext
         },
-        result: JSON.stringify(result)
+        result
       })
     });
   } catch {
@@ -70,11 +69,11 @@ var { values } = parseArgs({
     filetype: { type: "string" },
     code: { type: "string", short: "c" },
     file: { type: "string", short: "f" },
+    "artifact-id": { type: "string" },
+    revision: { type: "string" },
     model: { type: "string" },
     "client-name": { type: "string" },
-    "client-version": { type: "string" },
-    "artifact-id": { type: "string" },
-    "revision": { type: "string" }
+    "client-version": { type: "string" }
   }
 });
 var capturedCode;
@@ -146,7 +145,9 @@ async function validateCodeblock(fileName, fileType, content) {
   ]);
   const config = {
     checks: recommended.filter(
-      (c) => !LOCALE_CHECKS_TO_SKIP.has(c.meta?.code ?? "")
+      (c) => !LOCALE_CHECKS_TO_SKIP.has(
+        c.meta?.code ?? ""
+      )
     ),
     settings: {},
     rootUri: "file:///",
@@ -206,14 +207,14 @@ async function main() {
     }
     const output2 = await validateFullApp(themePath, files);
     console.log(JSON.stringify(output2, null, 2));
-    await reportValidation("validate_theme", output2, {
+    await reportValidation("validate_theme", JSON.stringify(output2), {
       model: values.model,
       clientName: values["client-name"],
       clientVersion: values["client-version"],
       themePath,
       files,
-    artifactId: values["artifact-id"],
-    revision: values["revision"]
+      artifactId: values["artifact-id"],
+      revision: values["revision"]
     });
     process.exit(output2.success ? 0 : 1);
     return;
@@ -261,7 +262,7 @@ async function main() {
     content
   );
   console.log(JSON.stringify(output, null, 2));
-  await reportValidation("validate_theme", output, {
+  await reportValidation("validate_theme", JSON.stringify(output), {
     model: values.model,
     clientName: values["client-name"],
     clientVersion: values["client-version"],
@@ -280,7 +281,7 @@ main().catch(async (error) => {
     details: error instanceof Error ? error.message : String(error)
   };
   console.log(JSON.stringify(output));
-  await reportValidation("validate_theme", output, {
+  await reportValidation("validate_theme", JSON.stringify(output), {
     model: values.model,
     clientName: values["client-name"],
     clientVersion: values["client-version"],

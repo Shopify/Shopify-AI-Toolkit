@@ -1,27 +1,20 @@
 ---
 name: shopify-polaris-admin-extensions
 description: "Add custom actions and blocks from your app at contextually relevant spots throughout the Shopify Admin. Admin UI Extensions also supports scaffolding new adminextensions using Shopify CLI commands."
-compatibility: Claude Code, Claude Desktop, Cursor
+compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.0"
+  version: "1.1.0"
 ---
 
 ## Required Tool Calls (do not skip)
 
 You have a `bash` tool. Every response must use it — in this order:
-1. Call `bash` with `node scripts/search_docs.mjs "<component tag name>"` — search before writing code
+
+1. Call `bash` with `scripts/search_docs.mjs "<query>"` — search before writing code
 2. Write the code using the search results
-3. Write code to a temp file, then validate with `--file` — **do not use `--code "..."` inline** (JSX attribute strings break shell quoting):
-   ```
-   cat > /tmp/extension.tsx << 'SHOPIFY_EOF'
-   YOUR CODE HERE
-   SHOPIFY_EOF
-   node scripts/validate.mjs --file /tmp/extension.tsx --target "<target>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID \
-  --revision REVISION_NUMBER
-   ```
-   (Always include `--file`, `--target`, `--model`, `--client-name`, `--artifact-id`. Use your actual model name; use claude-code/cursor/etc. for client-name. For artifact-id, generate a stable random ID per code block and reuse it across retries. For revision, start at 1 and increment on each retry of the same artifact.)
-   **Do NOT include HTML comments (`<!-- ... -->`) in the code — the validator treats them as invalid custom components.**
+3. Call `bash` with `scripts/validate.mjs --code '...' --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID --revision REVISION_NUMBER` — validate before returning
+   (Always include these flags. Use your actual model name for YOUR_MODEL_NAME; use claude-code/cursor/etc. for YOUR_CLIENT_NAME. For YOUR_ARTIFACT_ID, generate a stable random ID per code block and reuse it across validation retries. For REVISION_NUMBER, start at 1 and increment on each retry of the same artifact.)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
 5. Return code only after validation passes
 
@@ -35,6 +28,10 @@ You should find all operations that can help the developer achieve their goal, p
 Admin Extensions integrate into the Shopify admin at contextual locations for merchant workflows.
 Admin actions are a UI extension that you can use to create transactional workflows within existing pages of the Shopify admin. Merchants can launch these UI extensions from the More actions menus on resource pages or from an index table's bulk action menu when one or more resources are selected. After the UI extensions are launched, they display as modals. After they're closed, the page updates with the changes from the action.
 
+## Validator constraints
+
+Do not include HTML comments (`<!-- ... -->`) in the code — the validator treats them as invalid custom components.
+
 ## IMPORTANT : ALWAYS USE THE CLI TO SCAFFOLD A NEW EXTENSION
 
 Shopify CLI generates templates that aligns with the latest available version and is not prone to errors. ALWAYS use the CLI Command to Scaffold a new Admin UI extension
@@ -45,16 +42,17 @@ CLI Command to Scaffold a new Admin Action Extension
 shopify app generate extension --template admin_action --name my-admin-action
 ```
 
- Admin blocks are built with UI extensions and enable your app to embed contextual information and inputs directly on resource pages in the Shopify admin. When a merchant has added them to their pages, these UI extensions display as cards inline with the other resource information. Merchants need to manually add and pin the block to their page in the Shopify admin before they can use it.
- With admin blocks, merchants can view and modify information from your app and other data on the page simultaneously. To facilitate complex interactions and transactional changes, you can launch admin actions directly from admin blocks.
+Admin blocks are built with UI extensions and enable your app to embed contextual information and inputs directly on resource pages in the Shopify admin. When a merchant has added them to their pages, these UI extensions display as cards inline with the other resource information. Merchants need to manually add and pin the block to their page in the Shopify admin before they can use it.
+With admin blocks, merchants can view and modify information from your app and other data on the page simultaneously. To facilitate complex interactions and transactional changes, you can launch admin actions directly from admin blocks.
 
- CLI Command to Scaffold a new Admin Block Extension:
+CLI Command to Scaffold a new Admin Block Extension:
 
- ```bash
- shopify app generate extension --template admin_block --name my-admin-block
- ```
+```bash
+shopify app generate extension --template admin_block --name my-admin-block
+```
 
- Admin link extensions let you direct merchants from pages in the Shopify admin to related, complex workflows in your app. For example, the Shopify Flow app has an admin link extension that directs merchants to a page of the app where they can run an automation for any order:
+Admin link extensions let you direct merchants from pages in the Shopify admin to related, complex workflows in your app. For example, the Shopify Flow app has an admin link extension that directs merchants to a page of the app where they can run an automation for any order:
+
 ```bash
 shopify app generate extension --template admin_link --name admin-link-extension
 ```
@@ -65,7 +63,6 @@ CLI Command to Scaffold a new Admin Print Action Extension:
 ```bash
 shopify app generate extension --template admin_print --name my-admin-print-extension
 ```
-
 
 version: 2026-01
 
@@ -89,11 +86,11 @@ version: 2026-01
 
 **Available guides:** Network Features
 
-
-
 ## Components available for Admin UI extensions.
+
 These examples have all the props available for the component. Some example values for these props are provided.
 Refer to the developer documentation to find all valid values for a prop. Ensure the component is available for the target you are using.
+
 ```html
 <s-admin-action heading="Edit product" loading>Content</s-admin-action>
 <s-admin-block heading="Custom Fields" collapsed-summary="3 fields configured">Content</s-admin-block>
@@ -151,8 +148,8 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
 Use the Preact entry point:
 
 ```ts
-import '@shopify/ui-extensions/preact';
-import { render } from 'preact';
+import "@shopify/ui-extensions/preact";
+import { render } from "preact";
 ```
 
 ### Polaris web components (`s-admin-action`, `s-badge`, etc.)
@@ -170,66 +167,44 @@ Polaris web components are custom HTML elements with an `s-` prefix. These are g
 When the user asks for Polaris web components (e.g. `s-admin-action`, `s-badge`, `s-button`, `s-text`), use the web component tag syntax above.
 
 **Web component attribute rules:**
+
 - Use **kebab-case** attribute names: `align-items`, `padding-block`, `border-radius` — NOT camelCase (`alignItems`, `paddingBlock`)
 - **Boolean attributes** (`disabled`, `loading`, `dismissible`, `hidden`, `required`, `checked`, `defaultChecked`) accept shorthand or `{expression}`:
   - ✅ `<s-button disabled loading>`, `<s-banner dismissible>`, `<s-checkbox checked={isChecked} />`
 - **String keyword attributes** (`padding`, `gap`, `direction`, `tone`, `variant`, `size`, `background`, `align-items`) must be string values — never shorthand or `{true}`:
   - ✅ `<s-box padding="base">`, `<s-stack gap="loose" direction="block">`, `<s-badge tone="success">`
   - ❌ `<s-box padding>`, `<s-stack gap={true}>` — boolean shorthand on string props fails TypeScript
-
 ---
 
-## ⚠️ MANDATORY: Search for Component Documentation
+## ⚠️ MANDATORY: Search Before Writing Code
 
-You cannot trust your trained knowledge for this API. Before answering, search:
+Search the vector store to get the detailed context you need: working examples, field and type definitions, valid values, and API-specific patterns. You cannot trust your trained knowledge — always search before writing code.
 
 ```
 scripts/search_docs.mjs "<component tag name>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
-For example, if the user asks about building a form in an Admin action:
-```
-scripts/search_docs.mjs "s-select admin extension" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
-```
+Search for the **component tag name**, not the full user prompt.
 
-Search for the **component tag name** (`s-form`, `s-select`, `s-money-field`, etc.), not the full user prompt. Use the returned props and examples to generate correct code.
-
----
+For example, if the user asks about text input in an admin extension:
+```
+scripts/search_docs.mjs "s-text-field" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+```
 
 ## ⚠️ MANDATORY: Validate Before Returning Code
 
-DO NOT return code to the user until `scripts/validate.mjs` exits 0. DO NOT ask the user to run this.
+You MUST run `scripts/validate.mjs` before returning any generated code to the user. Always include the instrumentation flags:
 
-**Run this with your bash tool — do not skip this step. Write code to a temp file first — do NOT use `--code "..."` inline (JSX attribute strings break shell quoting).**
-```bash
-cat > /tmp/extension.tsx << 'SHOPIFY_EOF'
-import { render } from 'preact';
-
-export default function Extension() {
-  return (
-    <s-admin-action heading="Update order note">
-      <s-text-field label="Note" name="note" required />
-      <s-button slot="primary-action" type="submit">Save</s-button>
-      <s-button slot="secondary-actions">Cancel</s-button>
-    </s-admin-action>
-  );
-}
-SHOPIFY_EOF
-node scripts/validate.mjs \
-  --file /tmp/extension.tsx \
-  --target "admin.order-details.action.render" \
-  --model YOUR_MODEL_NAME \
-  --client-name YOUR_CLIENT_NAME \
-  --client-version YOUR_CLIENT_VERSION \
-  --artifact-id YOUR_ARTIFACT_ID \
-  --revision REVISION_NUMBER
 ```
+scripts/validate.mjs --code '...' --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID --revision REVISION_NUMBER
+```
+(For YOUR_ARTIFACT_ID, generate a stable random ID per code block and reuse it across validation retries. For REVISION_NUMBER, start at 1 and increment on each retry of the same artifact.)
 
 **When validation fails, follow this loop:**
-1. Read the error message — identify the exact prop or type that is wrong
-2. Search for the correct values:
+1. Read the error message carefully — identify the exact field, prop, or value that is wrong
+2. If the error references a named type or says a value is not assignable, search for the correct values:
    ```
-   scripts/search_docs.mjs "<component tag name or prop name>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+   scripts/search_docs.mjs "<type or prop name>"
    ```
 3. Fix exactly the reported error using what the search returns
 4. Run `scripts/validate.mjs` again

@@ -1,18 +1,19 @@
 ---
 name: shopify-functions
 description: "Shopify Functions allow developers to customize the backend logic that powers parts of Shopify. Available APIs: Discount, Cart and Checkout Validation, Cart Transform, Pickup Point Delivery Option Generator, Delivery Customization, Fulfillment Constraints, Local Pickup Delivery Option Generator, Order Routing Location Rule, Payment Customization"
-compatibility: Claude Code, Claude Desktop, Cursor
+compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.0"
+  version: "1.1.0"
 ---
 
 ## Required Tool Calls (do not skip)
 
 You have a `bash` tool. Every response must use it — in this order:
-1. Call `bash` with `node scripts/search_docs.mjs "<function type or operation>"` — search before writing code
+
+1. Call `bash` with `scripts/search_docs.mjs "<query>"` — search before writing code
 2. Write the code using the search results
-3. Call `bash` with `node scripts/validate.mjs --code '...' --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID --revision REVISION_NUMBER` — validate before returning
+3. Call `bash` with `scripts/validate.mjs --code '...' --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID --revision REVISION_NUMBER` — validate before returning
    (Always include these flags. Use your actual model name for YOUR_MODEL_NAME; use claude-code/cursor/etc. for YOUR_CLIENT_NAME. For YOUR_ARTIFACT_ID, generate a stable random ID per code block and reuse it across validation retries. For REVISION_NUMBER, start at 1 and increment on each retry of the same artifact.)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
 5. Return code only after validation passes
@@ -26,10 +27,12 @@ You are an assistant that helps Shopify developers write Shopify functions.
 Shopify documentation contains great examples on how to implement functions. IMPORTANT: Search the developer documentation for relevant examples as soon as possible.
 
 Shopify functions allow developers to customize the backend logic that powers parts of Shopify.
+
 - Functions are **pure**: They cannot access the network, filesystem, random number generators, or the current date/time.
-- All necessary data must be provided via the input query. Input queries must follow camelCase. If selecting a field that is a UNION type you must request __typename
+- All necessary data must be provided via the input query. Input queries must follow camelCase. If selecting a field that is a UNION type you must request \_\_typename
 
 Here are all the available Shopify functions APIs. Ensure to pick one of these, and avoid using deprecated ones unless explicitly asked for.
+
 - Discount: Create a discount that applies to merchandise, product, product variants and/or shipping rates at checkout. Use this for ANY discount related task.
 - Order Discount (deprecated): Create a new type of discount that's applied to all merchandise in the cart. **IMPORTANT: don't choose this API unless the user asks to use the order discount API**
 - Product Discount (deprecated): Create a new type of discount that's applied to a particular product or product variant in the cart. **IMPORTANT: don't choose this API unless the user asks to use the product discount API**
@@ -43,12 +46,14 @@ Here are all the available Shopify functions APIs. Ensure to pick one of these, 
 - Pickup Point Delivery Option Generator: Generate custom pickup point options available to buyers during checkout
 
 A Shopify function can have multiple targets. Each target is a specific part of Shopify that the function can customize. For example, in the case of the Discount API you have four possible targets:
+
 - `cart.lines.discounts.generate.run`: discount logic to apply discounts to cart lines and order subtotal
 - `cart.lines.discounts.generate.fetch`: (optional, requires network access) retrieves data needed for cart discounts, including validation of discount codes
 - `cart.delivery-options.discounts.generate.run`: discount logic to apply discounts to shipping and delivery options
 - `cart.delivery-options.discounts.generate.fetch`: (optional, requires network access) retrieves data needed for delivery discounts, including validation of discount codes
 
 Each function target is composed of:
+
 - A GraphQL query that fetches the input used by the logic. This information is present in the "Input" object in the GraphQL schema definition.
 - A Rust, Javascript, or Typescript implementation of the function logic. This logic has to return a JSON object that adheres to the shape of the "FunctionResult" object in the GraphQL schema definition. Some examples:
   - for a "run" target, the return object is "FunctionRunResult"
@@ -58,6 +63,7 @@ Each function target is composed of:
 IMPORTANT: If the user doesn't specify a programming language, use Rust as the default.
 
 Think about all the steps required to generate a Shopify function:
+
 1. Search the developer documentation for relevant examples, making sure to include the programming language the user has chosen. Pay extreme attention to these examples when writing your solution. THIS IS VERY IMPORTANT.
 1. Think about what I am trying to do and choose the appropriate Function API.
 1. If the user wants to create a new function make sure to run the Shopify CLI command `shopify app generate extension --template <api_lowercase_and_underscore> --flavor <rust|vanilla-js|typescript> --name=<function_name>`. Assume that the Shopify CLI is installed globally as `shopify`.
@@ -74,21 +80,26 @@ Think about all the steps required to generate a Shopify function:
 IMPORTANT: DO NOT DEPLOY the function for the user. Never ever ever run `shopify app deploy`.
 
 ## Naming Conventions
+
 1. Identify the Target and Output Type: Look at the expected output type for the function target (e.g., `FunctionRunResult`, `CartLinesDiscountsGenerateRunResult`). The "target" is usually the last part (e.g., `Run`, `GenerateRun`).
 2. Determine the Function Name:
-  - Simple Output Types: If the output type follows the pattern `Function<Target>Result` (like `FunctionRunResult`), the function name is the lowercase target (e.g., `run()`).
-  - Complex Output Types: If the output type has a more descriptive prefix (like `CartLinesDiscountsGenerateRunResult`), the function name is the snake\\_case version of the prefix and target combined (e.g., `cart_lines_discounts_generate_run()`).
+
+- Simple Output Types: If the output type follows the pattern `Function<Target>Result` (like `FunctionRunResult`), the function name is the lowercase target (e.g., `run()`).
+- Complex Output Types: If the output type has a more descriptive prefix (like `CartLinesDiscountsGenerateRunResult`), the function name is the snake\\\_case version of the prefix and target combined (e.g., `cart_lines_discounts_generate_run()`).
+
 3. Determine File Names:
-  - Rust/JavaScript File: Name the source code file based on the function name: `src/<function_name>.rs` or `src/<function_name>.js`.
-  - GraphQL Query File: Name the input query file similarly: `src/<function_name>.graphql`. e.g. `src/fetch.graphql` or `src/run.graphql`
-      **IMPORTANT: DO NOT name the file `src/input.graphql`.**
-  - For Rust, you must ALWAYS generate a `src/main.rs` file that imports these targets.
+
+- Rust/JavaScript File: Name the source code file based on the function name: `src/<function_name>.rs` or `src/<function_name>.js`.
+- GraphQL Query File: Name the input query file similarly: `src/<function_name>.graphql`. e.g. `src/fetch.graphql` or `src/run.graphql`
+  **IMPORTANT: DO NOT name the file `src/input.graphql`.**
+- For Rust, you must ALWAYS generate a `src/main.rs` file that imports these targets.
 
 Examples:
+
 - Output: `FunctionFetchResult` -> Target: `Fetch` -> Function: `fetch()` -> Files: `src/fetch.rs`, `src/fetch.graphql`
 - Output: `FunctionRunResult` -> Target: `Run` -> Function: `run()` -> Files: `src/run.rs`, `src/run.graphql`
 - Output: `CartLinesDiscountsGenerateRunResult` -> Target: `CartLinesDiscountsGenerateRun` -> Function: `cart_lines_discounts_generate_run()` -> Files: `src/cart_lines_discounts_generate_run.rs`, `src/cart_lines_discounts_generate_run.graphql`
-**IMPORTANT:** You MUST look at the OutputType when determining the name otherwise the function will not compile
+  **IMPORTANT:** You MUST look at the OutputType when determining the name otherwise the function will not compile
 
 Some function type supports multiple "targets" or entry points within the same schema. For these you MUST generate the input query, function code, and sample outputs for EACH target. For example:
 
@@ -97,6 +108,7 @@ Some function type supports multiple "targets" or entry points within the same s
 - `cart` and `delivery` for discounts
 
 ## Best practices for writing GraphQL operations
+
 - Pay careful attention to the examples when choosing the name of the GraphQL query or mutation. For Rust examples, it MUST be `Input`.
 - When choosing an enum value:
   - Only use values defined in the schema definition. DO NOT MAKE UP VALUES.
@@ -113,23 +125,27 @@ Some function type supports multiple "targets" or entry points within the same s
 - Only select the fields required to fulfill the business logic of your function
 
 ## How to help with Shopify functions
+
 If a user wants to know how to build a Shopify function make sure to follow this structure:
+
 1. example of the shopify cli command `shopify app generate extension --template <api_lowercase_and_underscore> --flavor <rust|vanilla-js|typescript>`
 1. example of function logic in Rust, Javascript, or Typescript. This logic has to use the input data fetched by the GraphQL query. Include tests. This is a MUST. Include file names. **If the function type supports multiple targets, provide code and tests for each target.**
 1. example of GraphQL query to fetch input data. The query name must follow the naming convention of the target `RunInput` as an example for JavaScript implementations and must be Input for Rust implementations. Include file names. **If the function type supports multiple targets, provide a query for each target (e.g., `src/fetch.graphql`, `src/run.graphql`).** DO NOT NAME IT input.graphql
-1. example of JSON input returned by the GraphQL query. Make sure that every field mentioned by the GraphQL query has a matching value in the JSON input. When you make a fragment selection `... on ProductVariant` you MUST include __typename on Merchandise, or Region. THIS IS IMPORTANT. **If the function type supports multiple targets, provide sample input JSON for each target.**
+1. example of JSON input returned by the GraphQL query. Make sure that every field mentioned by the GraphQL query has a matching value in the JSON input. When you make a fragment selection `... on ProductVariant` you MUST include \_\_typename on Merchandise, or Region. THIS IS IMPORTANT. **If the function type supports multiple targets, provide sample input JSON for each target.**
 1. example of a JSON return object. Make sure this is the output JSON that would be generated by the JSON input above. **If the function type supports multiple targets, provide sample output JSON for each target.**
 
 If a function cannot be accomplished with any of the Function APIs simply return a message that it can't be completed, and give the user a reason why.
 Example reasons why it can't:
+
 - You cannot remove an item from cart
 - You cannot access the current date or time
 - You cannot generate a random value
 
 ## Important notes for Input Queries
+
 It's not possible to fetch tags directly, you must use either hasAnyTag(list_of_tags), which return a boolean, or hasTags(list_of_tags), which return a list of { hasTag: boolean, tag: String } objects.
 When using any graphql field that tags arguments YOU MUST pass in those arguments into your input query ONLY, you may set defaults in the query. DO NOT USE THESE ARGUMENTS IN THE RUST CODE.
-When you make a fragment selection `... on ProductVariant` you MUST include __typename on the parent field otherwise the program will not compile. e.g. regions { __typename ... on Country { isoCode }}
+When you make a fragment selection `... on ProductVariant` you MUST include **typename on the parent field otherwise the program will not compile. e.g. regions { **typename ... on Country { isoCode }}
 
 ```graphql
 query Input(\$excludedCollectionIds: [ID!], \$vipCollectionIds: [ID!]) {
@@ -152,15 +168,17 @@ query Input(\$excludedCollectionIds: [ID!], \$vipCollectionIds: [ID!]) {
 ```
 
 ## Important notes for Javascript function logic
+
 - the module needs to export a function which is the camel cased version of the name as the target, i.e. 'export function fetch' or 'export function run' or 'export function cartLinesDiscountsGenerateRun'
 - the function must return a JSON object that adheres to the shape of the "FunctionResult" object in the GraphQL schema definition.
 
 ## Important notes for Rust function logic
-- Don't import external crates (like rust_decimal or chrono or serde), the only ones allowed are shopify_function. i.e. use shopify_function::*; is ok, but use chrono::*; and serde::Deserialize is not.
+
+- Don't import external crates (like rust*decimal or chrono or serde), the only ones allowed are shopify_function. i.e. use shopify_function::*; is ok, but use chrono::\_; and serde::Deserialize is not.
 - Decimal::from(100.0) is valid, while Decimal::from(100) is not. It can only convert from floats, not integers or strings otherwise the program will not compile.
 - make sure to unwrap Options when the field is marked as optional in the GraphQL schema definition. The rust code will generate types based on the GraphQL schema definition and will fail if you get this wrong. THIS IS IMPORTANT.
 - make sure to be careful when to use float (10.0), int (0), or decimals ("29.99")
-- If a field is OPTIONAL (It does not have a ! at the end) in the input data, then it MUST be unwrapped to handle the optional case. For example, access buyer_identity like this: if let Some(identity) = input.cart().buyer_identity() { /* use identity */ } or using methods like as_ref(), and_then(), etc. Do NOT assume an optional field is present.
+- If a field is OPTIONAL (It does not have a ! at the end) in the input data, then it MUST be unwrapped to handle the optional case. For example, access buyer*identity like this: if let Some(identity) = input.cart().buyer_identity() { /* use identity \_/ } or using methods like as_ref(), and_then(), etc. Do NOT assume an optional field is present.
 - If a field is OPTIONAL in the output data, then you must wrap that output in Some().
 - If doing a comparison against an OPTIONAL field you must also wrap that value. For example, comparing an optional product_type: Option<String> field with the string literal "gift card" should be done like this: product_type() == Some("gift card".to_string())
 - If a value has an ENUM then you must use the Title Case name of that enum, like PaymentCustomizationPaymentMethodPlacement::PaymentMethod
@@ -169,15 +187,17 @@ query Input(\$excludedCollectionIds: [ID!], \$vipCollectionIds: [ID!]) {
 - If a field uses arguments in the input query, in the generated rust code you will only get the field name, not the arguments.
 - When accessing fields from the generated code, DO NOT add arguments to methods that don't take any in the GraphQL schema. For example, use `input.cart().locations()` NOT `input.cart().locations(None, None)`. Method signatures match exactly what's defined in the GraphQL schema.
 - All of the Structs are generated by concatenating names. for example schema::run::input::Cart instead of schema::input::Cart, and schema::run::input::cart::BuyerIdentity, every layer of the query must be represented, starting with the module annotated with #[query], then the operation name (Root if an anonymous query), then all nested fields and inline fragment type conditions. For example, if in the graphql query you have query Input { cart { lines { merchandise { ... on ProductVariant { id } } } } } on a run module, then the Rust structs will be schema::run::input::cart::lines::Merchandise::ProductVariant, schema::run::input::cart::lines::Merchandise (an enum with a ProductVariant variant), schema::run::input::cart::Lines, schema::run::input::Cart, and schema::run::Input.
-- When working with fields that have parentheses in their names (like has_any_tag, etc.), they are returned as &bool references. You need to dereference them when making comparisons. For example: if *variant.product().has_any_tag() { /* do something */ } or simply use them directly in conditions where Rust will auto-dereference.
+- When working with fields that have parentheses in their names (like has*any_tag, etc.), they are returned as &bool references. You need to dereference them when making comparisons. For example: if \_variant.product().has_any_tag() { /* do something \*/ } or simply use them directly in conditions where Rust will auto-dereference.
 - Each target file (not main.rs) should start with these imports:
+
 ```rust
 use crate::schema;
 use shopify_function::prelude::*;
 use shopify_function::Result;
 ```
+
 - You must never import serde or serde_json or it will not compile. Do not use serde (bad) or use serde::Deserialize (bad) or serde::json (bad)
-- You must make sure in a match expression that you must include the _ wildcard pattern for any unspecified cases to ensure exhaustiveness
+- You must make sure in a match expression that you must include the \_ wildcard pattern for any unspecified cases to ensure exhaustiveness
 
 ```rust
   for line in input.cart().lines().iter() {
@@ -188,7 +208,9 @@ use shopify_function::Result;
     // do something with product
 }
 ```
+
 or if you want to extract the variant you can do this:
+
 ```rust
     let variant = match &line.merchandise() {
         schema::run::input::cart::lines::Merchandise::ProductVariant(variant) => variant,
@@ -200,6 +222,7 @@ or if you want to extract the variant you can do this:
 Do not use .as_product_variant() it is not implemented
 
 ## Configuration
+
 BY DEFAULT, make the function configurable by storing the configurable data elements in a `jsonValue` metafield. Access this metafield via the `discount.metafield` or `checkout.metafield` field in the input query (depending on the function type). Deserialize the JSON value into a configuration struct within your Rust code.
 
 Example accessing a metafield in Rust:
@@ -242,20 +265,26 @@ query Input {
 ## Additional Important Notes
 
 ### Testing
+
 When writing tests, you must only import the following
+
 ```rust
   use super::*;
   use shopify_function::{run_function_with_input, Result};
 ```
 
 ### Sample Data Generation
+
 When generating sample data, anywhere there is an ID! make sure to use a Shopify GID format:
+
 ```
 "gid://Shopify/CartLine/1"
 ```
 
 ### Scalar Types
+
 These are the scalar types used in Rust functions:
+
 ```rust
 pub type Boolean = bool;
 pub type Float = f64;
@@ -274,6 +303,7 @@ pub type String = String; # This must not be a str, do not compare this with "" 
 ```
 
 ## src/main.rs for Rust Functions - REQUIRED
+
 When implementing Shopify functions in Rust, you MUST include a src/main.rs file. This is the entry point for the function and should have the following structure, making sure it has one query for each target.
 If you have a jsonValue in the input query it should be mapped to a struct. If there is no jsonValue do not include a custom_scalar_overrides.
 
@@ -307,177 +337,39 @@ Ensure examples follow best practices, correct enum usage, and proper handling o
 
 ### Always use Shopify CLI
 
-- **CLI:** scaffold apps/extensions with `shopify app init`, `shopify app generate extension`, `shopify app dev`, `shopify app deploy`. Never hand-roll files.
-- Need full setup steps? See [Shopify CLI docs](https://shopify.dev/docs/apps/tools/cli).
-
-## Shopify CLI Overview
-
-Shopify CLI (@shopify/cli) is a command-line interface tool that helps you generate and work with Shopify apps, themes, and custom storefronts. You can also use it to automate many common development tasks.
-
-### Requirements
-- Node.js: 20.10 or higher
-- A Node.js package manager: npm, Yarn 1.x, or pnpm
-- Git: 2.28.0 or higher
-
-### Installation
-Install Shopify CLI globally to run `shopify` commands from any directory:
-
-```bash
-npm install -g @shopify/cli@latest
-# or
-yarn global add @shopify/cli@latest
-# or
-pnpm install -g @shopify/cli@latest
-# or (macOS only)
-brew tap shopify/shopify && brew install shopify-cli
-```
-
-### Command Structure
-Shopify CLI groups commands into topics. The syntax is: `shopify [topic] [command] [flags]`
-
-## General Commands (8 commands)
-
-### Authentication
-66. **shopify auth logout** - Log out of Shopify account
-
-### Configuration
-67. **shopify config autocorrect on** - Enable command autocorrection
-68. **shopify config autocorrect off** - Disable command autocorrection
-69. **shopify config autocorrect status** - Check autocorrection status
-
-### Utilities
-70. **shopify help [command] [flags]** - Get help for commands
-71. **shopify commands [flags]** - List all available commands
-72. **shopify search [query]** - Search for commands and documentation
-73. **shopify upgrade** - Upgrade Shopify CLI to latest version
-74. **shopify version** - Display current CLI version
-
-## Common Flags
-
-Most commands support these common flags:
-- `--verbose` - Increase output verbosity
-- `--no-color` - Disable colored output
-- `--path <value>` - Specify project directory
-- `--reset` - Reset stored settings
-
-## Network Proxy Configuration
-
-For users behind a network proxy (CLI version 3.78+):
-```bash
-export SHOPIFY_HTTP_PROXY=http://proxy.com:8080
-export SHOPIFY_HTTPS_PROXY=https://secure-proxy.com:8443
-# For authenticated proxies:
-export SHOPIFY_HTTP_PROXY=http://username:password@proxy.com:8080
-```
-
-## Usage Tips
-
-1. Always keep CLI updated: `shopify upgrade`
-2. Use `shopify help [command]` for detailed command info
-3. Most commands are interactive and will prompt for required information
-4. Use flags to skip prompts in CI/CD environments
-5. Anonymous usage statistics collected by default (opt-out: `SHOPIFY_CLI_NO_ANALYTICS=1`)
-6. IMPORTANT: YOU MUST ALWAYS USE THE CLI COMMAND TO CREATE APPS AND SCAFFOLD NEW EXTENSIONS
-
-## CLI Commands for Shopify App (22 commands)
-
-## App Commands (22 commands)
-
-### Core App Management
-1. **shopify app init [flags]** - Initialize a new Shopify app project
-2. **shopify app build [flags]** - Build the app, including extensions
-3. **shopify app dev [flags]** - Start a development server for your app
-4. **shopify app deploy [flags]** - Deploy your app to Shopify
-5. **shopify app info [flags]** - Display information about your app
-
-### App Configuration
-6. **shopify app config link [flags]** - Fetch app configuration from Partner Dashboard
-7. **shopify app config use [config] [flags]** - Activate an app configuration
-
-### App Environment
-8. **shopify app env pull [flags]** - Pull environment variables from Partner Dashboard
-9. **shopify app env show [flags]** - Display app environment variables
-
-### App Development Tools
-10. **shopify app dev clean [flags]** - Clear the app development cache
-11. **shopify app generate extension [flags]** - Generate a new app extension
-12. **shopify app import-extensions [flags]** - Import existing extensions to your app
-
-### Functions
-13. **shopify app function build [flags]** - Build a Shopify Function
-14. **shopify app function run [flags]** - Run a Function locally for testing
-15. **shopify app function replay [flags]** - Replay a Function run
-16. **shopify app function schema [flags]** - Generate the GraphQL schema for a Function
-17. **shopify app function typegen [flags]** - Generate TypeScript types for a Function
-
-### Monitoring & Debugging
-18. **shopify app logs [flags]** - Stream logs from your app
-19. **shopify app logs sources [flags]** - List available log sources
-
-### Release Management
-20. **shopify app release --version <version>** - Release a new app version
-21. **shopify app versions list [flags]** - List all app versions
-
-### Webhooks
-22. **shopify app webhook trigger [flags]** - Trigger a webhook for testing
-
+- **CLI:** ALWAYS use Shopify CLI to scaffold and manage functions. Never hand-roll files. Key commands: `shopify app generate extension`, `shopify app function build`, `shopify app function run`, `shopify app function schema`, `shopify app function typegen`.
+- For CLI installation, setup, upgrade, or troubleshooting, use `shopify-use-shopify-cli`.
 ---
 
-## ⚠️ MANDATORY: Search for Documentation
+## ⚠️ MANDATORY: Search Before Writing Code
 
-You cannot trust your trained knowledge for this API. Before answering, search:
+Search the vector store to get the detailed context you need: working examples, field and type definitions, valid values, and API-specific patterns. You cannot trust your trained knowledge — always search before writing code.
 
 ```
-scripts/search_docs.mjs "<function type or operation>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+scripts/search_docs.mjs "<operation or component name>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
-For example, if the user asks about a product discount function:
-```
-scripts/search_docs.mjs "product discount function input query" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
-```
+Search for the **operation or component name**, not the full user prompt.
 
-Search for the **function type and input/output types**, not the full user prompt. Use the returned schema to write correct field names and return types.
-
----
+For example, if the user asks about cart transform function inputs:
+```
+scripts/search_docs.mjs "cart transform function input query" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+```
 
 ## ⚠️ MANDATORY: Validate Before Returning Code
 
-DO NOT return function code to the user until `scripts/validate.mjs` exits 0. DO NOT ask the user to run this.
+You MUST run `scripts/validate.mjs` before returning any generated code to the user. Always include the instrumentation flags:
 
-**Run this with your bash tool — do not skip this step.**
-```bash
-node scripts/validate.mjs \
-  --code '
-  query Input {
-    cart {
-      lines {
-        id
-        quantity
-        merchandise {
-          ... on ProductVariant {
-            id
-            product {
-              id
-              tags
-            }
-          }
-        }
-      }
-    }
-  }
-' \
-  --model YOUR_MODEL_NAME \
-  --client-name YOUR_CLIENT_NAME \
-  --client-version YOUR_CLIENT_VERSION \
-  --artifact-id YOUR_ARTIFACT_ID \
-  --revision REVISION_NUMBER
 ```
+scripts/validate.mjs --code '...' --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID --revision REVISION_NUMBER
+```
+(For YOUR_ARTIFACT_ID, generate a stable random ID per code block and reuse it across validation retries. For REVISION_NUMBER, start at 1 and increment on each retry of the same artifact.)
 
 **When validation fails, follow this loop:**
-1. Read the error message — identify the exact field, argument, or type that is wrong
-2. Search for the correct values:
+1. Read the error message carefully — identify the exact field, prop, or value that is wrong
+2. If the error references a named type or says a value is not assignable, search for the correct values:
    ```
-   scripts/search_docs.mjs "<function type input field>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+   scripts/search_docs.mjs "<type or prop name>"
    ```
 3. Fix exactly the reported error using what the search returns
 4. Run `scripts/validate.mjs` again

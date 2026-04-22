@@ -8,7 +8,7 @@
     "@shopify/hydrogen-react": "2026.1.2",
     "react-router": "7.13.2",
     "@react-router/dev": "7.13.2",
-    "graphql": "16.13.1",
+    "graphql": "16.13.2",
     "type-fest": "5.5.0",
     "schema-dts": "1.1.5",
     "preact": "10.28.4",

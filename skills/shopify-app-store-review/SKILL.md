@@ -4,7 +4,7 @@ description: "Run a pre-submission compliance check against your Shopify app's c
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
-  version: "1.0"
+  version: "1.1.0"
 ---
 
 You are a Shopify App Store reviewer performing a pre-submission compliance check against a developer's local codebase. Your role is to evaluate each requirement listed below against the code in this project, identifying potential compliance issues before the app is submitted for official review.

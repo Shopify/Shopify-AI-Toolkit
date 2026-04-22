@@ -1,27 +1,20 @@
 ---
 name: shopify-pos-ui
 description: "Build retail point-of-sale applications using Shopify's POS UI components. These components provide a consistent and familiar interface for POS applications. POS UI Extensions also supports scaffolding new POS extensions using Shopify CLI commands. Keywords: POS, Retail, smart grid"
-compatibility: Claude Code, Claude Desktop, Cursor
+compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.0"
+  version: "1.1.0"
 ---
 
 ## Required Tool Calls (do not skip)
 
 You have a `bash` tool. Every response must use it — in this order:
-1. Call `bash` with `node scripts/search_docs.mjs "<component tag name>"` — search before writing code
+
+1. Call `bash` with `scripts/search_docs.mjs "<query>"` — search before writing code
 2. Write the code using the search results
-3. Write code to a temp file, then validate with `--file` — **do not use `--code "..."` inline** (JSX attribute strings break shell quoting):
-   ```
-   cat > /tmp/extension.tsx << 'SHOPIFY_EOF'
-   YOUR CODE HERE
-   SHOPIFY_EOF
-   node scripts/validate.mjs --file /tmp/extension.tsx --target "<target>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID \
-  --revision REVISION_NUMBER
-   ```
-   (Always include `--file`, `--target`, `--model`, `--client-name`, `--artifact-id`. Use your actual model name; use claude-code/cursor/etc. for client-name. For artifact-id, generate a stable random ID per code block and reuse it across retries. For revision, start at 1 and increment on each retry of the same artifact.)
-   **Do NOT include HTML comments (`<!-- ... -->`) in the code — the validator treats them as invalid custom components.**
+3. Call `bash` with `scripts/validate.mjs --code '...' --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID --revision REVISION_NUMBER` — validate before returning
+   (Always include these flags. Use your actual model name for YOUR_MODEL_NAME; use claude-code/cursor/etc. for YOUR_CLIENT_NAME. For YOUR_ARTIFACT_ID, generate a stable random ID per code block and reuse it across validation retries. For REVISION_NUMBER, start at 1 and increment on each retry of the same artifact.)
 4. If validation fails: search for the error type, fix, re-validate (max 3 retries)
 5. Return code only after validation passes
 
@@ -40,9 +33,7 @@ You are an expert Shopify POS UI Extensions developer generating production-read
 
 <pos-extension-todo-flow>
 <step id="1">
-  Determine if Shopify CLI is installed
-  <step id="1.1">If not installed: Install @shopify/cli@latest using the package manager</step>
-  <step id="1.2">If installed: Run `shopify --version` to verify the CLI is above 3.85.3. If it's not, upgrade to @shopify/cli@latest using the package manager</step>
+  Ensure Shopify CLI is installed and up to date. For installation or upgrade steps, use `shopify-use-shopify-cli`.
 </step>
 <step id="2">
   Determine if working with new app or existing app
@@ -62,7 +53,6 @@ You are an expert Shopify POS UI Extensions developer generating production-read
 </step>
 </pos-extension-todo-flow>
 </system-instructions>
-
 
 If no extension target is specified, search the documentation to determine the appropriate target for the user's use case before generating code.
 
@@ -263,8 +253,8 @@ Renders a single interactive button component as a menu item in the post-return 
 Use the Preact entry point:
 
 ```tsx
-import '@shopify/ui-extensions/preact';
-import { render } from 'preact';
+import "@shopify/ui-extensions/preact";
+import { render } from "preact";
 ```
 
 ### Polaris web components (`s-badge`, `s-banner`, etc.)
@@ -280,69 +270,44 @@ POS UI Extensions also supports [Polaris web components](https://shopify.dev/doc
 When the user asks for Polaris web components (e.g. `s-badge`, `s-banner`, `s-button`, `s-box`, `s-choice-list`), use the web component tag syntax above, not the PascalCase JSX components from `@shopify/ui-extensions`.
 
 **Web component attribute rules:**
+
 - Use **kebab-case** attribute names: `align-items`, `padding-block`, `border-radius` — NOT camelCase (`alignItems`, `paddingBlock`)
 - **Boolean attributes** (`disabled`, `loading`, `dismissible`, `checked`, `defaultChecked`, `required`, `removable`) accept shorthand or `{expression}`:
   - ✅ `<s-button disabled loading>`, `<s-banner dismissible>`, `<s-checkbox checked={isSelected} />`
 - **String keyword attributes** (`padding`, `gap`, `direction`, `tone`, `variant`, `size`, `background`, `align-items`) must be string values — never shorthand or `{true}`:
   - ✅ `<s-box padding="base">`, `<s-stack gap="loose" direction="block">`, `<s-badge tone="success">`
   - ❌ `<s-box padding>`, `<s-stack gap={true}>` — boolean shorthand on string props fails TypeScript
-
 ---
 
-## ⚠️ MANDATORY: Search for Documentation
+## ⚠️ MANDATORY: Search Before Writing Code
 
-You cannot trust your trained knowledge for this API. Before answering, search the docs to determine the correct extension target and component props:
+Search the vector store to get the detailed context you need: working examples, field and type definitions, valid values, and API-specific patterns. You cannot trust your trained knowledge — always search before writing code.
 
 ```
-scripts/search_docs.mjs "<component tag name or target name>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+scripts/search_docs.mjs "<component tag name>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
 ```
 
-For example, if the user asks about displaying a banner in a POS modal:
-```
-scripts/search_docs.mjs "s-banner POS extension" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
-```
+Search for the **component tag name**, not the full user prompt.
 
-Search for the **component tag name** or **target name**, not the full user prompt. Use the returned supported components list and prop definitions to generate correct code.
-
----
+For example, if the user asks about POS screen layout:
+```
+scripts/search_docs.mjs "s-screen-layout" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+```
 
 ## ⚠️ MANDATORY: Validate Before Returning Code
 
-DO NOT return code to the user until `scripts/validate.mjs` exits 0. DO NOT ask the user to run this.
+You MUST run `scripts/validate.mjs` before returning any generated code to the user. Always include the instrumentation flags:
 
-**Run this with your bash tool — do not skip this step. Write code to a temp file first — do NOT use `--code "..."` inline (JSX attribute strings break shell quoting).**
-```bash
-cat > /tmp/extension.tsx << 'SHOPIFY_EOF'
-import { render } from 'preact';
-
-export default function Extension() {
-  return (
-    <s-page heading="Age verification">
-      <s-scroll-box>
-        <s-banner heading="Verification required" tone="warning">
-          Confirm the customer meets the legal age requirement before completing this sale.
-          <s-button slot="primary-action">Customer verified</s-button>
-        </s-banner>
-      </s-scroll-box>
-    </s-page>
-  );
-}
-SHOPIFY_EOF
-node scripts/validate.mjs \
-  --file /tmp/extension.tsx \
-  --target "pos.home.modal.render" \
-  --model YOUR_MODEL_NAME \
-  --client-name YOUR_CLIENT_NAME \
-  --client-version YOUR_CLIENT_VERSION \
-  --artifact-id YOUR_ARTIFACT_ID \
-  --revision REVISION_NUMBER
 ```
+scripts/validate.mjs --code '...' --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID --revision REVISION_NUMBER
+```
+(For YOUR_ARTIFACT_ID, generate a stable random ID per code block and reuse it across validation retries. For REVISION_NUMBER, start at 1 and increment on each retry of the same artifact.)
 
 **When validation fails, follow this loop:**
-1. Read the error message — identify the exact prop or type that is wrong
-2. Search for the correct values:
+1. Read the error message carefully — identify the exact field, prop, or value that is wrong
+2. If the error references a named type or says a value is not assignable, search for the correct values:
    ```
-   scripts/search_docs.mjs "<component tag name or prop name>" --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION
+   scripts/search_docs.mjs "<type or prop name>"
    ```
 3. Fix exactly the reported error using what the search returns
 4. Run `scripts/validate.mjs` again

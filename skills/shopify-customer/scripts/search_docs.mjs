@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-// AUTO-GENERATED — do not edit directly.
-// Edit src/agent-skills/scripts/ in shopify-dev-tools and run: npm run generate_agent_skills
 
 // src/agent-skills/scripts/search_docs.ts
 import { parseArgs } from "util";
@@ -24,11 +22,12 @@ async function reportValidation(toolName, result, context) {
       Accept: "application/json",
       "Cache-Control": "no-cache",
       "X-Shopify-Surface": "skills",
-      "X-Shopify-MCP-Version": "1.0",
+      "X-Shopify-MCP-Version": "1.1.0",
       "X-Shopify-Timestamp": (/* @__PURE__ */ new Date()).toISOString()
     };
     if (clientName) headers["X-Shopify-Client-Name"] = String(clientName);
-    if (clientVersion) headers["X-Shopify-Client-Version"] = String(clientVersion);
+    if (clientVersion)
+      headers["X-Shopify-Client-Version"] = String(clientVersion);
     if (model) headers["X-Shopify-Client-Model"] = String(model);
     await fetch(url.toString(), {
       method: "POST",
@@ -37,10 +36,10 @@ async function reportValidation(toolName, result, context) {
         tool: toolName,
         parameters: {
           skill: "shopify-customer",
-          skillVersion: "1.0",
+          skillVersion: "1.1.0",
           ...remainingContext
         },
-        result: result.result
+        result
       })
     });
   } catch {
@@ -58,7 +57,9 @@ var { values, positionals } = parseArgs({
 });
 var query = positionals[0];
 if (!query) {
-  console.error("Usage: search_docs.js <query> [--model <id>] [--client-name <name>]");
+  console.error(
+    "Usage: search_docs.js <query> [--model <id>] [--client-name <name>]"
+  );
   process.exit(1);
 }
 var SHOPIFY_DEV_BASE_URL2 = "https://shopify.dev/";
@@ -93,7 +94,7 @@ try {
   const result = await performSearch(query, "customer");
   process.stdout.write(result);
   process.stdout.write("\n");
-  await reportValidation("search_docs", { result }, {
+  await reportValidation("search_docs", result, {
     model: values.model,
     clientName: values["client-name"],
     clientVersion: values["client-version"],
@@ -102,7 +103,7 @@ try {
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error);
   console.error(`Search failed: ${message}`);
-  await reportValidation("search_docs", { result: message }, {
+  await reportValidation("search_docs", message, {
     model: values.model,
     clientName: values["client-name"],
     clientVersion: values["client-version"],

@@ -1,10 +1,10 @@
 ---
 name: shopify-onboarding-dev
-description: 'Get started building on Shopify. Use when a developer asks to build an app, build a theme, create a dev store, set up a partner account, scaffold a project, or get started developing for Shopify. NOT for merchants managing stores.'
+description: "Get started building on Shopify. Use when a developer asks to build an app, build a theme, create a dev store, set up a partner account, scaffold a project, or get started developing for Shopify. NOT for merchants managing stores."
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
-  version: "1.0"
+  version: "1.1.0"
 ---
 
 ## Flow
@@ -14,7 +14,7 @@ metadata:
 Silently identify the client from system context:
 
 | Signal                          | Client        |
-|---------------------------------|---------------|
+| ------------------------------- | ------------- |
 | "Claude Code"                   | `claude-code` |
 | "Cursor"                        | `cursor`      |
 | "VSCode" / "Visual Studio Code" | `vscode`      |
@@ -46,13 +46,13 @@ Verify with `shopify version` before continuing.
 
 **AI toolkit plugin/extension** — install for the detected client:
 
-| Client        | Install command |
-|---------------|-----------------|
-| `claude-code` | `/plugin marketplace add Shopify/shopify-ai-toolkit` then `/plugin install shopify-plugin@shopify-ai-toolkit` |
-| `cursor`      | `/add-plugin` and search for "Shopify", or visit `cursor.com/marketplace/shopify` |
+| Client        | Install command                                                                                                              |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `claude-code` | `/plugin marketplace add Shopify/shopify-ai-toolkit` then `/plugin install shopify-plugin@shopify-ai-toolkit`                |
+| `cursor`      | `/add-plugin` and search for "Shopify", or visit `cursor.com/marketplace/shopify`                                            |
 | `vscode`      | Command Palette (Cmd+Shift+P) → **Chat: Install Plugin From Source** → paste `https://github.com/Shopify/Shopify-AI-Toolkit` |
-| `gemini-cli`  | `gemini extensions install https://github.com/Shopify/shopify-ai-toolkit` (run in terminal, not inside CLI) |
-| `other`       | Not supported — inform the user and stop |
+| `gemini-cli`  | `gemini extensions install https://github.com/Shopify/shopify-ai-toolkit` (run in terminal, not inside CLI)                  |
+| `other`       | Not supported — inform the user and stop                                                                                     |
 
 If install fails, report the exact error and stop.
 

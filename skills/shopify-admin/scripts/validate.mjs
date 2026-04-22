@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-// AUTO-GENERATED — do not edit directly.
-// Edit src/agent-skills/scripts/ in shopify-dev-tools and run: npm run generate_agent_skills
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -27,29 +25,29 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/version.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/version.js
 var require_version = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/version.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/version.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
     exports.versionInfo = exports.version = void 0;
-    var version = "16.13.1";
+    var version = "16.13.2";
     exports.version = version;
     var versionInfo = Object.freeze({
       major: 16,
       minor: 13,
-      patch: 1,
+      patch: 2,
       preReleaseTag: null
     });
     exports.versionInfo = versionInfo;
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/devAssert.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/devAssert.js
 var require_devAssert = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/devAssert.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/devAssert.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -64,9 +62,9 @@ var require_devAssert = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/isPromise.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/isPromise.js
 var require_isPromise = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/isPromise.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/isPromise.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -78,9 +76,9 @@ var require_isPromise = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/isObjectLike.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/isObjectLike.js
 var require_isObjectLike = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/isObjectLike.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/isObjectLike.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -92,9 +90,9 @@ var require_isObjectLike = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/invariant.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/invariant.js
 var require_invariant = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/invariant.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/invariant.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -111,9 +109,9 @@ var require_invariant = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/location.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/location.js
 var require_location = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/location.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/location.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -140,9 +138,9 @@ var require_location = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/printLocation.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/printLocation.js
 var require_printLocation = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/printLocation.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/printLocation.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -198,9 +196,9 @@ var require_printLocation = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/error/GraphQLError.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/error/GraphQLError.js
 var require_GraphQLError = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/error/GraphQLError.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/error/GraphQLError.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -370,9 +368,9 @@ var require_GraphQLError = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/error/syntaxError.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/error/syntaxError.js
 var require_syntaxError = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/error/syntaxError.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/error/syntaxError.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -388,9 +386,9 @@ var require_syntaxError = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/ast.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/ast.js
 var require_ast = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/ast.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/ast.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -585,9 +583,9 @@ var require_ast = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/directiveLocation.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/directiveLocation.js
 var require_directiveLocation = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/directiveLocation.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/directiveLocation.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -619,9 +617,9 @@ var require_directiveLocation = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/kinds.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/kinds.js
 var require_kinds = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/kinds.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/kinds.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -682,9 +680,9 @@ var require_kinds = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/characterClasses.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/characterClasses.js
 var require_characterClasses = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/characterClasses.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/characterClasses.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -713,9 +711,9 @@ var require_characterClasses = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/blockString.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/blockString.js
 var require_blockString = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/blockString.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/blockString.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -835,9 +833,9 @@ var require_blockString = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/tokenKind.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/tokenKind.js
 var require_tokenKind = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/tokenKind.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/tokenKind.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -873,9 +871,9 @@ var require_tokenKind = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/lexer.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/lexer.js
 var require_lexer = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/lexer.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/lexer.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -1514,9 +1512,9 @@ var require_lexer = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/schemaCoordinateLexer.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/schemaCoordinateLexer.js
 var require_schemaCoordinateLexer = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/schemaCoordinateLexer.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/schemaCoordinateLexer.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -1645,9 +1643,9 @@ var require_schemaCoordinateLexer = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/inspect.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/inspect.js
 var require_inspect = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/inspect.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/inspect.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -1737,9 +1735,9 @@ var require_inspect = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/instanceOf.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/instanceOf.js
 var require_instanceOf = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/instanceOf.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/instanceOf.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -1787,9 +1785,9 @@ spurious results.`);
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/source.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/source.js
 var require_source = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/source.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/source.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -1831,9 +1829,9 @@ var require_source = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/parser.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/parser.js
 var require_parser = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/parser.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/parser.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -3237,9 +3235,9 @@ var require_parser = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/didYouMean.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/didYouMean.js
 var require_didYouMean = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/didYouMean.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/didYouMean.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -3268,9 +3266,9 @@ var require_didYouMean = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/identityFunc.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/identityFunc.js
 var require_identityFunc = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/identityFunc.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/identityFunc.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -3282,9 +3280,9 @@ var require_identityFunc = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/keyMap.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/keyMap.js
 var require_keyMap = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/keyMap.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/keyMap.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -3300,9 +3298,9 @@ var require_keyMap = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/keyValMap.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/keyValMap.js
 var require_keyValMap = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/keyValMap.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/keyValMap.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -3318,9 +3316,9 @@ var require_keyValMap = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/mapValue.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/mapValue.js
 var require_mapValue = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/mapValue.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/mapValue.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -3336,9 +3334,9 @@ var require_mapValue = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/naturalCompare.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/naturalCompare.js
 var require_naturalCompare = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/naturalCompare.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/naturalCompare.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -3390,9 +3388,9 @@ var require_naturalCompare = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/suggestionList.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/suggestionList.js
 var require_suggestionList = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/suggestionList.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/suggestionList.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -3491,9 +3489,9 @@ var require_suggestionList = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/toObjMap.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/toObjMap.js
 var require_toObjMap = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/toObjMap.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/toObjMap.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -3515,9 +3513,9 @@ var require_toObjMap = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/printString.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/printString.js
 var require_printString = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/printString.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/printString.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -3700,9 +3698,9 @@ var require_printString = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/visitor.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/visitor.js
 var require_visitor = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/visitor.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/visitor.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -3908,9 +3906,9 @@ var require_visitor = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/printer.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/printer.js
 var require_printer = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/printer.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/printer.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -4184,9 +4182,9 @@ var require_printer = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/valueFromASTUntyped.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/valueFromASTUntyped.js
 var require_valueFromASTUntyped = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/valueFromASTUntyped.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/valueFromASTUntyped.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -4223,9 +4221,9 @@ var require_valueFromASTUntyped = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/assertName.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/assertName.js
 var require_assertName = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/assertName.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/assertName.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -4268,9 +4266,9 @@ var require_assertName = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/definition.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/definition.js
 var require_definition = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/definition.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/definition.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -5096,9 +5094,9 @@ var require_definition = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/typeComparators.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/typeComparators.js
 var require_typeComparators = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/typeComparators.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/typeComparators.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -5161,9 +5159,9 @@ var require_typeComparators = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/scalars.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/scalars.js
 var require_scalars = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/scalars.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/scalars.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -5442,9 +5440,9 @@ var require_scalars = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/directives.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/directives.js
 var require_directives = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/directives.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/directives.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -5601,9 +5599,9 @@ var require_directives = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/isIterableObject.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/isIterableObject.js
 var require_isIterableObject = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/isIterableObject.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/isIterableObject.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -5615,9 +5613,9 @@ var require_isIterableObject = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/astFromValue.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/astFromValue.js
 var require_astFromValue = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/astFromValue.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/astFromValue.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -5738,9 +5736,9 @@ var require_astFromValue = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/introspection.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/introspection.js
 var require_introspection = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/introspection.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/introspection.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -6271,9 +6269,9 @@ var require_introspection = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/schema.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/schema.js
 var require_schema = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/schema.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/schema.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -6506,9 +6504,9 @@ var require_schema = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/validate.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/validate.js
 var require_validate = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/validate.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/validate.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -6978,9 +6976,9 @@ var require_validate = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/typeFromAST.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/typeFromAST.js
 var require_typeFromAST = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/typeFromAST.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/typeFromAST.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7005,9 +7003,9 @@ var require_typeFromAST = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/TypeInfo.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/TypeInfo.js
 var require_TypeInfo = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/TypeInfo.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/TypeInfo.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7282,9 +7280,9 @@ var require_TypeInfo = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/predicates.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/predicates.js
 var require_predicates = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/predicates.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/predicates.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7337,9 +7335,9 @@ var require_predicates = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/ExecutableDefinitionsRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/ExecutableDefinitionsRule.js
 var require_ExecutableDefinitionsRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/ExecutableDefinitionsRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/ExecutableDefinitionsRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7371,9 +7369,9 @@ var require_ExecutableDefinitionsRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/FieldsOnCorrectTypeRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/FieldsOnCorrectTypeRule.js
 var require_FieldsOnCorrectTypeRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/FieldsOnCorrectTypeRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/FieldsOnCorrectTypeRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7460,9 +7458,9 @@ var require_FieldsOnCorrectTypeRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/FragmentsOnCompositeTypesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/FragmentsOnCompositeTypesRule.js
 var require_FragmentsOnCompositeTypesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/FragmentsOnCompositeTypesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/FragmentsOnCompositeTypesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7516,9 +7514,9 @@ var require_FragmentsOnCompositeTypesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/KnownArgumentNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/KnownArgumentNamesRule.js
 var require_KnownArgumentNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/KnownArgumentNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/KnownArgumentNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7602,9 +7600,9 @@ var require_KnownArgumentNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/KnownDirectivesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/KnownDirectivesRule.js
 var require_KnownDirectivesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/KnownDirectivesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/KnownDirectivesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7724,9 +7722,9 @@ var require_KnownDirectivesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/KnownFragmentNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/KnownFragmentNamesRule.js
 var require_KnownFragmentNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/KnownFragmentNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/KnownFragmentNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7754,9 +7752,9 @@ var require_KnownFragmentNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/KnownTypeNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/KnownTypeNamesRule.js
 var require_KnownTypeNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/KnownTypeNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/KnownTypeNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7817,9 +7815,9 @@ var require_KnownTypeNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/LoneAnonymousOperationRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/LoneAnonymousOperationRule.js
 var require_LoneAnonymousOperationRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/LoneAnonymousOperationRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/LoneAnonymousOperationRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7852,9 +7850,9 @@ var require_LoneAnonymousOperationRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/LoneSchemaDefinitionRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/LoneSchemaDefinitionRule.js
 var require_LoneSchemaDefinitionRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/LoneSchemaDefinitionRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/LoneSchemaDefinitionRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7896,9 +7894,9 @@ var require_LoneSchemaDefinitionRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/MaxIntrospectionDepthRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/MaxIntrospectionDepthRule.js
 var require_MaxIntrospectionDepthRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/MaxIntrospectionDepthRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/MaxIntrospectionDepthRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -7962,9 +7960,9 @@ var require_MaxIntrospectionDepthRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/NoFragmentCyclesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/NoFragmentCyclesRule.js
 var require_NoFragmentCyclesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/NoFragmentCyclesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/NoFragmentCyclesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -8022,9 +8020,9 @@ var require_NoFragmentCyclesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/NoUndefinedVariablesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/NoUndefinedVariablesRule.js
 var require_NoUndefinedVariablesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/NoUndefinedVariablesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/NoUndefinedVariablesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -8063,9 +8061,9 @@ var require_NoUndefinedVariablesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/NoUnusedFragmentsRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/NoUnusedFragmentsRule.js
 var require_NoUnusedFragmentsRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/NoUnusedFragmentsRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/NoUnusedFragmentsRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -8114,9 +8112,9 @@ var require_NoUnusedFragmentsRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/NoUnusedVariablesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/NoUnusedVariablesRule.js
 var require_NoUnusedVariablesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/NoUnusedVariablesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/NoUnusedVariablesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -8159,9 +8157,9 @@ var require_NoUnusedVariablesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/sortValueNode.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/sortValueNode.js
 var require_sortValueNode = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/sortValueNode.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/sortValueNode.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -8196,9 +8194,9 @@ var require_sortValueNode = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/OverlappingFieldsCanBeMergedRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/OverlappingFieldsCanBeMergedRule.js
 var require_OverlappingFieldsCanBeMergedRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/OverlappingFieldsCanBeMergedRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/OverlappingFieldsCanBeMergedRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -8725,9 +8723,9 @@ var require_OverlappingFieldsCanBeMergedRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/PossibleFragmentSpreadsRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/PossibleFragmentSpreadsRule.js
 var require_PossibleFragmentSpreadsRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/PossibleFragmentSpreadsRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/PossibleFragmentSpreadsRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -8798,9 +8796,9 @@ var require_PossibleFragmentSpreadsRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/PossibleTypeExtensionsRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/PossibleTypeExtensionsRule.js
 var require_PossibleTypeExtensionsRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/PossibleTypeExtensionsRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/PossibleTypeExtensionsRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -8930,9 +8928,9 @@ var require_PossibleTypeExtensionsRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/ProvidedRequiredArgumentsRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/ProvidedRequiredArgumentsRule.js
 var require_ProvidedRequiredArgumentsRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/ProvidedRequiredArgumentsRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/ProvidedRequiredArgumentsRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9036,9 +9034,9 @@ var require_ProvidedRequiredArgumentsRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/ScalarLeafsRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/ScalarLeafsRule.js
 var require_ScalarLeafsRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/ScalarLeafsRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/ScalarLeafsRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9096,9 +9094,9 @@ var require_ScalarLeafsRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/printPathArray.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/printPathArray.js
 var require_printPathArray = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/printPathArray.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/printPathArray.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9112,9 +9110,9 @@ var require_printPathArray = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/Path.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/Path.js
 var require_Path = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/Path.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/Path.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9140,9 +9138,9 @@ var require_Path = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/coerceInputValue.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/coerceInputValue.js
 var require_coerceInputValue = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/coerceInputValue.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/coerceInputValue.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9209,7 +9207,7 @@ var require_coerceInputValue = __commonJS({
           );
           return;
         }
-        const coercedValue = {};
+        const coercedValue = /* @__PURE__ */ Object.create(null);
         const fieldDefs = type.getFields();
         for (const field of Object.values(fieldDefs)) {
           const fieldValue = inputValue[field.name];
@@ -9271,7 +9269,7 @@ var require_coerceInputValue = __commonJS({
             );
           }
         }
-        return coercedValue;
+        return { ...coercedValue };
       }
       if ((0, _definition.isLeafType)(type)) {
         let parseResult;
@@ -9311,9 +9309,9 @@ var require_coerceInputValue = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/valueFromAST.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/valueFromAST.js
 var require_valueFromAST = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/valueFromAST.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/valueFromAST.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9433,9 +9431,9 @@ var require_valueFromAST = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/values.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/values.js
 var require_values = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/values.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/values.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9483,7 +9481,7 @@ var require_values = __commonJS({
       };
     }
     function coerceVariableValues(schema, varDefNodes, inputs, onError) {
-      const coercedValues = {};
+      const coercedValues = /* @__PURE__ */ Object.create(null);
       for (const varDefNode of varDefNodes) {
         const varName = varDefNode.variable.name.value;
         const varType = (0, _typeFromAST.typeFromAST)(schema, varDefNode.type);
@@ -9550,11 +9548,11 @@ var require_values = __commonJS({
           }
         );
       }
-      return coercedValues;
+      return { ...coercedValues };
     }
     function getArgumentValues(def, node, variableValues) {
       var _node$arguments;
-      const coercedValues = {};
+      const coercedValues = /* @__PURE__ */ Object.create(null);
       const argumentNodes = (_node$arguments = node.arguments) !== null && _node$arguments !== void 0 ? _node$arguments : [];
       const argNodeMap = (0, _keyMap.keyMap)(
         argumentNodes,
@@ -9627,7 +9625,7 @@ var require_values = __commonJS({
         }
         coercedValues[name] = coercedValue;
       }
-      return coercedValues;
+      return { ...coercedValues };
     }
     function getDirectiveValues(directiveDef, node, variableValues) {
       var _node$directives;
@@ -9644,9 +9642,9 @@ var require_values = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/collectFields.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/collectFields.js
 var require_collectFields = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/collectFields.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/collectFields.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9786,9 +9784,9 @@ var require_collectFields = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/SingleFieldSubscriptionsRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/SingleFieldSubscriptionsRule.js
 var require_SingleFieldSubscriptionsRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/SingleFieldSubscriptionsRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/SingleFieldSubscriptionsRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9855,9 +9853,9 @@ var require_SingleFieldSubscriptionsRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/groupBy.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/groupBy.js
 var require_groupBy = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/groupBy.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/groupBy.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9879,9 +9877,9 @@ var require_groupBy = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueArgumentDefinitionNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueArgumentDefinitionNamesRule.js
 var require_UniqueArgumentDefinitionNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueArgumentDefinitionNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueArgumentDefinitionNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9936,9 +9934,9 @@ var require_UniqueArgumentDefinitionNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueArgumentNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueArgumentNamesRule.js
 var require_UniqueArgumentNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueArgumentNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueArgumentNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -9975,9 +9973,9 @@ var require_UniqueArgumentNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueDirectiveNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueDirectiveNamesRule.js
 var require_UniqueDirectiveNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueDirectiveNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueDirectiveNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10020,9 +10018,9 @@ var require_UniqueDirectiveNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueDirectivesPerLocationRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueDirectivesPerLocationRule.js
 var require_UniqueDirectivesPerLocationRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueDirectivesPerLocationRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueDirectivesPerLocationRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10090,9 +10088,9 @@ var require_UniqueDirectivesPerLocationRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueEnumValueNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueEnumValueNamesRule.js
 var require_UniqueEnumValueNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueEnumValueNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueEnumValueNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10147,9 +10145,9 @@ var require_UniqueEnumValueNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueFieldDefinitionNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueFieldDefinitionNamesRule.js
 var require_UniqueFieldDefinitionNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueFieldDefinitionNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueFieldDefinitionNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10213,9 +10211,9 @@ var require_UniqueFieldDefinitionNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueFragmentNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueFragmentNamesRule.js
 var require_UniqueFragmentNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueFragmentNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueFragmentNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10247,9 +10245,9 @@ var require_UniqueFragmentNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueInputFieldNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueInputFieldNamesRule.js
 var require_UniqueInputFieldNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueInputFieldNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueInputFieldNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10292,9 +10290,9 @@ var require_UniqueInputFieldNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueOperationNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueOperationNamesRule.js
 var require_UniqueOperationNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueOperationNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueOperationNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10331,9 +10329,9 @@ var require_UniqueOperationNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueOperationTypesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueOperationTypesRule.js
 var require_UniqueOperationTypesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueOperationTypesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueOperationTypesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10386,9 +10384,9 @@ var require_UniqueOperationTypesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueTypeNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueTypeNamesRule.js
 var require_UniqueTypeNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueTypeNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueTypeNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10437,9 +10435,9 @@ var require_UniqueTypeNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueVariableNamesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueVariableNamesRule.js
 var require_UniqueVariableNamesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/UniqueVariableNamesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/UniqueVariableNamesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10474,9 +10472,9 @@ var require_UniqueVariableNamesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/ValuesOfCorrectTypeRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/ValuesOfCorrectTypeRule.js
 var require_ValuesOfCorrectTypeRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/ValuesOfCorrectTypeRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/ValuesOfCorrectTypeRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10491,16 +10489,7 @@ var require_ValuesOfCorrectTypeRule = __commonJS({
     var _printer = require_printer();
     var _definition = require_definition();
     function ValuesOfCorrectTypeRule(context) {
-      let variableDefinitions = {};
       return {
-        OperationDefinition: {
-          enter() {
-            variableDefinitions = {};
-          }
-        },
-        VariableDefinition(definition) {
-          variableDefinitions[definition.variable.name.value] = definition;
-        },
         ListValue(node) {
           const type = (0, _definition.getNullableType)(
             context.getParentInputType()
@@ -10674,9 +10663,9 @@ var require_ValuesOfCorrectTypeRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/VariablesAreInputTypesRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/VariablesAreInputTypesRule.js
 var require_VariablesAreInputTypesRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/VariablesAreInputTypesRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/VariablesAreInputTypesRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10711,9 +10700,9 @@ var require_VariablesAreInputTypesRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/VariablesInAllowedPositionRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/VariablesInAllowedPositionRule.js
 var require_VariablesInAllowedPositionRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/VariablesInAllowedPositionRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/VariablesInAllowedPositionRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10796,9 +10785,9 @@ var require_VariablesInAllowedPositionRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/specifiedRules.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/specifiedRules.js
 var require_specifiedRules = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/specifiedRules.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/specifiedRules.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -10894,9 +10883,9 @@ var require_specifiedRules = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/ValidationContext.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/ValidationContext.js
 var require_ValidationContext = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/ValidationContext.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/ValidationContext.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -11073,9 +11062,9 @@ var require_ValidationContext = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/validate.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/validate.js
 var require_validate2 = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/validate.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/validate.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -11164,9 +11153,9 @@ var require_validate2 = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/memoize3.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/memoize3.js
 var require_memoize3 = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/memoize3.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/memoize3.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -11199,9 +11188,9 @@ var require_memoize3 = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/promiseForObject.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/promiseForObject.js
 var require_promiseForObject = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/promiseForObject.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/promiseForObject.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -11219,9 +11208,9 @@ var require_promiseForObject = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/promiseReduce.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/promiseReduce.js
 var require_promiseReduce = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/promiseReduce.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/promiseReduce.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -11238,9 +11227,9 @@ var require_promiseReduce = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/toError.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/toError.js
 var require_toError = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/toError.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/toError.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -11260,9 +11249,9 @@ var require_toError = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/error/locatedError.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/error/locatedError.js
 var require_locatedError = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/error/locatedError.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/error/locatedError.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -11290,9 +11279,9 @@ var require_locatedError = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/execute.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/execute.js
 var require_execute = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/execute.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/execute.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -11957,9 +11946,9 @@ var require_execute = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/graphql.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/graphql.js
 var require_graphql = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/graphql.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/graphql.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -12031,9 +12020,9 @@ var require_graphql = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/index.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/index.js
 var require_type = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/type/index.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/type/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -12582,9 +12571,9 @@ var require_type = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/index.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/index.js
 var require_language = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/language/index.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/language/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -12802,9 +12791,9 @@ var require_language = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/isAsyncIterable.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/isAsyncIterable.js
 var require_isAsyncIterable = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/jsutils/isAsyncIterable.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/jsutils/isAsyncIterable.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -12816,9 +12805,9 @@ var require_isAsyncIterable = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/mapAsyncIterator.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/mapAsyncIterator.js
 var require_mapAsyncIterator = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/mapAsyncIterator.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/mapAsyncIterator.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -12869,9 +12858,9 @@ var require_mapAsyncIterator = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/subscribe.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/subscribe.js
 var require_subscribe = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/subscribe.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/subscribe.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13008,9 +12997,9 @@ var require_subscribe = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/index.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/index.js
 var require_execution = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/execution/index.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/execution/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13082,9 +13071,9 @@ var require_execution = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/custom/NoDeprecatedCustomRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/custom/NoDeprecatedCustomRule.js
 var require_NoDeprecatedCustomRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/custom/NoDeprecatedCustomRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/custom/NoDeprecatedCustomRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13182,9 +13171,9 @@ var require_NoDeprecatedCustomRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/custom/NoSchemaIntrospectionCustomRule.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/custom/NoSchemaIntrospectionCustomRule.js
 var require_NoSchemaIntrospectionCustomRule = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/rules/custom/NoSchemaIntrospectionCustomRule.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/rules/custom/NoSchemaIntrospectionCustomRule.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13213,9 +13202,9 @@ var require_NoSchemaIntrospectionCustomRule = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/index.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/index.js
 var require_validation = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/validation/index.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/validation/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13509,9 +13498,9 @@ var require_validation = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/error/index.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/error/index.js
 var require_error = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/error/index.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/error/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13552,9 +13541,9 @@ var require_error = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/getIntrospectionQuery.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/getIntrospectionQuery.js
 var require_getIntrospectionQuery = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/getIntrospectionQuery.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/getIntrospectionQuery.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13689,9 +13678,9 @@ var require_getIntrospectionQuery = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/getOperationAST.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/getOperationAST.js
 var require_getOperationAST = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/getOperationAST.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/getOperationAST.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13718,9 +13707,9 @@ var require_getOperationAST = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/getOperationRootType.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/getOperationRootType.js
 var require_getOperationRootType = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/getOperationRootType.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/getOperationRootType.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13774,9 +13763,9 @@ var require_getOperationRootType = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/introspectionFromSchema.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/introspectionFromSchema.js
 var require_introspectionFromSchema = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/introspectionFromSchema.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/introspectionFromSchema.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13808,9 +13797,9 @@ var require_introspectionFromSchema = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/buildClientSchema.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/buildClientSchema.js
 var require_buildClientSchema = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/buildClientSchema.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/buildClientSchema.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -14098,9 +14087,9 @@ var require_buildClientSchema = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/extendSchema.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/extendSchema.js
 var require_extendSchema = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/extendSchema.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/extendSchema.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -14589,9 +14578,9 @@ var require_extendSchema = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/buildASTSchema.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/buildASTSchema.js
 var require_buildASTSchema = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/buildASTSchema.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/buildASTSchema.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -14665,9 +14654,9 @@ var require_buildASTSchema = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/lexicographicSortSchema.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/lexicographicSortSchema.js
 var require_lexicographicSortSchema = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/lexicographicSortSchema.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/lexicographicSortSchema.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -14804,9 +14793,9 @@ var require_lexicographicSortSchema = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/printSchema.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/printSchema.js
 var require_printSchema = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/printSchema.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/printSchema.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -15013,9 +15002,9 @@ ${operationTypes.join("\n")}
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/concatAST.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/concatAST.js
 var require_concatAST = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/concatAST.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/concatAST.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -15035,9 +15024,9 @@ var require_concatAST = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/separateOperations.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/separateOperations.js
 var require_separateOperations = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/separateOperations.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/separateOperations.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -15100,9 +15089,9 @@ var require_separateOperations = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/stripIgnoredCharacters.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/stripIgnoredCharacters.js
 var require_stripIgnoredCharacters = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/stripIgnoredCharacters.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/stripIgnoredCharacters.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -15144,9 +15133,9 @@ var require_stripIgnoredCharacters = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/assertValidName.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/assertValidName.js
 var require_assertValidName = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/assertValidName.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/assertValidName.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -15179,9 +15168,9 @@ var require_assertValidName = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/findBreakingChanges.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/findBreakingChanges.js
 var require_findBreakingChanges = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/findBreakingChanges.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/findBreakingChanges.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -15593,9 +15582,9 @@ var require_findBreakingChanges = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/resolveSchemaCoordinate.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/resolveSchemaCoordinate.js
 var require_resolveSchemaCoordinate = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/resolveSchemaCoordinate.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/resolveSchemaCoordinate.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -15770,9 +15759,9 @@ var require_resolveSchemaCoordinate = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/index.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/index.js
 var require_utilities = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/utilities/index.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/utilities/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -16000,9 +15989,9 @@ var require_utilities = __commonJS({
   }
 });
 
-// ../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/index.js
+// ../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/index.js
 var require_graphql2 = __commonJS({
-  "../../node_modules/.pnpm/graphql@16.13.1/node_modules/graphql/index.js"(exports) {
+  "../../node_modules/.pnpm/graphql@16.13.2/node_modules/graphql/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -17365,7 +17354,7 @@ var CONFIGURATION_APIs = {
   CUSTOM_DATA: "custom-data"
 };
 var EXECUTION_APIs = {
-  ADMIN_EXECUTION: "admin-execution"
+  USE_SHOPIFY_CLI: "use-shopify-cli"
 };
 var SHOPIFY_APIS = {
   ...GRAPHQL_APIs,
@@ -17396,13 +17385,26 @@ var APICategory = {
 
 // src/types/api-mapping.ts
 var SHOPIFY_APIS2 = {
+  [EXECUTION_APIs.USE_SHOPIFY_CLI]: {
+    name: EXECUTION_APIs.USE_SHOPIFY_CLI,
+    displayName: "Use Shopify CLI",
+    description: "Choose before `admin` when the user needs **Shopify CLI** to run or fix something now: validate app or extension config on disk (`shopify.app.toml`, `shopify.app.<name>.toml`, `shopify.extension.toml`) with **`shopify app config validate --json`** (not Admin GraphQL; MCP has no TOML validator); run or troubleshoot store workflows (`shopify store auth`, `shopify store execute`); inventory or product changes by handle, SKU, or location name; or CLI setup, auth, upgrade issues. Emphasize **commands and operational steps**, not only authoring GraphQL. Skip for API-only understanding or codegen with no CLI execution. Examples: validate before deploy; run an existing query via CLI; list products; missing `shopify store execute`.",
+    category: APICategory.EXECUTION,
+    visibility: Visibility.PUBLIC,
+    searchable: false
+  },
   [GRAPHQL_APIs.ADMIN]: {
     name: GRAPHQL_APIs.ADMIN,
     displayName: "Admin API",
-    description: "The Admin GraphQL API lets you build apps and integrations that extend and enhance the Shopify admin.",
+    description: "Write or explain **Admin GraphQL** queries and mutations for apps and integrations that extend the Shopify admin. Use when the user wants to **understand, design, or generate** the operation itself\u2014even before deciding how to run it. Do **not** choose `admin` first for **app or extension config files** (`shopify.app.toml`, `shopify.app.<name>.toml`, `shopify.extension.toml`), pre-deploy config errors, or invalid TOML\u2014use **`use-shopify-cli`** and **`shopify app config validate --json`** (no TOML validator here). Do **not** choose `admin` first to **execute** Admin GraphQL **now via Shopify CLI** or for CLI setup/troubleshooting on store workflows\u2014use **`use-shopify-cli`** (store auth/execute, handle/SKU/location lookups, inventory changes).",
     category: APICategory.GRAPHQL,
     visibility: Visibility.PUBLIC,
-    validation: true
+    schemaSource: { shopifyDevPrefix: "admin" },
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "productCreate mutation",
+      context: "creating a product"
+    }
   },
   [GRAPHQL_APIs.STOREFRONT]: {
     name: GRAPHQL_APIs.STOREFRONT,
@@ -17410,7 +17412,12 @@ var SHOPIFY_APIS2 = {
     description: `Use for custom storefronts requiring direct GraphQL queries/mutations for data fetching and cart operations. Choose this when you need full control over data fetching and rendering your own UI. NOT for Web Components - if the prompt mentions HTML tags like <shopify-store>, <shopify-cart>, use ${TYPESCRIPT_APIs.STOREFRONT_WEB_COMPONENTS} instead.`,
     category: APICategory.GRAPHQL,
     visibility: Visibility.PUBLIC,
-    validation: true
+    schemaSource: { shopifyDevPrefix: "storefront" },
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "predictiveSearch query",
+      context: "storefront search"
+    }
   },
   [GRAPHQL_APIs.PARTNER]: {
     name: GRAPHQL_APIs.PARTNER,
@@ -17418,7 +17425,12 @@ var SHOPIFY_APIS2 = {
     description: "The Partner API lets you programmatically access data about your Partner Dashboard, including your apps, themes, and affiliate referrals.",
     category: APICategory.GRAPHQL,
     visibility: Visibility.PUBLIC,
-    validation: true
+    schemaSource: { shopifyDevPrefix: "partner" },
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "app installations query",
+      context: "app install data"
+    }
   },
   [GRAPHQL_APIs.CUSTOMER]: {
     name: GRAPHQL_APIs.CUSTOMER,
@@ -17426,7 +17438,12 @@ var SHOPIFY_APIS2 = {
     description: "The Customer Account API allows customers to access their own data including orders, payment methods, and addresses.",
     category: APICategory.GRAPHQL,
     visibility: Visibility.PUBLIC,
-    validation: true
+    schemaSource: { shopifyDevPrefix: "customer" },
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "customer orders query",
+      context: "customer order history"
+    }
   },
   [GRAPHQL_APIs.PAYMENTS_APPS]: {
     name: GRAPHQL_APIs.PAYMENTS_APPS,
@@ -17434,7 +17451,12 @@ var SHOPIFY_APIS2 = {
     description: "The Payments Apps API enables payment providers to integrate their payment solutions with Shopify's checkout.",
     category: APICategory.GRAPHQL,
     visibility: Visibility.PUBLIC,
-    validation: true
+    schemaSource: { shopifyDevPrefix: "payments_apps" },
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "paymentSessionPending mutation",
+      context: "pending a payment session"
+    }
   },
   [FUNCTIONS_APIs.FUNCTIONS]: {
     name: FUNCTIONS_APIs.FUNCTIONS,
@@ -17442,7 +17464,11 @@ var SHOPIFY_APIS2 = {
     description: "Shopify Functions allow developers to customize the backend logic that powers parts of Shopify. Available APIs: Discount, Cart and Checkout Validation, Cart Transform, Pickup Point Delivery Option Generator, Delivery Customization, Fulfillment Constraints, Local Pickup Delivery Option Generator, Order Routing Location Rule, Payment Customization",
     category: APICategory.FUNCTIONS,
     visibility: Visibility.PUBLIC,
-    validation: true
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "cart transform function input query",
+      context: "cart transform function inputs"
+    }
   },
   // Function-specific GraphQL APIs for input query validation
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_CART_CHECKOUT_VALIDATION]: {
@@ -17450,91 +17476,118 @@ var SHOPIFY_APIS2 = {
     displayName: "Cart Checkout Validation Function",
     description: "GraphQL schema for Cart and Checkout Validation Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: {
+      shopifyDevPrefix: "functions_cart_checkout_validation_schema"
+    }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_CART_TRANSFORM]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_CART_TRANSFORM,
     displayName: "Cart Transform Function",
     description: "GraphQL schema for Cart Transform Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: { shopifyDevPrefix: "functions_cart_transform_schema" }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DELIVERY_CUSTOMIZATION]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DELIVERY_CUSTOMIZATION,
     displayName: "Delivery Customization Function",
     description: "GraphQL schema for Delivery Customization Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: {
+      shopifyDevPrefix: "functions_delivery_customization_schema"
+    }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DISCOUNT]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DISCOUNT,
     displayName: "Discount Function",
     description: "GraphQL schema for Discount Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: { shopifyDevPrefix: "functions_discount_schema" }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DISCOUNTS_ALLOCATOR]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DISCOUNTS_ALLOCATOR,
     displayName: "Discounts Allocator Function",
     description: "GraphQL schema for Discounts Allocator Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: { shopifyDevPrefix: "functions_discounts_allocator_schema" }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_FULFILLMENT_CONSTRAINTS]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_FULFILLMENT_CONSTRAINTS,
     displayName: "Fulfillment Constraints Function",
     description: "GraphQL schema for Fulfillment Constraints Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: {
+      shopifyDevPrefix: "functions_fulfillment_constraints_schema"
+    }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_LOCAL_PICKUP_DELIVERY_OPTION_GENERATOR]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_LOCAL_PICKUP_DELIVERY_OPTION_GENERATOR,
     displayName: "Local Pickup Delivery Option Generator Function",
     description: "GraphQL schema for Local Pickup Delivery Option Generator Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: {
+      shopifyDevPrefix: "functions_local_pickup_delivery_option_generator_schema"
+    }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_ORDER_DISCOUNTS]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_ORDER_DISCOUNTS,
     displayName: "Order Discounts Function",
     description: "GraphQL schema for Order Discounts Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: { shopifyDevPrefix: "functions_order_discounts_schema" }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_ORDER_ROUTING_LOCATION_RULE]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_ORDER_ROUTING_LOCATION_RULE,
     displayName: "Order Routing Location Rule Function",
     description: "GraphQL schema for Order Routing Location Rule Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: {
+      shopifyDevPrefix: "functions_order_routing_location_rule_schema"
+    }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PAYMENT_CUSTOMIZATION]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PAYMENT_CUSTOMIZATION,
     displayName: "Payment Customization Function",
     description: "GraphQL schema for Payment Customization Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: {
+      shopifyDevPrefix: "functions_payment_customization_schema"
+    }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PICKUP_POINT_DELIVERY_OPTION_GENERATOR]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PICKUP_POINT_DELIVERY_OPTION_GENERATOR,
     displayName: "Pickup Point Delivery Option Generator Function",
     description: "GraphQL schema for Pickup Point Delivery Option Generator Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: {
+      shopifyDevPrefix: "functions_pickup_point_delivery_option_generator_schema"
+    }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PRODUCT_DISCOUNTS]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PRODUCT_DISCOUNTS,
     displayName: "Product Discounts Function",
     description: "GraphQL schema for Product Discounts Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: { shopifyDevPrefix: "functions_product_discounts_schema" }
   },
   [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_SHIPPING_DISCOUNTS]: {
     name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_SHIPPING_DISCOUNTS,
     displayName: "Shipping Discounts Function",
     description: "GraphQL schema for Shipping Discounts Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
-    visibility: Visibility.PUBLIC
+    visibility: Visibility.PUBLIC,
+    schemaSource: { shopifyDevPrefix: "functions_shipping_discounts_schema" }
   },
   [TYPESCRIPT_APIs.POLARIS_APP_HOME]: {
     name: TYPESCRIPT_APIs.POLARIS_APP_HOME,
@@ -17543,7 +17596,11 @@ var SHOPIFY_APIS2 = {
     category: APICategory.UI_FRAMEWORK,
     publicPackages: ["@shopify/polaris-types", "@shopify/app-bridge-types"],
     visibility: Visibility.PUBLIC,
-    validation: true
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "s-form",
+      context: "form in app home"
+    }
   },
   [TYPESCRIPT_APIs.POLARIS_ADMIN_EXTENSIONS]: {
     name: TYPESCRIPT_APIs.POLARIS_ADMIN_EXTENSIONS,
@@ -17553,7 +17610,11 @@ var SHOPIFY_APIS2 = {
     publicPackages: ["@shopify/ui-extensions"],
     extensionSurfaceName: "admin",
     visibility: Visibility.PUBLIC,
-    validation: true
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "s-text-field",
+      context: "text input in an admin extension"
+    }
   },
   [TYPESCRIPT_APIs.POLARIS_CHECKOUT_EXTENSIONS]: {
     name: TYPESCRIPT_APIs.POLARIS_CHECKOUT_EXTENSIONS,
@@ -17563,7 +17624,11 @@ var SHOPIFY_APIS2 = {
     publicPackages: ["@shopify/ui-extensions"],
     extensionSurfaceName: "checkout",
     visibility: Visibility.PUBLIC,
-    validation: true
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "s-button checkout",
+      context: "checkout button"
+    }
   },
   [TYPESCRIPT_APIs.POLARIS_CUSTOMER_ACCOUNT_EXTENSIONS]: {
     name: TYPESCRIPT_APIs.POLARIS_CUSTOMER_ACCOUNT_EXTENSIONS,
@@ -17573,7 +17638,11 @@ var SHOPIFY_APIS2 = {
     publicPackages: ["@shopify/ui-extensions"],
     extensionSurfaceName: "customer-account",
     visibility: Visibility.PUBLIC,
-    validation: true
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "s-card customer-account",
+      context: "customer account card"
+    }
   },
   [TYPESCRIPT_APIs.POS_UI]: {
     name: TYPESCRIPT_APIs.POS_UI,
@@ -17583,7 +17652,11 @@ var SHOPIFY_APIS2 = {
     publicPackages: ["@shopify/ui-extensions"],
     extensionSurfaceName: "point-of-sale",
     visibility: Visibility.PUBLIC,
-    validation: true
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "s-screen-layout",
+      context: "POS screen layout"
+    }
   },
   [TYPESCRIPT_APIs.HYDROGEN]: {
     name: TYPESCRIPT_APIs.HYDROGEN,
@@ -17592,7 +17665,11 @@ var SHOPIFY_APIS2 = {
     category: APICategory.UI_FRAMEWORK,
     publicPackages: ["@shopify/hydrogen"],
     visibility: Visibility.PUBLIC,
-    validation: true
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "CartForm component",
+      context: "cart UI"
+    }
   },
   [TYPESCRIPT_APIs.STOREFRONT_WEB_COMPONENTS]: {
     name: TYPESCRIPT_APIs.STOREFRONT_WEB_COMPONENTS,
@@ -17603,7 +17680,8 @@ var SHOPIFY_APIS2 = {
     //TODO: Need to find the appropriate packages for Storefront Web Components.
     // Docs has <script src="https://cdn.shopify.com/storefront/web-components.js"></script> and not a npm package
     publicPackages: ["@shopify/polaris-types", "@shopify/app-bridge-types"],
-    visibility: Visibility.EARLY_ACCESS
+    visibility: Visibility.EARLY_ACCESS,
+    validation: true
   },
   [THEME_APIs.LIQUID]: {
     name: THEME_APIs.LIQUID,
@@ -17611,21 +17689,18 @@ var SHOPIFY_APIS2 = {
     description: "Liquid is an open-source templating language created by Shopify. It is the backbone of Shopify themes and is used to load dynamic content on storefronts. Keywords: liquid, theme, shopify-theme, liquid-component, liquid-block, liquid-section, liquid-snippet, liquid-schemas, shopify-theme-schemas",
     category: APICategory.THEME,
     visibility: Visibility.PUBLIC,
-    validation: true
+    schemaSource: { npmPackage: "@shopify/theme-check-common" },
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "product metafields",
+      context: "product metafield access in a theme"
+    }
   },
   [CONFIGURATION_APIs.CUSTOM_DATA]: {
     name: CONFIGURATION_APIs.CUSTOM_DATA,
     displayName: "Custom Data",
     description: "MUST be used first when prompts mention Metafields or Metaobjects. Use Metafields and Metaobjects to model and store custom data for your app. Metafields extend built-in Shopify data types like products or customers, Metaobjects are custom data types that can be used to store bespoke data structures. Metafield and Metaobject definitions provide a schema and configuration for values to follow.",
     category: APICategory.CONFIGURATION,
-    visibility: Visibility.PUBLIC,
-    searchable: false
-  },
-  [EXECUTION_APIs.ADMIN_EXECUTION]: {
-    name: EXECUTION_APIs.ADMIN_EXECUTION,
-    displayName: "Admin API Execution",
-    description: "Run a validated Admin GraphQL operation against a specific store using Shopify CLI. Use this when the user wants an executable store workflow, not just the query or mutation text. If the answer should include `shopify store auth` and `shopify store execute`, choose this API. Choose this for 'my store', 'this store', a store domain, product reads on a merchant store, low-inventory lookups, product updates, and warehouse/location inventory changes. Examples: 'Show me the first 10 products on my store', 'Find products with low inventory on my store', 'Set inventory at the Toronto warehouse so SKU ABC-123 is 12'.",
-    category: APICategory.EXECUTION,
     visibility: Visibility.PUBLIC,
     searchable: false
   }
@@ -18111,11 +18186,12 @@ async function reportValidation(toolName, result, context) {
       Accept: "application/json",
       "Cache-Control": "no-cache",
       "X-Shopify-Surface": "skills",
-      "X-Shopify-MCP-Version": "1.0",
+      "X-Shopify-MCP-Version": "1.1.0",
       "X-Shopify-Timestamp": (/* @__PURE__ */ new Date()).toISOString()
     };
     if (clientName) headers["X-Shopify-Client-Name"] = String(clientName);
-    if (clientVersion) headers["X-Shopify-Client-Version"] = String(clientVersion);
+    if (clientVersion)
+      headers["X-Shopify-Client-Version"] = String(clientVersion);
     if (model) headers["X-Shopify-Client-Model"] = String(model);
     await fetch(url.toString(), {
       method: "POST",
@@ -18124,10 +18200,10 @@ async function reportValidation(toolName, result, context) {
         tool: toolName,
         parameters: {
           skill: "shopify-admin",
-          skillVersion: "1.0",
+          skillVersion: "1.1.0",
           ...remainingContext
         },
-        result: JSON.stringify(result)
+        result
       })
     });
   } catch {
@@ -18139,11 +18215,11 @@ var { values } = parseArgs({
   options: {
     code: { type: "string", short: "c" },
     file: { type: "string", short: "f" },
+    "artifact-id": { type: "string" },
+    revision: { type: "string" },
     model: { type: "string" },
     "client-name": { type: "string" },
-    "client-version": { type: "string" },
-    "artifact-id": { type: "string" },
-    "revision": { type: "string" }
+    "client-version": { type: "string" }
   },
   allowPositionals: true
 });
@@ -18188,7 +18264,7 @@ async function main() {
     scopes: result.scopes ?? []
   };
   console.log(JSON.stringify(output, null, 2));
-  await reportValidation("validate_graphql", output, {
+  await reportValidation("validate_graphql", JSON.stringify(output), {
     model: values.model,
     clientName: values["client-name"],
     clientVersion: values["client-version"],
@@ -18205,7 +18281,7 @@ main().catch(async (error) => {
     details: error instanceof Error ? error.message : String(error)
   };
   console.log(JSON.stringify(output));
-  await reportValidation("validate_graphql", output, {
+  await reportValidation("validate_graphql", JSON.stringify(output), {
     model: values.model,
     clientName: values["client-name"],
     clientVersion: values["client-version"],
