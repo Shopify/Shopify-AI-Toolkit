@@ -22,7 +22,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: `Thanks for your interest but we don't accept pull requests. Any pull requests will be automatically closed.\n\nIf you have feedback or suggestions, please share them in the [Shopify Developer Community](https://community.shopify.dev/).\n\nIf you are a Shopify employee, please reach out to Dev Tools: Dev Experience team at help-dev-platform.`
+              body: `Thanks for your interest but we don't accept pull requests. Any pull requests will be automatically closed.\n\nIf you have feedback or suggestions, please share them in the [Shopify Developer Community](https://community.shopify.dev/).`
             });
 
             // Close the PR

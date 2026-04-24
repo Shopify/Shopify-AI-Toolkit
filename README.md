@@ -44,5 +44,3 @@ If your platform doesn't support plugins, you can install agent skills or the De
 ## Contributing
 
 Thanks for your interest but we don't accept pull requests. Any pull requests will be automatically closed.
-
-If you are a Shopify employee, please open your pull request at [Shopify/dev-mcp](https://github.com/Shopify/dev-mcp).
