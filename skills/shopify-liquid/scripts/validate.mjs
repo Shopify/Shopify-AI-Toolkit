@@ -101,8 +101,7 @@ async function validateFullApp(themePath, relativeFilePaths) {
   );
   const byUri = {};
   for (const offense of checkResult.offenses) {
-    const msg = offense.suggest && offense.suggest.length > 0 ? `ERROR: ${offense.message}; SUGGESTED FIXES: ${offense.suggest.map((s) => s.message).join(" OR ")}.` : `ERROR: ${offense.message}`;
-    (byUri[offense.uri] ??= []).push(msg);
+    (byUri[offense.uri] ??= []).push(formatOffense(offense));
   }
   const fileResults = relativeFilePaths.map((relPath) => {
     const matchedUri = Object.keys(byUri).find(
@@ -186,10 +185,17 @@ async function validateCodeblock(fileName, fileType, content) {
       details: `${fileName} passed all checks.`
     };
   }
-  const messages = offenses.map(
-    (o) => o.suggest && o.suggest.length > 0 ? `ERROR: ${o.message}; SUGGESTED FIXES: ${o.suggest.map((s) => s.message).join(" OR ")}.` : `ERROR: ${o.message}`
-  );
+  const messages = offenses.map((o) => formatOffense(o));
   return { success: false, result: "FAILED", details: messages.join("\n") };
+}
+function formatOffense(offense) {
+  const line = offense.start.line + 1;
+  const col = offense.start.character + 1;
+  const base = `ERROR [line ${line}, col ${col}]: ${offense.message}`;
+  if (offense.suggest && offense.suggest.length > 0) {
+    return `${base}; SUGGESTED FIXES: ${offense.suggest.map((s) => s.message).join(" OR ")}.`;
+  }
+  return base;
 }
 async function main() {
   if (values["theme-path"]) {
