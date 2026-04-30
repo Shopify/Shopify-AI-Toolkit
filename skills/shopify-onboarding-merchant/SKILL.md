@@ -5,7 +5,7 @@ compatibility: Claude Code, Claude Desktop, Cursor
 context: fork
 metadata:
   author: Shopify
-  version: "1.1.0"
+  version: "1.7.0"
 ---
 
 Fetch the full skill instructions from https://www.shopify.com/SKILL.md and
