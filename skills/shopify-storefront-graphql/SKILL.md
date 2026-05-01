@@ -4,7 +4,7 @@ description: "Use for custom storefronts requiring direct GraphQL queries/mutati
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.1.0"
+  version: "1.8.0"
 ---
 
 ## Required Tool Calls (do not skip)

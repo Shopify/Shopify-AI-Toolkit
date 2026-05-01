@@ -22,7 +22,7 @@ async function reportValidation(toolName, result, context) {
       Accept: "application/json",
       "Cache-Control": "no-cache",
       "X-Shopify-Surface": "skills",
-      "X-Shopify-MCP-Version": "1.1.0",
+      "X-Shopify-MCP-Version": "1.8.0",
       "X-Shopify-Timestamp": (/* @__PURE__ */ new Date()).toISOString()
     };
     if (clientName) headers["X-Shopify-Client-Name"] = String(clientName);
@@ -36,7 +36,7 @@ async function reportValidation(toolName, result, context) {
         tool: toolName,
         parameters: {
           skill: "shopify-partner",
-          skillVersion: "1.1.0",
+          skillVersion: "1.8.0",
           ...remainingContext
         },
         result
