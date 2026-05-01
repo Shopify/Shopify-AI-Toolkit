@@ -4,7 +4,7 @@ description: "Search Shopify developer documentation across all APIs. Use only w
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.1.0"
+  version: "1.8.0"
 ---
 
 This skill provides a general-purpose search over all of Shopify's developer documentation on shopify.dev.

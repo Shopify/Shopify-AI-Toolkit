@@ -1,6 +1,6 @@
 {
   "name": "shopify-plugin",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "private": true,
   "description": "AI agent plugin manifests for the Shopify Dev MCP server",
   "author": "Shopify",

@@ -17311,61 +17311,6 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-// src/types/api-constants.ts
-var GRAPHQL_APIs = {
-  ADMIN: "admin",
-  STOREFRONT: "storefront-graphql",
-  PARTNER: "partner",
-  CUSTOMER: "customer",
-  PAYMENTS_APPS: "payments-apps"
-};
-var FUNCTION_GRAPHQL_SCHEMAS = {
-  FUNCTIONS_CART_CHECKOUT_VALIDATION: "functions_cart_checkout_validation",
-  FUNCTIONS_CART_TRANSFORM: "functions_cart_transform",
-  FUNCTIONS_DELIVERY_CUSTOMIZATION: "functions_delivery_customization",
-  FUNCTIONS_DISCOUNT: "functions_discount",
-  FUNCTIONS_DISCOUNTS_ALLOCATOR: "functions_discounts_allocator",
-  FUNCTIONS_FULFILLMENT_CONSTRAINTS: "functions_fulfillment_constraints",
-  FUNCTIONS_LOCAL_PICKUP_DELIVERY_OPTION_GENERATOR: "functions_local_pickup_delivery_option_generator",
-  FUNCTIONS_ORDER_DISCOUNTS: "functions_order_discounts",
-  FUNCTIONS_ORDER_ROUTING_LOCATION_RULE: "functions_order_routing_location_rule",
-  FUNCTIONS_PAYMENT_CUSTOMIZATION: "functions_payment_customization",
-  FUNCTIONS_PICKUP_POINT_DELIVERY_OPTION_GENERATOR: "functions_pickup_point_delivery_option_generator",
-  FUNCTIONS_PRODUCT_DISCOUNTS: "functions_product_discounts",
-  FUNCTIONS_SHIPPING_DISCOUNTS: "functions_shipping_discounts"
-};
-var FUNCTIONS_APIs = {
-  FUNCTIONS: "functions"
-  // Main Functions API without GraphQL schema
-};
-var TYPESCRIPT_APIs = {
-  POLARIS_APP_HOME: "polaris-app-home",
-  POLARIS_ADMIN_EXTENSIONS: "polaris-admin-extensions",
-  POLARIS_CHECKOUT_EXTENSIONS: "polaris-checkout-extensions",
-  POLARIS_CUSTOMER_ACCOUNT_EXTENSIONS: "polaris-customer-account-extensions",
-  POS_UI: "pos-ui",
-  HYDROGEN: "hydrogen",
-  STOREFRONT_WEB_COMPONENTS: "storefront-web-components"
-};
-var THEME_APIs = {
-  LIQUID: "liquid"
-};
-var CONFIGURATION_APIs = {
-  CUSTOM_DATA: "custom-data"
-};
-var EXECUTION_APIs = {
-  USE_SHOPIFY_CLI: "use-shopify-cli"
-};
-var SHOPIFY_APIS = {
-  ...GRAPHQL_APIs,
-  ...FUNCTIONS_APIs,
-  ...TYPESCRIPT_APIs,
-  ...THEME_APIs,
-  ...FUNCTION_GRAPHQL_SCHEMAS,
-  ...CONFIGURATION_APIs,
-  ...EXECUTION_APIs
-};
-
 // src/types/api-types.ts
 var Visibility = {
   PUBLIC: "public",
@@ -17380,23 +17325,28 @@ var APICategory = {
   UI_FRAMEWORK: "ui-framework",
   THEME: "theme",
   CONFIGURATION: "configuration",
-  EXECUTION: "execution"
+  EXECUTION: "execution",
+  GUIDANCE: "guidance"
+  // Procedural topics (onboarding, review checklists) — hand-maintained, no validation/search
 };
 
 // src/types/api-mapping.ts
-var SHOPIFY_APIS2 = {
-  [EXECUTION_APIs.USE_SHOPIFY_CLI]: {
-    name: EXECUTION_APIs.USE_SHOPIFY_CLI,
+function defineApis(apis) {
+  return Object.fromEntries(
+    Object.entries(apis).map(([name, config]) => [name, { name, ...config }])
+  );
+}
+var SHOPIFY_APIS = defineApis({
+  "use-shopify-cli": {
     displayName: "Use Shopify CLI",
-    description: "Choose before `admin` when the user needs **Shopify CLI** to run or fix something now: validate app or extension config on disk (`shopify.app.toml`, `shopify.app.<name>.toml`, `shopify.extension.toml`) with **`shopify app config validate --json`** (not Admin GraphQL; MCP has no TOML validator); run or troubleshoot store workflows (`shopify store auth`, `shopify store execute`); inventory or product changes by handle, SKU, or location name; or CLI setup, auth, upgrade issues. Emphasize **commands and operational steps**, not only authoring GraphQL. Skip for API-only understanding or codegen with no CLI execution. Examples: validate before deploy; run an existing query via CLI; list products; missing `shopify store execute`.",
+    description: "Choose when the user needs **Shopify CLI** to run or fix something now: validate app or extension config on disk (`shopify.app.toml`, `shopify.app.<name>.toml`, `shopify.extension.toml`); run or troubleshoot store workflows (`shopify store auth`, `shopify store execute`); inventory or product changes by handle, SKU, or location name; or CLI setup, auth, upgrade issues. Emphasize **commands and operational steps**, not only authoring GraphQL. Skip for API-only understanding or codegen with no CLI execution. Examples: validate configuration before deploy; run an existing query via CLI; list products; missing `shopify store execute`.",
     category: APICategory.EXECUTION,
     visibility: Visibility.PUBLIC,
     searchable: false
   },
-  [GRAPHQL_APIs.ADMIN]: {
-    name: GRAPHQL_APIs.ADMIN,
+  admin: {
     displayName: "Admin API",
-    description: "Write or explain **Admin GraphQL** queries and mutations for apps and integrations that extend the Shopify admin. Use when the user wants to **understand, design, or generate** the operation itself\u2014even before deciding how to run it. Do **not** choose `admin` first for **app or extension config files** (`shopify.app.toml`, `shopify.app.<name>.toml`, `shopify.extension.toml`), pre-deploy config errors, or invalid TOML\u2014use **`use-shopify-cli`** and **`shopify app config validate --json`** (no TOML validator here). Do **not** choose `admin` first to **execute** Admin GraphQL **now via Shopify CLI** or for CLI setup/troubleshooting on store workflows\u2014use **`use-shopify-cli`** (store auth/execute, handle/SKU/location lookups, inventory changes).",
+    description: "Write or explain **Admin GraphQL** queries and mutations for apps and integrations that extend the Shopify admin. Use when the user wants to **understand, design, or generate** the operation itself\u2014even before deciding how to run it. Do **not** choose `admin` first for **app or extension config validation** \u2014use **`use-shopify-cli`**. Do **not** choose `admin` first to **execute** Admin GraphQL **now via Shopify CLI** or for CLI setup/troubleshooting on store workflows\u2014use **`use-shopify-cli`** (store auth/execute, handle/SKU/location lookups, inventory changes).",
     category: APICategory.GRAPHQL,
     visibility: Visibility.PUBLIC,
     schemaSource: { shopifyDevPrefix: "admin" },
@@ -17406,10 +17356,9 @@ var SHOPIFY_APIS2 = {
       context: "creating a product"
     }
   },
-  [GRAPHQL_APIs.STOREFRONT]: {
-    name: GRAPHQL_APIs.STOREFRONT,
+  "storefront-graphql": {
     displayName: "Storefront GraphQL API",
-    description: `Use for custom storefronts requiring direct GraphQL queries/mutations for data fetching and cart operations. Choose this when you need full control over data fetching and rendering your own UI. NOT for Web Components - if the prompt mentions HTML tags like <shopify-store>, <shopify-cart>, use ${TYPESCRIPT_APIs.STOREFRONT_WEB_COMPONENTS} instead.`,
+    description: "Use for custom storefronts requiring direct GraphQL queries/mutations for data fetching and cart operations. Choose this when you need full control over data fetching and rendering your own UI. NOT for Web Components - if the prompt mentions HTML tags like <shopify-store>, <shopify-cart>, use storefront-web-components instead.",
     category: APICategory.GRAPHQL,
     visibility: Visibility.PUBLIC,
     schemaSource: { shopifyDevPrefix: "storefront" },
@@ -17419,8 +17368,7 @@ var SHOPIFY_APIS2 = {
       context: "storefront search"
     }
   },
-  [GRAPHQL_APIs.PARTNER]: {
-    name: GRAPHQL_APIs.PARTNER,
+  partner: {
     displayName: "Partner API",
     description: "The Partner API lets you programmatically access data about your Partner Dashboard, including your apps, themes, and affiliate referrals.",
     category: APICategory.GRAPHQL,
@@ -17432,8 +17380,7 @@ var SHOPIFY_APIS2 = {
       context: "app install data"
     }
   },
-  [GRAPHQL_APIs.CUSTOMER]: {
-    name: GRAPHQL_APIs.CUSTOMER,
+  customer: {
     displayName: "Customer Account API",
     description: "The Customer Account API allows customers to access their own data including orders, payment methods, and addresses.",
     category: APICategory.GRAPHQL,
@@ -17445,8 +17392,7 @@ var SHOPIFY_APIS2 = {
       context: "customer order history"
     }
   },
-  [GRAPHQL_APIs.PAYMENTS_APPS]: {
-    name: GRAPHQL_APIs.PAYMENTS_APPS,
+  "payments-apps": {
     displayName: "Payments Apps API",
     description: "The Payments Apps API enables payment providers to integrate their payment solutions with Shopify's checkout.",
     category: APICategory.GRAPHQL,
@@ -17458,8 +17404,7 @@ var SHOPIFY_APIS2 = {
       context: "pending a payment session"
     }
   },
-  [FUNCTIONS_APIs.FUNCTIONS]: {
-    name: FUNCTIONS_APIs.FUNCTIONS,
+  functions: {
     displayName: "Shopify Functions",
     description: "Shopify Functions allow developers to customize the backend logic that powers parts of Shopify. Available APIs: Discount, Cart and Checkout Validation, Cart Transform, Pickup Point Delivery Option Generator, Delivery Customization, Fulfillment Constraints, Local Pickup Delivery Option Generator, Order Routing Location Rule, Payment Customization",
     category: APICategory.FUNCTIONS,
@@ -17471,8 +17416,7 @@ var SHOPIFY_APIS2 = {
     }
   },
   // Function-specific GraphQL APIs for input query validation
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_CART_CHECKOUT_VALIDATION]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_CART_CHECKOUT_VALIDATION,
+  functions_cart_checkout_validation: {
     displayName: "Cart Checkout Validation Function",
     description: "GraphQL schema for Cart and Checkout Validation Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
@@ -17481,16 +17425,14 @@ var SHOPIFY_APIS2 = {
       shopifyDevPrefix: "functions_cart_checkout_validation_schema"
     }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_CART_TRANSFORM]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_CART_TRANSFORM,
+  functions_cart_transform: {
     displayName: "Cart Transform Function",
     description: "GraphQL schema for Cart Transform Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
     visibility: Visibility.PUBLIC,
     schemaSource: { shopifyDevPrefix: "functions_cart_transform_schema" }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DELIVERY_CUSTOMIZATION]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DELIVERY_CUSTOMIZATION,
+  functions_delivery_customization: {
     displayName: "Delivery Customization Function",
     description: "GraphQL schema for Delivery Customization Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
@@ -17499,24 +17441,21 @@ var SHOPIFY_APIS2 = {
       shopifyDevPrefix: "functions_delivery_customization_schema"
     }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DISCOUNT]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DISCOUNT,
+  functions_discount: {
     displayName: "Discount Function",
     description: "GraphQL schema for Discount Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
     visibility: Visibility.PUBLIC,
     schemaSource: { shopifyDevPrefix: "functions_discount_schema" }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DISCOUNTS_ALLOCATOR]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_DISCOUNTS_ALLOCATOR,
+  functions_discounts_allocator: {
     displayName: "Discounts Allocator Function",
     description: "GraphQL schema for Discounts Allocator Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
     visibility: Visibility.PUBLIC,
     schemaSource: { shopifyDevPrefix: "functions_discounts_allocator_schema" }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_FULFILLMENT_CONSTRAINTS]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_FULFILLMENT_CONSTRAINTS,
+  functions_fulfillment_constraints: {
     displayName: "Fulfillment Constraints Function",
     description: "GraphQL schema for Fulfillment Constraints Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
@@ -17525,8 +17464,7 @@ var SHOPIFY_APIS2 = {
       shopifyDevPrefix: "functions_fulfillment_constraints_schema"
     }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_LOCAL_PICKUP_DELIVERY_OPTION_GENERATOR]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_LOCAL_PICKUP_DELIVERY_OPTION_GENERATOR,
+  functions_local_pickup_delivery_option_generator: {
     displayName: "Local Pickup Delivery Option Generator Function",
     description: "GraphQL schema for Local Pickup Delivery Option Generator Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
@@ -17535,16 +17473,14 @@ var SHOPIFY_APIS2 = {
       shopifyDevPrefix: "functions_local_pickup_delivery_option_generator_schema"
     }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_ORDER_DISCOUNTS]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_ORDER_DISCOUNTS,
+  functions_order_discounts: {
     displayName: "Order Discounts Function",
     description: "GraphQL schema for Order Discounts Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
     visibility: Visibility.PUBLIC,
     schemaSource: { shopifyDevPrefix: "functions_order_discounts_schema" }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_ORDER_ROUTING_LOCATION_RULE]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_ORDER_ROUTING_LOCATION_RULE,
+  functions_order_routing_location_rule: {
     displayName: "Order Routing Location Rule Function",
     description: "GraphQL schema for Order Routing Location Rule Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
@@ -17553,8 +17489,7 @@ var SHOPIFY_APIS2 = {
       shopifyDevPrefix: "functions_order_routing_location_rule_schema"
     }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PAYMENT_CUSTOMIZATION]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PAYMENT_CUSTOMIZATION,
+  functions_payment_customization: {
     displayName: "Payment Customization Function",
     description: "GraphQL schema for Payment Customization Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
@@ -17563,8 +17498,7 @@ var SHOPIFY_APIS2 = {
       shopifyDevPrefix: "functions_payment_customization_schema"
     }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PICKUP_POINT_DELIVERY_OPTION_GENERATOR]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PICKUP_POINT_DELIVERY_OPTION_GENERATOR,
+  functions_pickup_point_delivery_option_generator: {
     displayName: "Pickup Point Delivery Option Generator Function",
     description: "GraphQL schema for Pickup Point Delivery Option Generator Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
@@ -17573,24 +17507,21 @@ var SHOPIFY_APIS2 = {
       shopifyDevPrefix: "functions_pickup_point_delivery_option_generator_schema"
     }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PRODUCT_DISCOUNTS]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_PRODUCT_DISCOUNTS,
+  functions_product_discounts: {
     displayName: "Product Discounts Function",
     description: "GraphQL schema for Product Discounts Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
     visibility: Visibility.PUBLIC,
     schemaSource: { shopifyDevPrefix: "functions_product_discounts_schema" }
   },
-  [FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_SHIPPING_DISCOUNTS]: {
-    name: FUNCTION_GRAPHQL_SCHEMAS.FUNCTIONS_SHIPPING_DISCOUNTS,
+  functions_shipping_discounts: {
     displayName: "Shipping Discounts Function",
     description: "GraphQL schema for Shipping Discounts Function input queries",
     category: APICategory.FUNCTION_GRAPHQL,
     visibility: Visibility.PUBLIC,
     schemaSource: { shopifyDevPrefix: "functions_shipping_discounts_schema" }
   },
-  [TYPESCRIPT_APIs.POLARIS_APP_HOME]: {
-    name: TYPESCRIPT_APIs.POLARIS_APP_HOME,
+  "polaris-app-home": {
     displayName: "Polaris App Home",
     description: "Build your app's primary user interface embedded in the Shopify admin. If the prompt just mentions `Polaris` and you can't tell based off of the context what API they meant, assume they meant this API.",
     category: APICategory.UI_FRAMEWORK,
@@ -17602,13 +17533,14 @@ var SHOPIFY_APIS2 = {
       context: "form in app home"
     }
   },
-  [TYPESCRIPT_APIs.POLARIS_ADMIN_EXTENSIONS]: {
-    name: TYPESCRIPT_APIs.POLARIS_ADMIN_EXTENSIONS,
+  "polaris-admin-extensions": {
     displayName: "Polaris Admin Extensions",
     description: `Add custom actions and blocks from your app at contextually relevant spots throughout the Shopify Admin. Admin UI Extensions also supports scaffolding new adminextensions using Shopify CLI commands.`,
     category: APICategory.UI_FRAMEWORK,
     publicPackages: ["@shopify/ui-extensions"],
     extensionSurfaceName: "admin",
+    extensionTypeName: "Admin Extensions",
+    extensionSearchContext: "admin UI extensions",
     visibility: Visibility.PUBLIC,
     validation: true,
     exampleVectorStoreQuery: {
@@ -17616,13 +17548,14 @@ var SHOPIFY_APIS2 = {
       context: "text input in an admin extension"
     }
   },
-  [TYPESCRIPT_APIs.POLARIS_CHECKOUT_EXTENSIONS]: {
-    name: TYPESCRIPT_APIs.POLARIS_CHECKOUT_EXTENSIONS,
+  "polaris-checkout-extensions": {
     displayName: "Polaris Checkout Extensions",
     description: `Build custom functionality that merchants can install at defined points in the checkout flow, including product information, shipping, payment, order summary, and Shop Pay. Checkout UI Extensions also supports scaffolding new checkout extensions using Shopify CLI commands.`,
     category: APICategory.UI_FRAMEWORK,
     publicPackages: ["@shopify/ui-extensions"],
     extensionSurfaceName: "checkout",
+    extensionTypeName: "Checkout Extensions",
+    extensionSearchContext: "checkout UI extensions",
     visibility: Visibility.PUBLIC,
     validation: true,
     exampleVectorStoreQuery: {
@@ -17630,13 +17563,14 @@ var SHOPIFY_APIS2 = {
       context: "checkout button"
     }
   },
-  [TYPESCRIPT_APIs.POLARIS_CUSTOMER_ACCOUNT_EXTENSIONS]: {
-    name: TYPESCRIPT_APIs.POLARIS_CUSTOMER_ACCOUNT_EXTENSIONS,
+  "polaris-customer-account-extensions": {
     displayName: "Polaris Customer Account Extensions",
     description: `Build custom functionality that merchants can install at defined points on the Order index, Order status, and Profile pages in customer accounts. Customer Account UI Extensions also supports scaffolding new customer account extensions using Shopify CLI commands.`,
     category: APICategory.UI_FRAMEWORK,
     publicPackages: ["@shopify/ui-extensions"],
     extensionSurfaceName: "customer-account",
+    extensionTypeName: "Customer Account Extensions",
+    extensionSearchContext: "customer account UI extensions",
     visibility: Visibility.PUBLIC,
     validation: true,
     exampleVectorStoreQuery: {
@@ -17644,13 +17578,14 @@ var SHOPIFY_APIS2 = {
       context: "customer account card"
     }
   },
-  [TYPESCRIPT_APIs.POS_UI]: {
-    name: TYPESCRIPT_APIs.POS_UI,
+  "pos-ui": {
     displayName: "POS UI",
     description: `Build retail point-of-sale applications using Shopify's POS UI components. These components provide a consistent and familiar interface for POS applications. POS UI Extensions also supports scaffolding new POS extensions using Shopify CLI commands. Keywords: POS, Retail, smart grid`,
     category: APICategory.UI_FRAMEWORK,
     publicPackages: ["@shopify/ui-extensions"],
     extensionSurfaceName: "point-of-sale",
+    extensionTypeName: "POS UI Extensions",
+    extensionSearchContext: "POS UI extensions",
     visibility: Visibility.PUBLIC,
     validation: true,
     exampleVectorStoreQuery: {
@@ -17658,8 +17593,7 @@ var SHOPIFY_APIS2 = {
       context: "POS screen layout"
     }
   },
-  [TYPESCRIPT_APIs.HYDROGEN]: {
-    name: TYPESCRIPT_APIs.HYDROGEN,
+  hydrogen: {
     displayName: "Hydrogen",
     description: "Hydrogen storefront implementation cookbooks. Some of the available recipes are: B2B Commerce, Bundles, Combined Listings, Custom Cart Method, Dynamic Content with Metaobjects, Express Server, Google Tag Manager Integration, Infinite Scroll, Legacy Customer Account Flow, Markets, Partytown + Google Tag Manager, Subscriptions, Third-party API Queries and Caching. MANDATORY: Use this API for ANY Hydrogen storefront question - do NOT use Storefront GraphQL when 'Hydrogen' is mentioned.",
     category: APICategory.UI_FRAMEWORK,
@@ -17671,8 +17605,7 @@ var SHOPIFY_APIS2 = {
       context: "cart UI"
     }
   },
-  [TYPESCRIPT_APIs.STOREFRONT_WEB_COMPONENTS]: {
-    name: TYPESCRIPT_APIs.STOREFRONT_WEB_COMPONENTS,
+  "storefront-web-components": {
     displayName: "Storefront Web Components",
     description: "HTML-first web components for building storefronts WITHOUT GraphQL. Choose when prompts mention: Web Components, HTML tags (<shopify-store>, <shopify-context>, <shopify-cart>, <shopify-variant-selector>, <shopify-money>), native <dialog>, 'HTML-only', 'without JavaScript', or 'no GraphQL'. Components handle data fetching and state internally.",
     category: APICategory.UI_FRAMEWORK,
@@ -17681,10 +17614,13 @@ var SHOPIFY_APIS2 = {
     // Docs has <script src="https://cdn.shopify.com/storefront/web-components.js"></script> and not a npm package
     publicPackages: ["@shopify/polaris-types", "@shopify/app-bridge-types"],
     visibility: Visibility.EARLY_ACCESS,
-    validation: true
+    validation: true,
+    exampleVectorStoreQuery: {
+      query: "shopify-cart",
+      context: "cart web component"
+    }
   },
-  [THEME_APIs.LIQUID]: {
-    name: THEME_APIs.LIQUID,
+  liquid: {
     displayName: "Liquid",
     description: "Liquid is an open-source templating language created by Shopify. It is the backbone of Shopify themes and is used to load dynamic content on storefronts. Keywords: liquid, theme, shopify-theme, liquid-component, liquid-block, liquid-section, liquid-snippet, liquid-schemas, shopify-theme-schemas",
     category: APICategory.THEME,
@@ -17696,15 +17632,39 @@ var SHOPIFY_APIS2 = {
       context: "product metafield access in a theme"
     }
   },
-  [CONFIGURATION_APIs.CUSTOM_DATA]: {
-    name: CONFIGURATION_APIs.CUSTOM_DATA,
+  "custom-data": {
     displayName: "Custom Data",
     description: "MUST be used first when prompts mention Metafields or Metaobjects. Use Metafields and Metaobjects to model and store custom data for your app. Metafields extend built-in Shopify data types like products or customers, Metaobjects are custom data types that can be used to store bespoke data structures. Metafield and Metaobject definitions provide a schema and configuration for values to follow.",
     category: APICategory.CONFIGURATION,
     visibility: Visibility.PUBLIC,
     searchable: false
+  },
+  "app-store-review": {
+    displayName: "App Store Review",
+    description: "Run a pre-submission compliance check against your Shopify app's codebase. Reviews App Store requirements and surfaces likely issues before you submit for official review.",
+    category: APICategory.GUIDANCE,
+    visibility: Visibility.PUBLIC,
+    searchable: false,
+    compatibility: "Claude Code, Claude Desktop, Cursor"
+  },
+  "onboarding-dev": {
+    displayName: "Developer Onboarding",
+    description: "Get started building on Shopify. Use when a developer asks to build an app, build a theme, create a dev store, set up a partner account, scaffold a project, or get started developing for Shopify. NOT for merchants managing stores.",
+    category: APICategory.GUIDANCE,
+    visibility: Visibility.PUBLIC,
+    searchable: false,
+    compatibility: "Claude Code, Claude Desktop, Cursor"
+  },
+  "onboarding-merchant": {
+    displayName: "Merchant Onboarding",
+    description: "Set up and connect a Shopify store from your AI assistant. Use when the user wants to: set up my Shopify store, connect my store, install Shopify plugin, get started with Shopify, manage my store, add products to my store, merchant onboarding, start selling online, Shopify setup help, create my first store, how do I set up an online store, import products, migrate from Square, migrate from WooCommerce, migrate from Etsy, migrate from Amazon, migrate from eBay, migrate from Wix, import from Google Merchant Center, migrate from Clover, migrate from Lightspeed, move products to Shopify, import catalog, replatform to Shopify. This is for store owners \u2014 not developers.",
+    category: APICategory.GUIDANCE,
+    visibility: Visibility.PUBLIC,
+    searchable: false,
+    compatibility: "Claude Code, Claude Desktop, Cursor",
+    frontmatterExtras: { context: "fork", maintainer: "Shopify" }
   }
-};
+});
 
 // src/schemaOperations/loadAPISchemas.ts
 function getDataDirectory() {
@@ -17724,6 +17684,22 @@ function getDataDirectory() {
   return path.resolve(currentDir, "../data");
 }
 var dataDir = getDataDirectory();
+function configuredSchemaPath(api) {
+  const apiConfig = SHOPIFY_APIS[api];
+  if (apiConfig?.gqlSchemaPath) return apiConfig.gqlSchemaPath;
+  if (apiConfig?.gqlSchemaFileName) {
+    return path.join(dataDir, apiConfig.gqlSchemaFileName);
+  }
+  return void 0;
+}
+function schemaPathFor(api, versionName) {
+  return configuredSchemaPath(api) ?? path.join(dataDir, `${api}_${versionName}.json`);
+}
+function deriveVersionNameFromSchemaFile(fileName) {
+  const baseName = fileName.replace(/\.json(?:\.gz)?$/, "");
+  const versionSeparatorIndex = baseName.lastIndexOf("_");
+  return versionSeparatorIndex === -1 ? "latest" : baseName.slice(versionSeparatorIndex + 1);
+}
 function loadAPISchemas(apis, schemaOptions) {
   if (apis.length === 0) {
     throw new Error("No APIs provided");
@@ -17738,7 +17714,7 @@ function loadAPISchemas(apis, schemaOptions) {
       {
         ...schemaOptions,
         api: apis[0],
-        schemaPath: schemaOptions.schemaPath ?? SHOPIFY_APIS2[apis[0]]?.gqlSchemaPath ?? path.join(dataDir, `${apis[0]}_${schemaOptions.name}.json`)
+        schemaPath: schemaOptions.schemaPath ?? schemaPathFor(apis[0], schemaOptions.name)
       }
     ];
   }
@@ -17753,15 +17729,18 @@ function loadAPISchemas(apis, schemaOptions) {
       const versionsWithApi = versions.map((v) => ({
         ...v,
         api,
-        schemaPath: SHOPIFY_APIS2[api]?.gqlSchemaPath ?? path.join(dataDir, `${api}_${v.name}.json`)
+        schemaPath: schemaPathFor(api, v.name)
       }));
       apiVersions.push(...versionsWithApi);
-    } else if (SHOPIFY_APIS2[api]?.gqlSchemaPath) {
+    } else {
+      const apiConfig = SHOPIFY_APIS[api];
+      const configuredPath = configuredSchemaPath(api);
+      if (!configuredPath) continue;
       apiVersions.push({
-        name: "latest",
+        name: apiConfig?.gqlSchemaFileName ? deriveVersionNameFromSchemaFile(apiConfig.gqlSchemaFileName) : "latest",
         latestVersion: true,
         api,
-        schemaPath: SHOPIFY_APIS2[api].gqlSchemaPath
+        schemaPath: configuredPath
       });
     }
   }
@@ -18186,7 +18165,7 @@ async function reportValidation(toolName, result, context) {
       Accept: "application/json",
       "Cache-Control": "no-cache",
       "X-Shopify-Surface": "skills",
-      "X-Shopify-MCP-Version": "1.1.0",
+      "X-Shopify-MCP-Version": "1.8.0",
       "X-Shopify-Timestamp": (/* @__PURE__ */ new Date()).toISOString()
     };
     if (clientName) headers["X-Shopify-Client-Name"] = String(clientName);
@@ -18200,7 +18179,7 @@ async function reportValidation(toolName, result, context) {
         tool: toolName,
         parameters: {
           skill: "shopify-payments-apps",
-          skillVersion: "1.1.0",
+          skillVersion: "1.8.0",
           ...remainingContext
         },
         result

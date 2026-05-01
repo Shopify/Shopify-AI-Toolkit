@@ -4,7 +4,7 @@ description: "Build your app's primary user interface embedded in the Shopify ad
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.1.0"
+  version: "1.8.0"
 ---
 
 ## Required Tool Calls (do not skip)
@@ -47,7 +47,7 @@ Components available for Polaris App Home.
 These examples have all the props available for the component. Some example values for these props are provided.
 Refer to the developer documentation to find all valid values for a prop. Ensure the component is available for the target you are using.
 
-```html
+```tsx
 <s-avatar
   initials="JD"
   src="https://example.com/avatar.jpg"
@@ -58,7 +58,7 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
   >Fulfilled</s-badge
 >
 <s-banner heading="Important" tone="info" dismissible>Message content</s-banner>
-<s-box padding="base" background="subdued" border="base" border-radius="base"
+<s-box padding="base" background="subdued" border="base" borderRadius="base"
   >Content</s-box
 >
 <s-button variant="primary" tone="auto" icon="save" type="submit"
@@ -69,7 +69,7 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
   ><s-button variant="secondary">Cancel</s-button></s-button-group
 >
 <s-checkbox label="Accept terms" name="terms" value="accepted"></s-checkbox>
-<s-chip color="base" accessibility-label="Tag">Category</s-chip>
+<s-chip color="base" accessibilityLabel="Tag">Category</s-chip>
 <s-choice-list label="Options" name="options"
   ><s-choice value="1">Option 1</s-choice
   ><s-choice value="2">Option 2</s-choice></s-choice-list
@@ -77,7 +77,7 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
 <s-clickable href="/products/42" padding="base" background="subdued"
   >Click area</s-clickable
 >
-<s-clickable-chip color="strong" removable accessibility-label="Filter"
+<s-clickable-chip color="strong" removable accessibilityLabel="Filter"
   >Active</s-clickable-chip
 >
 <s-color-field
@@ -113,7 +113,7 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
   autocomplete="email"
   required
 ></s-email-field>
-<s-grid grid-template-columns="1fr 1fr" gap="base"
+<s-grid gridTemplateColumns="1fr 1fr" gap="base"
   ><s-box>Col 1</s-box><s-box>Col 2</s-box></s-grid
 >
 <s-heading>Section Title</s-heading>
@@ -121,13 +121,13 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
 <s-image
   src="https://example.com/image.png"
   alt="Description"
-  aspect-ratio="16/9"
-  object-fit="cover"
+  aspectRatio="16/9"
+  objectFit="cover"
   loading="lazy"
 ></s-image>
 <s-link href="https://example.com" tone="auto">Link text</s-link>
-<s-button command-for="actions-menu" icon="menu-vertical"></s-button>
-<s-menu id="actions-menu" accessibility-label="Actions"
+<s-button commandFor="actions-menu" icon="menu-vertical"></s-button>
+<s-menu id="actions-menu" accessibilityLabel="Actions"
   ><s-button icon="edit" variant="tertiary">Edit</s-button></s-menu
 >
 <s-modal id="my-modal" heading="Title" size="base"
@@ -136,22 +136,22 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
 <s-money-field
   label="Amount"
   name="amount"
-  min="{0}"
-  max="{999999}"
+  min={0}
+  max={999999}
 ></s-money-field>
 <s-number-field
   label="Quantity"
   name="qty"
-  min="{1}"
-  max="{100}"
-  step="{1}"
-  input-mode="numeric"
+  min={1}
+  max={100}
+  step={1}
+  inputMode="numeric"
 ></s-number-field>
 <s-ordered-list
   ><s-list-item>First</s-list-item
   ><s-list-item>Second</s-list-item></s-ordered-list
 >
-<s-page heading="Products" inline-size="base"
+<s-page heading="Products" inlineSize="base"
   ><s-section heading="All products"
     ><s-text>Content</s-text></s-section
   ></s-page
@@ -161,18 +161,18 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
   label="Password"
   name="password"
   autocomplete="current-password"
-  min-length="8"
+  minLength={8}
   required
 ></s-password-field>
-<s-popover id="pop" inline-size="300px"
+<s-popover id="pop" inlineSize="300px"
   ><s-box padding="base"><s-text>Popover content</s-text></s-box></s-popover
 >
-<s-query-container container-name="main">Content</s-query-container>
+<s-query-container containerName="main">Content</s-query-container>
 <s-search-field
   label="Search"
   name="query"
   placeholder="Search..."
-  label-accessibility-visibility="exclusive"
+  labelAccessibilityVisibility="exclusive"
 ></s-search-field>
 <s-section heading="Section" padding="base"
   ><s-text>Section content</s-text></s-section
@@ -180,15 +180,15 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
 <s-select label="Choose" name="choice" placeholder="Select..."
   ><s-option value="a">A</s-option><s-option value="b">B</s-option></s-select
 >
-<s-spinner size="base" accessibility-label="Loading"></s-spinner>
-<s-stack direction="inline" gap="base" align-items="center"
+<s-spinner size="base" accessibilityLabel="Loading"></s-spinner>
+<s-stack direction="inline" gap="base" alignItems="center"
   ><s-text>Item 1</s-text><s-text>Item 2</s-text></s-stack
 >
 <s-switch label="Enable" name="enabled" checked></s-switch>
 <s-table variant="auto"
   ><s-table-header-row
-    ><s-table-header list-slot="primary">Name</s-table-header
-    ><s-table-header list-slot="labeled" format="currency"
+    ><s-table-header listSlot="primary">Name</s-table-header
+    ><s-table-header listSlot="labeled" format="currency"
       >Price</s-table-header
     ></s-table-header-row
   ><s-table-body
@@ -202,8 +202,8 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
 <s-text-area
   label="Description"
   name="desc"
-  rows="{4}"
-  max-length="{500}"
+  rows={4}
+  maxLength={500}
 ></s-text-area>
 <s-text-field
   label="Name"
@@ -217,7 +217,7 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
   alt="Product"
   size="small"
 ></s-thumbnail>
-<s-icon type="info" interest-for="my-tip"></s-icon
+<s-icon type="info" interestFor="my-tip"></s-icon
 ><s-tooltip id="my-tip">Hover for info</s-tooltip>
 <s-unordered-list
   ><s-list-item>Item A</s-list-item
@@ -254,10 +254,10 @@ When the user asks for Polaris web components (e.g. `s-page`, `s-badge`, `s-butt
 
 **Web component attribute rules:**
 
-- Use **kebab-case** attribute names: `align-items`, `grid-template-columns`, `border-radius` — NOT camelCase (`alignItems`, `gridTemplateColumns`)
+- Use **camelCase** prop names: `alignItems`, `gridTemplateColumns`, `borderRadius` — NOT hyphenated (`align-items`, `grid-template-columns`)
 - **Boolean attributes** (`disabled`, `loading`, `dismissible`, `checked`, `defaultChecked`, `required`, `removable`, `alpha`, `multiple`) accept shorthand or `{expression}`:
   - ✅ `<s-button disabled>`, `<s-switch checked={isEnabled} />`, `<s-banner dismissible>`
-- **String keyword attributes** (`padding`, `gap`, `direction`, `tone`, `variant`, `size`, `background`, `align-items`, `inline-size`) must be string values — never shorthand or `{true}`:
+- **String keyword attributes** (`padding`, `gap`, `direction`, `tone`, `variant`, `size`, `background`, `alignItems`, `inlineSize`) must be string values — never shorthand or `{true}`:
   - ✅ `<s-box padding="base">`, `<s-stack gap="loose" direction="block">`, `<s-badge tone="success">`
   - ❌ `<s-box padding>`, `<s-stack gap={true}>` — boolean shorthand on string props fails TypeScript
 ---

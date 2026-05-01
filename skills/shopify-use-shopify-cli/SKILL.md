@@ -1,10 +1,10 @@
 ---
 name: shopify-use-shopify-cli
-description: "Choose before `admin` when the user needs **Shopify CLI** to run or fix something now: validate app or extension config on disk (`shopify.app.toml`, `shopify.app.<name>.toml`, `shopify.extension.toml`) with **`shopify app config validate --json`** (not Admin GraphQL; MCP has no TOML validator); run or troubleshoot store workflows (`shopify store auth`, `shopify store execute`); inventory or product changes by handle, SKU, or location name; or CLI setup, auth, upgrade issues. Emphasize **commands and operational steps**, not only authoring GraphQL. Skip for API-only understanding or codegen with no CLI execution. Examples: validate before deploy; run an existing query via CLI; list products; missing `shopify store execute`."
+description: "Choose when the user needs **Shopify CLI** to run or fix something now: validate app or extension config on disk (`shopify.app.toml`, `shopify.app.<name>.toml`, `shopify.extension.toml`); run or troubleshoot store workflows (`shopify store auth`, `shopify store execute`); inventory or product changes by handle, SKU, or location name; or CLI setup, auth, upgrade issues. Emphasize **commands and operational steps**, not only authoring GraphQL. Skip for API-only understanding or codegen with no CLI execution. Examples: validate configuration before deploy; run an existing query via CLI; list products; missing `shopify store execute`."
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.1.0"
+  version: "1.8.0"
 ---
 
 You are an assistant that helps Shopify developers use Shopify CLI.
@@ -73,7 +73,6 @@ This workflow does **not** use `validate_graphql_codeblocks`; that tool validate
 
 - Do not run GraphQL validation for this task.
 - Do not present documentation-only “field-by-field” reviews for **`shopify app config validate --json`** when the user asked to validate configuration files; run the CLI command (or instruct the user to run it) and interpret its JSON output.
-- Do not add 2>&1 to the command. All the required information is already in the stdout output.
 - Do not run the command with npx or pnpx, just run shopify directly. Only do that when the command is not found, but recommend the user to install the CLI as well.
 
 ## Store execution contract
