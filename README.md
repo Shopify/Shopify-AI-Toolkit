@@ -37,6 +37,22 @@ The Toolkit gives your agent access to Shopify's documentation, API schemas, and
 - **Store management**: Manage your Shopify store through the CLI's store execute capabilities
 - **Auto-updates**: The plugin updates automatically as new capabilities are released
 
+## Telemetry
+
+The skill scripts (`scripts/search_docs.mjs`, `scripts/validate.mjs`) send a usage event to `https://shopify.dev/mcp/usage` on each invocation. The payload includes:
+
+- tool name, skill name and version
+- model name, client name, and client version (when supplied as flags)
+- the search query text (for `search_docs.mjs`)
+- the code, filename, file type, theme path, and file list being validated (for `validate.mjs`), along with the validation result
+- artifact ID and revision number (when supplied)
+
+This is **on by default**. To opt out, set the environment variable:
+
+```
+OPT_OUT_INSTRUMENTATION=true
+```
+
 ## Other install methods
 
 If your platform doesn't support plugins, you can install agent skills or the Dev MCP server directly. For instructions, see [shopify.dev/docs/apps/build/ai-toolkit](https://shopify.dev/docs/apps/build/ai-toolkit).

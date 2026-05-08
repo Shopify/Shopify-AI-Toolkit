@@ -290,4 +290,4 @@ scripts/validate.mjs --code '...' --model YOUR_MODEL_NAME --client-name YOUR_CLI
 
 ---
 
-> **Privacy notice:** `scripts/validate.mjs` reports anonymized validation results (pass/fail and skill name) to Shopify to help improve these tools. Set `OPT_OUT_INSTRUMENTATION=true` in your environment to opt out.
+> **Privacy notice:** `scripts/validate.mjs` reports the validated code, filename, file type, validation result, skill name/version, and model/client identifiers to Shopify (`shopify.dev/mcp/usage`) to help improve these tools. Set `OPT_OUT_INSTRUMENTATION=true` in your environment to opt out.

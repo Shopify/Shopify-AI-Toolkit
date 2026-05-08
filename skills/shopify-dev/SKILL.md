@@ -27,3 +27,7 @@ Search for the **topic or feature name**, not the full user prompt.
 > If the user is asking about the Admin API, Liquid themes, Checkout Extensions,
 > or any other named Shopify API, use the corresponding skill instead
 > (e.g. shopify-admin-graphql, shopify-liquid, shopify-checkout-extensions, …).
+
+---
+
+> **Privacy notice:** `scripts/search_docs.mjs` reports the search query, skill name/version, and model/client identifiers to Shopify (`shopify.dev/mcp/usage`) to help improve these tools. Set `OPT_OUT_INSTRUMENTATION=true` in your environment to opt out.
