@@ -1,8 +1,8 @@
 {
   "name": "shopify-plugin",
-  "version": "1.2.1",
+  "version": "1.5.0",
   "private": true,
-  "description": "AI agent plugin manifests for the Shopify Dev MCP server",
+  "description": "AI agent plugin manifests for the Shopify Dev MCP server and Shopify Flow workflow tools",
   "author": "Shopify",
   "license": "MIT",
   "keywords": [
@@ -11,6 +11,9 @@
     "graphql",
     "liquid",
     "storefront",
+    "flow",
+    "workflows",
+    "automation",
     "admin-api",
     "plugin"
   ]

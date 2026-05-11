@@ -4,14 +4,14 @@
     "name": "Shopify"
   },
   "metadata": {
-    "description": "Shopify developer tools for Claude Code"
+    "description": "Shopify developer tools for Claude Code, including Shopify Flow workflow tooling"
   },
   "plugins": [
     {
       "name": "shopify-plugin",
       "source": "./",
-      "description": "Search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code",
-      "version": "1.2.1",
+      "description": "Search Shopify docs, generate and validate GraphQL, Liquid, UI extension code, and Shopify Flow workflows",
+      "version": "1.5.0",
       "author": { "name": "Shopify" },
       "license": "MIT",
       "homepage": "https://github.com/Shopify/Shopify-AI-Toolkit",
@@ -21,6 +21,9 @@
         "graphql",
         "liquid",
         "storefront",
+        "flow",
+        "workflows",
+        "automation",
         "admin-api"
       ]
     }

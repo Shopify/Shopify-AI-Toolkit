@@ -4,13 +4,13 @@
     "name": "Shopify"
   },
   "metadata": {
-    "description": "Shopify AI toolkit plugins for Cursor"
+    "description": "Shopify AI toolkit plugins for Cursor, including Shopify Flow workflow tooling"
   },
   "plugins": [
     {
       "name": "shopify-plugin",
       "source": "./",
-      "description": "Search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code",
+      "description": "Search Shopify docs, generate and validate GraphQL, Liquid, UI extension code, and Shopify Flow workflows",
       "version": "1.2.1",
       "author": { "name": "Shopify" },
       "license": "MIT",
@@ -21,6 +21,9 @@
         "graphql",
         "liquid",
         "storefront",
+        "flow",
+        "workflows",
+        "automation",
         "admin-api"
       ]
     }

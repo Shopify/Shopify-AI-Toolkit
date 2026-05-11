@@ -2,7 +2,7 @@
 
 Connect your AI tools to the Shopify platform. 
 
-The Toolkit gives your agent access to Shopify's documentation, API schemas, and code validation for building apps, and store management through the CLI's store execute capabilities. For more info, [see the docs](https://shopify.dev/docs/apps/build/ai-toolkit).
+The Toolkit gives your agent access to Shopify's documentation, API schemas, code validation for building apps, store management through CLI capabilities, and Shopify Flow workflow tooling. For more info, [see the docs](https://shopify.dev/docs/apps/build/ai-toolkit).
 
 ## Install
 
@@ -35,6 +35,7 @@ The Toolkit gives your agent access to Shopify's documentation, API schemas, and
 - **Docs and API schemas**: Search Shopify's documentation and API schemas without leaving your editor
 - **Code validation**: Validate GraphQL queries, Liquid templates, and UI extensions against Shopify's schemas
 - **Store management**: Manage your Shopify store through the CLI's store execute capabilities
+- **Flow workflows**: Search Flow templates and build or update workflows through CLI-backed tooling
 - **Auto-updates**: The plugin updates automatically as new capabilities are released
 
 ## Other install methods
