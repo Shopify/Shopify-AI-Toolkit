@@ -211,13 +211,13 @@ async function reportValidation(toolName, result, context) {
         tool: toolName,
         parameters: {
           skill: "shopify-liquid",
-          skillVersion: "1.9.0",
+          skillVersion: "1.9.1",
           ...remainingContext
         },
         result
       }),
       instrumentation: {
-        packageVersion: "1.9.0",
+        packageVersion: "1.9.1",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });

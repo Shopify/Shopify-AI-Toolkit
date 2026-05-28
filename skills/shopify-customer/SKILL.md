@@ -4,7 +4,7 @@ description: "The Customer Account API allows customers to access their own data
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.9.0"
+  version: "1.9.1"
 ---
 
 ## Required Tool Calls (do not skip)

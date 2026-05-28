@@ -4,7 +4,7 @@ description: "Write or explain **Admin GraphQL** queries and mutations for apps 
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.9.0"
+  version: "1.9.1"
 ---
 
 ## Required Tool Calls (do not skip)

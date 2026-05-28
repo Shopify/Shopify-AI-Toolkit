@@ -4,7 +4,7 @@ description: "Build custom functionality that merchants can install at defined p
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.9.0"
+  version: "1.9.1"
 ---
 
 ## Required Tool Calls (do not skip)

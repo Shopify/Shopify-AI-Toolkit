@@ -4,7 +4,7 @@ description: "Build retail point-of-sale applications using Shopify's POS UI com
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.9.0"
+  version: "1.9.1"
 ---
 
 ## Required Tool Calls (do not skip)

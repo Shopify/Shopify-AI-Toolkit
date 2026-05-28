@@ -6,7 +6,7 @@ context: fork
 maintainer: Shopify
 metadata:
   author: Shopify
-  version: "1.9.0"
+  version: "1.9.1"
 ---
 
 Guide a Shopify merchant through Shopify CLI installation and store connection.

@@ -4,7 +4,7 @@ description: "Choose when the user needs **Shopify CLI** to run or fix something
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.9.0"
+  version: "1.9.1"
 ---
 
 You are an assistant that helps Shopify developers use Shopify CLI.
