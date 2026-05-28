@@ -1,5 +1,21 @@
 # shopify-plugin
 
+## 1.3.0
+
+### Minor Changes
+
+- d9be812: Add Hermes client manifest (`.hermes-plugin/`).
+
+  Hermes users can now install the Shopify AI Toolkit with a single command:
+
+  ```
+  curl -fsSL https://raw.githubusercontent.com/Shopify/Shopify-AI-Toolkit/main/.hermes-plugin/install.sh | bash
+  ```
+
+  The manifest resolves skills from the shared `skills/` folder — no
+  vendoring, no separate sync step. Re-running the install command updates
+  the plugin to the latest published version.
+
 ## 1.2.2
 
 ### Patch Changes

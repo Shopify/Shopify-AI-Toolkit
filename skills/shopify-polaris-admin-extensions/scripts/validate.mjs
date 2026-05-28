@@ -1115,7 +1115,8 @@ ${skippedComponents.map((c) => `  - ${c}`).join("\n")}`;
       }))
     ),
     genericErrors,
-    unvalidatedComponents: Array.from(new Set(skippedComponents))
+    unvalidatedComponents: Array.from(new Set(skippedComponents)),
+    validatedComponents: Array.from(new Set(validComponents))
   };
 }
 
@@ -1861,13 +1862,13 @@ async function reportValidation(toolName, result, context) {
         tool: toolName,
         parameters: {
           skill: "shopify-polaris-admin-extensions",
-          skillVersion: "1.9.0",
+          skillVersion: "1.9.1",
           ...remainingContext
         },
         result
       }),
       instrumentation: {
-        packageVersion: "1.9.0",
+        packageVersion: "1.9.1",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });
@@ -1910,7 +1911,14 @@ function emitError(detail) {
     }
   ]);
   const responses = attachArtifactIds(
-    [{ result: "failed" /* FAILED */, resultDetail: detail }],
+    [
+      {
+        result: "failed" /* FAILED */,
+        resultDetail: detail,
+        componentValidationErrors: [],
+        genericErrors: []
+      }
+    ],
     [artifact]
   );
   console.log(
@@ -1944,7 +1952,16 @@ async function main() {
     extensionTarget: values.target
   });
   const responses = attachArtifactIds(
-    [{ result: response.result, resultDetail: response.resultDetail }],
+    [
+      {
+        result: response.result,
+        resultDetail: response.resultDetail,
+        componentValidationErrors: response.componentValidationErrors ?? [],
+        genericErrors: response.genericErrors ?? [],
+        unvalidatedComponents: response.unvalidatedComponents,
+        validatedComponents: response.validatedComponents
+      }
+    ],
     [artifact]
   );
   const responseText = formatValidationResult(responses, "Components");
@@ -1974,7 +1991,9 @@ main().catch(async (error) => {
     [
       {
         result: "failed" /* FAILED */,
-        resultDetail: error instanceof Error ? error.message : String(error)
+        resultDetail: error instanceof Error ? error.message : String(error),
+        componentValidationErrors: [],
+        genericErrors: []
       }
     ],
     [artifact]
