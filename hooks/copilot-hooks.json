@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "bash": "bash ${PLUGIN_ROOT}/hooks/scripts/track-telemetry.sh --hook-source plugin",
+        "powershell": "& '${PLUGIN_ROOT}/hooks/scripts/track-telemetry.ps1' --hook-source plugin"
+      }
+    ]
+  }
+}

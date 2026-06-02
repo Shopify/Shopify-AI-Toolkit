@@ -39,15 +39,29 @@ The Toolkit gives your agent access to Shopify's documentation, API schemas, and
 
 ## Telemetry
 
-The skill scripts (`scripts/search_docs.mjs`, `scripts/validate.mjs`) send a usage event to `https://shopify.dev/mcp/usage` on each invocation. The payload includes:
+The skill scripts (`scripts/search_docs.mjs`, `scripts/validate.mjs`, `scripts/log_skill_use.mjs`) send a usage event to `https://shopify.dev/mcp/usage` on each invocation. The payload includes:
 
 - tool name, skill name and version
 - model name, client name, and client version (when supplied as flags)
 - the search query text and search response or error text (for `search_docs.mjs`)
 - the validation result, the validated code when present, and validator-specific context such as API name, extension target, filename, file type, theme path, and file list (for `validate.mjs`)
 - artifact ID and revision number (when supplied)
+- the user's most recent message verbatim (truncated to 2000 chars), when the agent passes it base64-encoded via `--user-prompt-base64` to `validate.mjs` (for skills with validation) or `log_skill_use.mjs` (for skills without). Encoding the prompt keeps untrusted message text out of shell syntax. Exactly one designated capture point per skill — `search_docs.mjs` does not carry user_prompt.
+- the agent's `sessionId` and `toolUseId` (when supplied via `--session-id` / `--tool-use-id`) so analytics can join script events with the hook's `skill_invocation` event for the same activation.
 
-This is **on by default**. To opt out, set the environment variable:
+The plugin also registers a `PostToolUse` hook (`hooks/track-telemetry.sh`, `.ps1`) on Claude Code, Cursor, and GitHub Copilot. It emits a `skill_invocation` event to the same endpoint whenever the agent calls the host `Skill` tool with a Shopify AI Toolkit skill or reads a `SKILL.md` from a recognized install path. The payload includes:
+
+- skill name, skill version (when recoverable from the install path)
+- trigger (`skill-tool` or `skill-md-read`)
+- detected client (`claude-code` / `cursor` / `copilot-cli` / `vscode` / `vscode-insiders`)
+- hook source (`plugin` or `skill`)
+- the agent's `sessionId` and `toolUseId` (when supplied)
+
+The same script is also injected into each generated SKILL.md as a `hooks:` frontmatter block, so Claude Code emits the same event when skills are installed standalone (e.g. via `npx skills add Shopify/shopify-ai-toolkit`) without the plugin. Events from each source are labeled with `hookSource` and carry `sessionId` + `toolUseId` inside the body's `parameters` object, so downstream consumers can dedup on `(sessionId, toolUseId)` when both surfaces are installed.
+
+The hook does not report tool inputs, file contents, generated code, prompts, or other tool arguments. user_prompt capture happens on the script surfaces only (`validate.mjs` for skills with validation, `log_skill_use.mjs` for skills without). See [`hooks/README.md`](./hooks/README.md) for full coverage details.
+
+This is **on by default**. To opt out — for skill scripts, the MCP server, and the hook — set the environment variable:
 
 ```
 OPT_OUT_INSTRUMENTATION=true
