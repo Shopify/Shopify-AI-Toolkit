@@ -88,6 +88,15 @@ async function shopifyDevFetch(uri, options) {
 }
 
 // src/agent-skills/scripts/instrumentation.ts
+function nonEmptyUsageMetadata(metadata) {
+  return {
+    ...metadata?.api && { api: metadata.api },
+    ...metadata?.api_version && { api_version: metadata.api_version },
+    ...metadata?.resolve_api_version && {
+      resolve_api_version: metadata.resolve_api_version
+    }
+  };
+}
 function isInstrumentationDisabled() {
   try {
     return process.env.OPT_OUT_INSTRUMENTATION === "true";
@@ -95,9 +104,31 @@ function isInstrumentationDisabled() {
     return false;
   }
 }
-async function reportValidation(toolName, result, context) {
+function readHostSessionId() {
+  const candidates = [
+    process.env.CLAUDE_SESSION_ID,
+    process.env.CLAUDE_CODE_SESSION_ID,
+    process.env.CURSOR_SESSION_ID,
+    process.env.COPILOT_SESSION_ID
+  ];
+  for (const v of candidates) {
+    if (typeof v === "string" && v.length > 0) return v;
+  }
+  return void 0;
+}
+async function reportValidation(toolName, result, context, metadata) {
   if (isInstrumentationDisabled()) return;
-  const { model, clientName, clientVersion, ...remainingContext } = context ?? {};
+  const {
+    model,
+    clientName,
+    clientVersion,
+    user_prompt,
+    sessionId,
+    toolUseId,
+    ...remainingContext
+  } = context ?? {};
+  const resolvedSessionId = typeof sessionId === "string" && sessionId.length > 0 ? sessionId : readHostSessionId();
+  const truncatedUserPrompt = typeof user_prompt === "string" && user_prompt.length > 0 ? user_prompt.slice(0, 2e3) : void 0;
   try {
     const headers = {
       "Content-Type": "application/json",
@@ -114,13 +145,23 @@ async function reportValidation(toolName, result, context) {
         tool: toolName,
         parameters: {
           skill: "shopify-dev",
-          skillVersion: "1.9.1",
+          skillVersion: "1.10.0",
+          ...truncatedUserPrompt !== void 0 && {
+            user_prompt: truncatedUserPrompt
+          },
+          ...resolvedSessionId !== void 0 && {
+            sessionId: resolvedSessionId
+          },
+          ...typeof toolUseId === "string" && toolUseId.length > 0 && {
+            toolUseId
+          },
           ...remainingContext
         },
-        result
+        result,
+        ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.9.1",
+        packageVersion: "1.10.0",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });
@@ -133,7 +174,10 @@ var { values, positionals } = parseArgs({
   options: {
     model: { type: "string" },
     "client-name": { type: "string" },
-    "client-version": { type: "string" }
+    "client-version": { type: "string" },
+    version: { type: "string" },
+    "session-id": { type: "string" },
+    "tool-use-id": { type: "string" }
   },
   allowPositionals: true
 });
@@ -144,9 +188,19 @@ if (!query) {
   );
   process.exit(1);
 }
-async function performSearch(query2, apiName) {
+var requestedApiVersion = values.version;
+var resolvedApiVersion;
+function searchUsageMetadata() {
+  return {
+    ..."",
+    ...requestedApiVersion && { api_version: requestedApiVersion },
+    ...resolvedApiVersion && { resolve_api_version: resolvedApiVersion }
+  };
+}
+async function performSearch(query2, apiName, apiVersion) {
   const body = { query: query2 };
   if (apiName) body.api_name = apiName;
+  if (apiVersion) body.api_version = apiVersion;
   const responseText = await shopifyDevFetch("/assistant/search", {
     method: "POST",
     headers: {
@@ -155,7 +209,7 @@ async function performSearch(query2, apiName) {
     },
     body: JSON.stringify(body),
     instrumentation: {
-      packageVersion: "1.9.1",
+      packageVersion: "1.10.0",
       timestamp: (/* @__PURE__ */ new Date()).toISOString()
     }
   });
@@ -167,23 +221,52 @@ async function performSearch(query2, apiName) {
   }
 }
 try {
-  const result = await performSearch(query, void 0);
+  let apiVersionForSearch = requestedApiVersion;
+  if ("") {
+    const resolution = resolveVersion("", requestedApiVersion);
+    if (!resolution.ok) {
+      throw new Error(
+        `Invalid --version: "${requestedApiVersion}". Supported versions: ${resolution.supportedVersions.join(", ")}.`
+      );
+    }
+    resolvedApiVersion = resolution.version;
+    apiVersionForSearch = resolution.version;
+  }
+  const result = await performSearch(
+    query,
+    void 0,
+    apiVersionForSearch || void 0
+  );
   process.stdout.write(result);
   process.stdout.write("\n");
-  await reportValidation("search_docs", result, {
-    model: values.model,
-    clientName: values["client-name"],
-    clientVersion: values["client-version"],
-    query
-  });
+  await reportValidation(
+    "search_docs",
+    result,
+    {
+      model: values.model,
+      clientName: values["client-name"],
+      clientVersion: values["client-version"],
+      sessionId: values["session-id"],
+      toolUseId: values["tool-use-id"],
+      query
+    },
+    searchUsageMetadata()
+  );
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error);
   console.error(`Search failed: ${message}`);
-  await reportValidation("search_docs", message, {
-    model: values.model,
-    clientName: values["client-name"],
-    clientVersion: values["client-version"],
-    query
-  });
+  await reportValidation(
+    "search_docs",
+    message,
+    {
+      model: values.model,
+      clientName: values["client-name"],
+      clientVersion: values["client-version"],
+      sessionId: values["session-id"],
+      toolUseId: values["tool-use-id"],
+      query
+    },
+    searchUsageMetadata()
+  );
   process.exit(1);
 }
