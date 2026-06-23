@@ -42,8 +42,8 @@ The lockfile records `workflow_id`, `workflow_definition_version`, `payload_sha2
 Use this when adopting IaC on a shop that already has workflows in the UI:
 
 ```bash
-shopify flow init --store shop.myshopify.com
-shopify flow workflow pull --all
+node scripts/flow.mjs init --store shop.myshopify.com
+node scripts/flow.mjs workflow pull --all
 git add flow.toml workflows/
 git commit -m "Bootstrap Flow IaC from shop.myshopify.com"
 ```
@@ -57,20 +57,20 @@ git commit -m "Bootstrap Flow IaC from shop.myshopify.com"
 #    The agent edits the JSON directly. Same shape as workflow-create-or-update tool args.
 
 # 2. Validate against the shop (no writes):
-shopify flow workflow validate workflows/high-value-orders/workflow.flow.json --store shop1.my.shop.dev
+node scripts/flow.mjs workflow validate workflows/high-value-orders/workflow.flow.json --store shop1.my.shop.dev
 
 # 3. Push (creates or updates, writes/refreshes the lockfile):
-shopify flow workflow push workflows/high-value-orders/workflow.flow.json --store shop1.my.shop.dev
+node scripts/flow.mjs workflow push workflows/high-value-orders/workflow.flow.json --store shop1.my.shop.dev
 
 # 4. Inspect drift between local and remote:
-shopify flow workflow diff workflows/high-value-orders/workflow.flow.json --store shop1.my.shop.dev
+node scripts/flow.mjs workflow diff workflows/high-value-orders/workflow.flow.json --store shop1.my.shop.dev
 #   Exit 0 = clean, exit 1 = differences
 
 # 5. Activate the pushed definition:
-shopify flow workflow activate workflows/high-value-orders/workflow.flow.json --store shop1.my.shop.dev
+node scripts/flow.mjs workflow activate workflows/high-value-orders/workflow.flow.json --store shop1.my.shop.dev
 
 # 6. Deactivate when needed:
-shopify flow workflow deactivate workflows/high-value-orders/workflow.flow.json --store shop1.my.shop.dev
+node scripts/flow.mjs workflow deactivate workflows/high-value-orders/workflow.flow.json --store shop1.my.shop.dev
 ```
 
 ## What the commands do under the hood
@@ -89,16 +89,16 @@ Most lifecycle commands accept `--store`, but if a `flow.toml` is present in cwd
 
 ```bash
 # (a) lockfile-driven (default)
-shopify flow workflow activate workflows/high-value-orders/workflow.flow.json --store shop.myshopify.com
+node scripts/flow.mjs workflow activate workflows/high-value-orders/workflow.flow.json --store shop.myshopify.com
 
 # (b) explicit id + version (no lockfile required)
-shopify flow workflow activate \
+node scripts/flow.mjs workflow activate \
   --workflow-id 01HQK... \
   --workflow-version 01HQL... \
   --store shop.myshopify.com
 
 # (c) latest main version via lookup
-shopify flow workflow activate \
+node scripts/flow.mjs workflow activate \
   --workflow-id 01HQK... \
   --use-latest \
   --store shop.myshopify.com
@@ -121,27 +121,27 @@ Both `push` and `pull` write files in canonical form: keys sorted alphabetically
 ```bash
 # Once flow.toml is initialized, --store is read from it. You can omit --store
 # from every command below if cwd is inside the project.
-shopify flow init --store shop1.my.shop.dev
+node scripts/flow.mjs init --store shop1.my.shop.dev
 
 # Initial scaffold from a template
-shopify flow tool call template-search --arguments '{"search_queries":["tag high-value orders"]}'
+node scripts/flow.mjs tool call template-search --arguments '{"search_queries":["tag high-value orders"]}'
 
 # Save the chosen template's workflow_json into a local file
 # workflows/high-value-orders/workflow.flow.json
 
-shopify flow workflow validate workflows/high-value-orders/workflow.flow.json
+node scripts/flow.mjs workflow validate workflows/high-value-orders/workflow.flow.json
 # → Workflow is valid.
 
-shopify flow workflow push workflows/high-value-orders/workflow.flow.json
+node scripts/flow.mjs workflow push workflows/high-value-orders/workflow.flow.json
 # → Pushed workflow 01HQK... (version 01HQL...). Lockfile updated.
 
 git add workflows/high-value-orders/
 git commit -m "Add high-value-orders workflow"
 
-shopify flow workflow activate workflows/high-value-orders/workflow.flow.json
+node scripts/flow.mjs workflow activate workflows/high-value-orders/workflow.flow.json
 # → Activated workflow 01HQK... (version 01HQL...).
 
-shopify flow workflow status
+node scripts/flow.mjs workflow status
 # → clean: 1, drifted: 0, new: 0, orphaned: 0, unknown: 0
 ```
 
