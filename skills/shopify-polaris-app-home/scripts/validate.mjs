@@ -247,7 +247,11 @@ var SHOPIFY_APIS = defineApis({
     displayName: "Polaris App Home",
     description: "Build your app's primary user interface embedded in the Shopify admin. If the prompt just mentions `Polaris` and you can't tell based off of the context what API they meant, assume they meant this API.",
     category: APICategory.UI_FRAMEWORK,
-    publicPackages: ["@shopify/polaris-types", "@shopify/app-bridge-types"],
+    publicPackages: [
+      "@shopify/polaris-types",
+      "@shopify/app-bridge-types",
+      "@shopify/app-bridge-react"
+    ],
     visibility: Visibility.PUBLIC,
     validation: true,
     exampleVectorStoreQuery: {
@@ -1302,7 +1306,8 @@ var svgTagNames = [
 // src/validation/extractComponentValidations.ts
 var DIAGNOSTIC_CODES = {
   NAMESPACE_USED_AS_VALUE: 2708,
-  TYPE_NOT_ASSIGNABLE: 2322
+  TYPE_NOT_ASSIGNABLE: 2322,
+  CANNOT_FIND_NAME: 2304
 };
 var PATTERNS = {
   PROPERTY_NOT_EXIST: /Property '(\w+)' does not exist on type/,
@@ -1321,6 +1326,46 @@ var PATTERNS = {
   CSS_PROPERTIES_COMPAT: /CSSProperties/,
   OBJECT_IS_UNKNOWN: /Object is of type 'unknown'/
 };
+var HTML_GLOBAL_ATTRIBUTES = /* @__PURE__ */ new Set([
+  // Core globals
+  "class",
+  "style",
+  "title",
+  "id",
+  "slot",
+  "role",
+  "hidden",
+  "lang",
+  "dir",
+  "tabindex",
+  "inert",
+  "part",
+  "is",
+  "nonce",
+  "popover",
+  // Editing / interaction globals
+  "contenteditable",
+  "draggable",
+  "spellcheck",
+  "translate",
+  "autocapitalize",
+  "autofocus",
+  "accesskey",
+  "enterkeyhint",
+  "inputmode"
+]);
+var HTML_SUPPRESSED_TARGET = /^(number|boolean)(\s*\|\s*(number|boolean|undefined|null))*$/;
+function isHtmlGlobalAttribute(name) {
+  return HTML_GLOBAL_ATTRIBUTES.has(name) || /^on[a-z]+$/.test(name);
+}
+function isHtmlStringCoercion(message) {
+  const match = message.match(PATTERNS.TYPE_NOT_ASSIGNABLE);
+  if (!match) return false;
+  const actual = match[1];
+  const expected = match[2];
+  if (actual !== "string") return false;
+  return HTML_SUPPRESSED_TARGET.test(expected.trim());
+}
 function isStandardHTMLElement(tagName) {
   return html_tags_default.includes(tagName);
 }
@@ -1499,7 +1544,8 @@ function checkHyphenatedAttributes(node) {
   return errors;
 }
 function extractComponentValidations(originalCode, diagnostics, shopifyWebComponents, options = {}) {
-  const { enforceShopifyOnlyComponents = false } = options;
+  const { enforceShopifyOnlyComponents = false, language } = options;
+  const htmlMode = language === "html";
   const validations = [];
   const handledDiagnostics = /* @__PURE__ */ new Set();
   const sourceFile = ts2.createSourceFile(
@@ -1524,7 +1570,7 @@ function extractComponentValidations(originalCode, diagnostics, shopifyWebCompon
       validations.push(nonShopifyComponentValidationResult);
       continue;
     }
-    const { errors, handledDiagnostics: componentHandledDiagnostics } = getComponentErrors(start, end, diagnostics);
+    const { errors, handledDiagnostics: componentHandledDiagnostics } = getComponentErrors(start, end, diagnostics, htmlMode);
     componentHandledDiagnostics.forEach((d) => handledDiagnostics.add(d));
     const hyphenatedErrors = checkHyphenatedAttributes(node);
     errors.push(...hyphenatedErrors);
@@ -1537,7 +1583,7 @@ function extractComponentValidations(originalCode, diagnostics, shopifyWebCompon
   const unhandledDiagnostics = diagnostics.filter(
     (d) => !handledDiagnostics.has(d)
   );
-  const genericErrors = unhandledDiagnostics.filter(shouldIncludeDiagnostic).filter(shouldIncludeGenericDiagnostic).map((d) => ({
+  const genericErrors = unhandledDiagnostics.filter((d) => shouldIncludeDiagnostic(d, htmlMode)).filter(shouldIncludeGenericDiagnostic).map((d) => ({
     message: ts2.flattenDiagnosticMessageText(d.messageText, "\n"),
     code: d.code,
     start: d.start,
@@ -1545,13 +1591,22 @@ function extractComponentValidations(originalCode, diagnostics, shopifyWebCompon
   }));
   return { validations, genericErrors };
 }
-function shouldIncludeDiagnostic(diagnostic) {
+function shouldIncludeDiagnostic(diagnostic, htmlMode = false) {
   if (diagnostic.start === void 0 || diagnostic.length === void 0) {
     return false;
   }
   const message = ts2.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
   if (diagnostic.code === DIAGNOSTIC_CODES.NAMESPACE_USED_AS_VALUE) {
     return false;
+  }
+  if (htmlMode) {
+    const globalAttrMatch = message.match(PATTERNS.PROPERTY_NOT_EXIST);
+    if (globalAttrMatch && isHtmlGlobalAttribute(globalAttrMatch[1])) {
+      return false;
+    }
+    if (isHtmlStringCoercion(message)) {
+      return false;
+    }
   }
   if (message.includes("Cannot find module") && !message.match(PATTERNS.SHOPIFY_MODULE)) {
     return false;
@@ -1568,8 +1623,11 @@ function shouldIncludeGenericDiagnostic(diagnostic) {
   }
   return true;
 }
-function isRelevantDiagnostic(diagnostic, componentStart, componentEnd) {
-  if (!shouldIncludeDiagnostic(diagnostic)) {
+function isRelevantDiagnostic(diagnostic, componentStart, componentEnd, htmlMode = false) {
+  if (!shouldIncludeDiagnostic(diagnostic, htmlMode)) {
+    return false;
+  }
+  if (diagnostic.code === DIAGNOSTIC_CODES.CANNOT_FIND_NAME) {
     return false;
   }
   const diagnosticStart = diagnostic.start;
@@ -1580,11 +1638,11 @@ function isRelevantDiagnostic(diagnostic, componentStart, componentEnd) {
   }
   return true;
 }
-function getComponentErrors(componentStart, componentEnd, diagnostics) {
+function getComponentErrors(componentStart, componentEnd, diagnostics, htmlMode = false) {
   const errors = [];
   const handledDiagnostics = [];
   const relevantDiagnostics = diagnostics.filter(
-    (diagnostic) => isRelevantDiagnostic(diagnostic, componentStart, componentEnd)
+    (diagnostic) => isRelevantDiagnostic(diagnostic, componentStart, componentEnd, htmlMode)
   );
   for (const diagnostic of relevantDiagnostics) {
     const message = ts2.flattenDiagnosticMessageText(
@@ -1702,9 +1760,20 @@ function extractShopifyComponents(content, packageName) {
       return extractAppBridgeElements(content);
     case "@shopify/hydrogen":
       return extractHydrogenComponents(content);
+    case "@shopify/app-bridge-react":
+      return extractAppBridgeReactComponents(content);
     default:
       return [];
   }
+}
+function extractAppBridgeReactComponents(content) {
+  const components = [];
+  const re = /(?:export\s+)?declare\s+const\s+(\w+)\s*:\s*React\.(?:ComponentType|ForwardRefExoticComponent)\b/g;
+  let match;
+  while ((match = re.exec(content)) !== null) {
+    components.push(match[1]);
+  }
+  return [...new Set(components)];
 }
 function extractWebComponentTagNames(content) {
   const components = [];
@@ -2237,6 +2306,9 @@ async function loadTypesIntoTSEnv(api, apiVersion, virtualEnv, extensionTarget) 
         shopifyWebComponents
       );
     }
+    if (pkg === "@shopify/app-bridge-types") {
+      addAppBridgePreactJSXShim(virtualEnv);
+    }
   }
   return {
     missingPackages,
@@ -2247,6 +2319,25 @@ async function loadTypesIntoTSEnv(api, apiVersion, virtualEnv, extensionTarget) 
     invalidTarget
   };
 }
+function addAppBridgePreactJSXShim(virtualEnv) {
+  const currentDir = fileURLToPath2(import.meta.url);
+  const packageRoot = path2.resolve(currentDir, "../..");
+  const shimPath = path2.join(
+    packageRoot,
+    "__shims__",
+    "app-bridge-preact-jsx.d.ts"
+  );
+  const shimContent = [
+    `import type { AppBridgeElements } from "@shopify/app-bridge-types/dist/shopify";`,
+    `declare module "preact" {`,
+    `  namespace createElement.JSX {`,
+    `    interface IntrinsicElements extends AppBridgeElements {}`,
+    `  }`,
+    `}`,
+    ``
+  ].join("\n");
+  addFileToVirtualEnv(virtualEnv, shimPath, shimContent);
+}
 
 // src/validation/validateComponentCodeBlock.ts
 var ENFORCE_SHOPIFY_ONLY_COMPONENTS_APIS = [
@@ -2255,9 +2346,15 @@ var ENFORCE_SHOPIFY_ONLY_COMPONENTS_APIS = [
   "polaris-customer-account-extensions",
   "pos-ui"
 ];
+var RAW_HTML_COMPONENT_VALIDATION_APIS = [
+  "polaris-app-home"
+];
+function supportsRawHtmlComponentValidation(apiName2) {
+  return RAW_HTML_COMPONENT_VALIDATION_APIS.includes(apiName2);
+}
 async function validateComponentCodeBlock(input) {
   try {
-    const { code: code2, apiName: apiName2, version, extensionTarget } = input;
+    const { code: code2, apiName: apiName2, version, extensionTarget, language } = input;
     if (!apiName2) {
       return {
         result: "failed" /* FAILED */,
@@ -2275,6 +2372,12 @@ async function validateComponentCodeBlock(input) {
       return {
         result: "failed" /* FAILED */,
         resultDetail: `Validation failed: Unknown API: ${apiName2}`
+      };
+    }
+    if (language === "html" && !supportsRawHtmlComponentValidation(apiName2)) {
+      return {
+        result: "failed" /* FAILED */,
+        resultDetail: `Validation failed: HTML validation mode is only supported for API 'polaris-app-home'. Other UI framework APIs must use JSX/TSX code blocks.`
       };
     }
     if (apiEntry.extensionSurfaceName && !extensionTarget) {
@@ -2346,7 +2449,7 @@ ${installCmd}`
       codeWithImports,
       diagnostics,
       shopifyWebComponents,
-      { enforceShopifyOnlyComponents }
+      { enforceShopifyOnlyComponents, language }
     );
     return formatValidationResponse(validations, genericErrors);
   } catch (error) {
@@ -2394,7 +2497,7 @@ function formatValidationResult(result, itemName = "Items") {
   if (hasFailed) {
     overallStatus = "\u274C INVALID";
   } else if (hasInform) {
-    overallStatus = "\u26A0\uFE0F VALID (with deprecated fields)";
+    overallStatus = "\u26A0\uFE0F VALID (with warnings)";
   } else {
     overallStatus = "\u2705 VALID";
   }
@@ -2591,7 +2694,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-polaris-app-home",
-          skillVersion: "1.10.0",
+          skillVersion: "1.11.0",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -2607,7 +2710,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.10.0",
+        packageVersion: "1.11.0",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });
@@ -2631,6 +2734,7 @@ var { values } = parseArgs({
     "user-prompt-base64": { type: "string" },
     "session-id": { type: "string" },
     "tool-use-id": { type: "string" },
+    language: { type: "string" },
     json: { type: "boolean" }
   }
 });
@@ -2712,7 +2816,9 @@ async function main() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     apiName,
     version: resolvedVersion,
-    extensionTarget: values.target
+    extensionTarget: values.target,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    language: values.language
   });
   const responses = attachArtifactIds(
     [

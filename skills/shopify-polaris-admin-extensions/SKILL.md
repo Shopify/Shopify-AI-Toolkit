@@ -4,7 +4,7 @@ description: "Add custom actions and blocks from your app at contextually releva
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.10.0"
+  version: "1.11.0"
 hooks:
   PostToolUse:
     - matcher: Skill

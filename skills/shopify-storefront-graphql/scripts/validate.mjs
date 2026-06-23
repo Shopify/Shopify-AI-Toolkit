@@ -17554,7 +17554,11 @@ var SHOPIFY_APIS = defineApis({
     displayName: "Polaris App Home",
     description: "Build your app's primary user interface embedded in the Shopify admin. If the prompt just mentions `Polaris` and you can't tell based off of the context what API they meant, assume they meant this API.",
     category: APICategory.UI_FRAMEWORK,
-    publicPackages: ["@shopify/polaris-types", "@shopify/app-bridge-types"],
+    publicPackages: [
+      "@shopify/polaris-types",
+      "@shopify/app-bridge-types",
+      "@shopify/app-bridge-react"
+    ],
     visibility: Visibility.PUBLIC,
     validation: true,
     exampleVectorStoreQuery: {
@@ -18586,9 +18590,6 @@ async function loadAndBuildGraphQLSchema(apiVersion) {
     for (const type of schemaData.__schema.types) {
       if (type.kind === "INPUT_OBJECT" && type.inputFields && type.inputFields.length === 0) {
         emptyInputTypes.add(type.name);
-        console.debug(
-          `Found empty INPUT_OBJECT type in ${apiVersion.api}: ${type.name}`
-        );
       }
     }
     if (emptyInputTypes.size > 0) {
@@ -18608,9 +18609,6 @@ async function loadAndBuildGraphQLSchema(apiVersion) {
               deprecationReason: null
             }
           ];
-          console.debug(
-            `Patched empty INPUT_OBJECT type in ${apiVersion.api}: ${type.name}`
-          );
         }
       }
     }
@@ -18742,7 +18740,7 @@ function formatValidationResult(result, itemName = "Items") {
   if (hasFailed) {
     overallStatus = "\u274C INVALID";
   } else if (hasInform) {
-    overallStatus = "\u26A0\uFE0F VALID (with deprecated fields)";
+    overallStatus = "\u26A0\uFE0F VALID (with warnings)";
   } else {
     overallStatus = "\u2705 VALID";
   }
@@ -18939,7 +18937,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-storefront-graphql",
-          skillVersion: "1.10.0",
+          skillVersion: "1.11.0",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -18955,7 +18953,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.10.0",
+        packageVersion: "1.11.0",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });

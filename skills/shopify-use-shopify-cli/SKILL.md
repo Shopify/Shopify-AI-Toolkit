@@ -4,7 +4,7 @@ description: "Choose when the user needs **Shopify CLI** to run or fix something
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.10.0"
+  version: "1.11.0"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -83,10 +83,15 @@ When a Shopify CLI command is missing or unavailable while the user is trying to
 You MUST prefix Shopify CLI calls you execute yourself with these env vars:
 
 ```bash
-SHOPIFY_CLI_AGENT_INFO="n:YOUR_AGENT_NAME|v:YOUR_AGENT_VERSION|p:YOUR_AGENT_PROVIDER" SHOPIFY_CLI_AGENT_IDS="s:YOUR_SESSION_ID|r:YOUR_RUN_ID|i:YOUR_INSTANCE_ID" shopify ...
+SHOPIFY_CLI_AGENT_INFO="n:YOUR_AGENT_NAME|v:YOUR_AGENT_VERSION|p:YOUR_AGENT_PROVIDER|m:YOUR_MODEL" SHOPIFY_CLI_AGENT_IDS="s:YOUR_SESSION_ID|r:YOUR_RUN_ID|i:YOUR_INSTANCE_ID" shopify ...
 ```
 
-- `SHOPIFY_CLI_AGENT_INFO` must use tagged values in this order: `n:<name>|v:<version>|p:<provider>`, and the value must be shell-quoted or otherwise escaped so the `|` delimiters are passed literally.
+- `SHOPIFY_CLI_AGENT_INFO` must use tagged values in this order: `n:<name>|v:<version>|p:<provider>|m:<model>`, and the value must be shell-quoted or otherwise escaped so the `|` delimiters are passed literally.
+  - `n:` is the agent/client product name, e.g. `claude-code`, `cursor`, `codex`, `gemini-cli`. This is the tool, not the provider and not the model.
+  - `v:` is the version of that agent/client product (e.g. `1.2.3`). This is NOT the model version and NOT the Shopify CLI version. Send the full version string the host reports; do not collapse it to `1` or `1.0`.
+  - `p:` is the model provider, e.g. `anthropic`, `openai`, `google`.
+  - `m:` is your full model name/ID, e.g. `claude-opus-4-8`, `claude-sonnet-4-6`, `gpt-5`, `gemini-2.5-pro`. This is the actual model, not the provider.
+  - Always use the real runtime values the host exposes. Do NOT guess: if you cannot resolve a field, set it to `none` rather than a generic or placeholder value (for example, do not put the provider in `m:`, and do not send `v:` as `1.0`). Accurate values help us improve CLI tooling and documentation quality.
 - `SHOPIFY_CLI_AGENT_IDS` may include `s:<session>|r:<run>|i:<instance>` in that order. Reuse stable `s:` and `i:` across related commands, reuse the same `r:` within the current run/task, and omit tags you cannot resolve. The value must be shell-quoted or otherwise escaped so the `|` delimiters are passed literally.
 - Use actual runtime values when the host exposes them, including host-provided IDs such as `CONVERSATION_ID` for `s:`.
 - Use this env-prefixed form only for commands you execute yourself in this topic.

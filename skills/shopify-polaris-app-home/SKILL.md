@@ -4,7 +4,7 @@ description: "Build your app's primary user interface embedded in the Shopify ad
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.10.0"
+  version: "1.11.0"
 hooks:
   PostToolUse:
     - matcher: Skill
