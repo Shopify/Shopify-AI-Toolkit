@@ -4,7 +4,7 @@ description: "Run a pre-submission compliance check against your Shopify app's c
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
-  version: "1.10.0"
+  version: "1.11.0"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -72,13 +72,20 @@ Report this list in the **Skipped groups** section of the output (see Output For
 
 ## List of Requirements
 
-Fetch the canonical, up-to-date list of requirements from:
+Fetch the canonical, up-to-date list of requirements before evaluating anything. Follow these steps exactly:
 
-```
-https://shopify.dev/docs/apps/launch/app-store-review/app-store-ai-self-review-requirements
-```
+1. **Change into the app's project directory.** Run the fetch from the root of the app you're reviewing.
+2. **Fetch the requirements with the Shopify CLI's `doc fetch` command.** Do not use a browser, web-fetch tool, `curl`, or any other tool:
 
-That page is the source of truth — it contains every requirement to be evaluated, each with a **Description** and **Verification guidance**. Use whatever web-fetching capability you have (e.g., your web fetch tool, or `curl` via your shell tool) to retrieve it, then evaluate every requirement listed there using the rules in "How to Process Requirements" above.
+   ```
+   shopify doc fetch --url https://shopify.dev/docs/apps/launch/app-store-review/app-store-ai-self-review-requirements
+   ```
+
+   Optionally pass `--output <path>` to save the Markdown to a file instead of printing it to stdout (e.g. `--output app-store-review-requirements.md`).
+
+3. **If the command isn't available, update the Shopify CLI to the latest version and try again.** Do not fall back to fetching the page another way.
+
+The fetched Markdown is the source of truth — it contains every requirement to be evaluated, each with a **Description** and **Verification guidance**. Evaluate every requirement listed there using the rules in "How to Process Requirements" above.
 
 Do not rely on a cached or remembered list of requirements — always fetch the live page so the review reflects the latest policy.
 

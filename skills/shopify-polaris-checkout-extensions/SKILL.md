@@ -4,7 +4,7 @@ description: "Build custom functionality that merchants can install at defined p
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.10.0"
+  version: "1.11.0"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -250,7 +250,7 @@ Polaris web components are custom HTML elements with an `s-` prefix. These are g
 ```tsx
 // No import needed — s-banner, s-badge, s-button, etc. are globally available
 <s-banner tone="warning">Age verification required</s-banner>
-<s-badge tone="success">Payment captured</s-badge>
+<s-badge tone="neutral">Payment captured</s-badge>
 ```
 
 When the user asks for Polaris web components (e.g. `s-banner`, `s-badge`, `s-button`, `s-text`), use the web component tag syntax above.
@@ -261,7 +261,7 @@ When the user asks for Polaris web components (e.g. `s-banner`, `s-badge`, `s-bu
 - **Boolean attributes** (`disabled`, `loading`, `dismissible`, `checked`, `defaultChecked`, `required`, `multiple`) accept shorthand or `{expression}`:
   - ✅ `<s-checkbox checked={includeGift === 'yes'} />`, `<s-button disabled>`, `<s-banner dismissible>`
 - **String keyword attributes** (`padding`, `gap`, `direction`, `tone`, `variant`, `size`, `background`, `alignItems`) must be string values — never shorthand or `{true}`:
-  - ✅ `<s-box padding="base">`, `<s-stack gap="loose" direction="block">`, `<s-badge tone="success">`
+  - ✅ `<s-box padding="base">`, `<s-stack gap="loose" direction="block">`, `<s-badge tone="neutral">`
   - ❌ `<s-box padding>`, `<s-stack gap={true}>` — boolean shorthand on string props fails TypeScript
 ---
 

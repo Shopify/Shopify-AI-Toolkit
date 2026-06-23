@@ -154,7 +154,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-app-store-review",
-          skillVersion: "1.10.0",
+          skillVersion: "1.11.0",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -170,7 +170,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.10.0",
+        packageVersion: "1.11.0",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });

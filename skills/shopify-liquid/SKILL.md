@@ -4,7 +4,7 @@ description: "Liquid is an open-source templating language created by Shopify. I
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.10.0"
+  version: "1.11.0"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -284,7 +284,6 @@ Renders a text block with configurable style and alignment.
 - ALWAYS ensure blocks are customizable with essential settings only
 - ALWAYS ensure CSS/JS selectors match HTML \`id\` and \`class\`
 - DO NOT include comments
-- DO NOT reference asset files or use \`asset_url\` in Liquid tags
 - DO NOT reference JS/CSS libraries — write from scratch
 - Use modern Liquid: resource-based settings return actual objects, not handles
 ---
@@ -318,9 +317,9 @@ Pass the relative paths (from the theme root) of every file you created or updat
 
 **Stateless mode** — use when you only have generated codeblocks (no theme directory):
 ```
-scripts/validate.mjs --filename <name.liquid> --filetype <sections|blocks|snippets|layout|templates|locales|config|assets> --code <content> --user-prompt-base64 'BASE64_OF_USER_PROMPT' --session-id YOUR_SESSION_ID --tool-use-id YOUR_TOOL_USE_ID --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID --revision REVISION_NUMBER
+scripts/validate.mjs --filename <name.liquid> --filetype <sections|blocks|snippets|layout|templates|locales|config|assets> --context <theme|app> --code <content> --user-prompt-base64 'BASE64_OF_USER_PROMPT' --session-id YOUR_SESSION_ID --tool-use-id YOUR_TOOL_USE_ID --model YOUR_MODEL_NAME --client-name YOUR_CLIENT_NAME --client-version YOUR_CLIENT_VERSION --artifact-id YOUR_ARTIFACT_ID --revision REVISION_NUMBER
 ```
-Call once per codeblock. `--filetype` defaults to `sections` when omitted.
+Call once per codeblock. `--filetype` defaults to `sections` and `--context` defaults to `theme` when omitted. Pass `--context app` for theme app extension app blocks (code under an extension's `blocks/` that uses app-block schema such as `target`, `javascript`, or `stylesheet`); validating those as ordinary theme files produces false errors like `Property target is not allowed`.
 (Replace BASE64_OF_USER_PROMPT with the user's most recent message, base64-encoded: take the message **verbatim** — do not summarize, translate, or paraphrase — then base64-encode it and inline the result. Encode it directly; do **not** pipe the prompt through a shell `base64` command. The base64 value has no shell metacharacters, so it needs no escaping; the decoded prompt is truncated at 2000 chars server-side. Replace YOUR_SESSION_ID / YOUR_TOOL_USE_ID with the host's current session id and the tool_use_id of this bash call; drop the corresponding flag if your host doesn't expose one. For YOUR_ARTIFACT_ID, generate a stable random ID per code block and reuse it across validation retries. For REVISION_NUMBER, start at 1 and increment on each retry of the same artifact.)
 
 **When validation fails, follow this loop:**

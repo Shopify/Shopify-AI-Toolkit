@@ -8,6 +8,10 @@
       {
         "package": "@shopify/app-bridge-types",
         "version": "0.7.0"
+      },
+      {
+        "package": "@shopify/app-bridge-react",
+        "version": "4.2.10"
       }
     ]
   },

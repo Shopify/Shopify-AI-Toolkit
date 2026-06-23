@@ -10,6 +10,7 @@ import {
   extractDocDefinition,
   FileType as NodeFileType,
   recommended,
+  Severity,
   SourceCodeType,
   toSchema,
   toSourceCode
@@ -54,7 +55,7 @@ function formatValidationResult(result, itemName = "Items") {
   if (hasFailed) {
     overallStatus = "\u274C INVALID";
   } else if (hasInform) {
-    overallStatus = "\u26A0\uFE0F VALID (with deprecated fields)";
+    overallStatus = "\u26A0\uFE0F VALID (with warnings)";
   } else {
     overallStatus = "\u2705 VALID";
   }
@@ -251,7 +252,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-liquid",
-          skillVersion: "1.10.0",
+          skillVersion: "1.11.0",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -267,7 +268,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.10.0",
+        packageVersion: "1.11.0",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });
@@ -282,6 +283,7 @@ var { values } = parseArgs({
     files: { type: "string" },
     filename: { type: "string" },
     filetype: { type: "string" },
+    context: { type: "string" },
     code: { type: "string", short: "c" },
     file: { type: "string", short: "f" },
     "artifact-id": { type: "string" },
@@ -307,6 +309,7 @@ var VALID_FILE_TYPES = [
   "snippets",
   "templates"
 ];
+var VALID_CONTEXTS = ["theme", "app"];
 async function validateFullApp(themePath, relativeFilePaths) {
   let configPath = join(themePath, ".theme-check.yml");
   try {
@@ -320,18 +323,30 @@ async function validateFullApp(themePath, relativeFilePaths) {
     (msg) => console.error(msg)
   );
   const byUri = {};
+  const hasErrorByUri = {};
   for (const offense of checkResult.offenses) {
     (byUri[offense.uri] ??= []).push(formatOffense(offense));
+    if (isFailingOffense(offense)) {
+      hasErrorByUri[offense.uri] = true;
+    }
   }
   return relativeFilePaths.map((relPath) => {
     const matchedUri = Object.keys(byUri).find(
       (u) => normalize(u).endsWith(normalize(relPath))
     );
     if (matchedUri) {
+      const findings = byUri[matchedUri].join("\n");
+      if (hasErrorByUri[matchedUri]) {
+        return {
+          result: "failed" /* FAILED */,
+          resultDetail: `${relPath}:
+${findings}`
+        };
+      }
       return {
-        result: "failed" /* FAILED */,
-        resultDetail: `${relPath}:
-${byUri[matchedUri].join("\n")}`
+        result: "inform" /* INFORM */,
+        resultDetail: `${relPath} passed all checks (with non-error findings):
+${findings}`
       };
     }
     return {
@@ -358,22 +373,33 @@ var MockFileSystem = class {
     return { type: NodeFileType.File, size: file.length };
   }
 };
-async function validateCodeblock(fileName, fileType, content) {
+async function validateCodeblock(fileName, fileType, context, content) {
   const uri = `file:///${fileType}/${fileName}`;
   const theme = { [uri]: content };
-  const LOCALE_CHECKS_TO_SKIP = /* @__PURE__ */ new Set([
+  const STATELESS_FALSE_POSITIVE_CHECKS = /* @__PURE__ */ new Set([
+    // Locale checks — need locale files co-resident
     "TranslationKeyExists",
-    "ValidSchemaTranslations"
+    "ValidSchemaTranslations",
+    // Cross-file existence checks — need the referenced file co-resident
+    "MissingTemplate",
+    "MissingAsset",
+    "ValidStaticBlockType",
+    // Theme app extension app-block asset checks — JS/CSS files are referenced
+    // from the schema, but a stateless validation request often contains only
+    // the Liquid block. Full-theme validation still catches missing/oversized
+    // assets when the extension is on disk.
+    "AssetSizeAppBlockCSS",
+    "AssetSizeAppBlockJavaScript"
   ]);
   const config = {
     checks: recommended.filter(
-      (c) => !LOCALE_CHECKS_TO_SKIP.has(
+      (c) => !STATELESS_FALSE_POSITIVE_CHECKS.has(
         c.meta?.code ?? ""
       )
     ),
     settings: {},
     rootUri: "file:///",
-    context: "theme"
+    context
   };
   const docsManager = new ThemeLiquidDocsManager();
   const sourceCode = Object.entries(theme).filter(([u]) => u.endsWith(".liquid") || u.endsWith(".json")).map(([u, c]) => toSourceCode(u, c, void 0));
@@ -385,13 +411,13 @@ async function validateCodeblock(fileName, fileType, content) {
       const blockUri = `file:///blocks/${blockName}.liquid`;
       const sc = sourceCode.find((s) => s.uri === blockUri);
       if (!sc) return void 0;
-      return toSchema("theme", blockUri, sc, async () => true);
+      return toSchema(context, blockUri, sc, async () => true);
     },
     getSectionSchema: async (sectionName) => {
       const sectionUri = `file:///sections/${sectionName}.liquid`;
       const sc = sourceCode.find((s) => s.uri === sectionUri);
       if (!sc) return void 0;
-      return toSchema("theme", sectionUri, sc, async () => true);
+      return toSchema(context, sectionUri, sc, async () => true);
     },
     async getDocDefinition(relativePath) {
       const sc = sourceCode.find(
@@ -401,10 +427,18 @@ async function validateCodeblock(fileName, fileType, content) {
       return extractDocDefinition(sc.uri, sc.ast);
     }
   });
-  if (offenses.length === 0) {
+  const errorOffenses = offenses.filter(isFailingOffense);
+  if (errorOffenses.length === 0) {
+    if (offenses.length === 0) {
+      return {
+        result: "success" /* SUCCESS */,
+        resultDetail: `${fileName} passed all checks.`
+      };
+    }
     return {
-      result: "success" /* SUCCESS */,
-      resultDetail: `${fileName} passed all checks.`
+      result: "inform" /* INFORM */,
+      resultDetail: `${fileName} passed all checks (with ${offenses.length} non-error finding(s)):
+` + offenses.map((o) => formatOffense(o)).join("\n")
     };
   }
   return {
@@ -412,14 +446,29 @@ async function validateCodeblock(fileName, fileType, content) {
     resultDetail: offenses.map((o) => formatOffense(o)).join("\n")
   };
 }
+function severityLabel(s) {
+  switch (s) {
+    case Severity.WARNING:
+      return "WARNING";
+    case Severity.INFO:
+      return "INFO";
+    case Severity.ERROR:
+    default:
+      return "ERROR";
+  }
+}
 function formatOffense(offense) {
   const line = offense.start.line + 1;
   const col = offense.start.character + 1;
-  const base = `ERROR [line ${line}, col ${col}]: ${offense.message}`;
+  const label = severityLabel(offense.severity);
+  const base = `${label} [line ${line}, col ${col}]: ${offense.message}`;
   if (offense.suggest && offense.suggest.length > 0) {
     return `${base}; SUGGESTED FIXES: ${offense.suggest.map((s) => s.message).join(" OR ")}.`;
   }
   return base;
+}
+function isFailingOffense(offense) {
+  return (offense.severity ?? Severity.ERROR) === Severity.ERROR;
 }
 function parseRevision(raw) {
   if (!raw) return void 0;
@@ -526,6 +575,16 @@ async function main() {
     );
     process.exit(1);
   }
+  const rawContext = values.context ?? "theme";
+  if (!VALID_CONTEXTS.includes(rawContext)) {
+    const { responses: responses2, text } = formatErrorResponse(
+      `Invalid --context "${rawContext}". Valid values: ${VALID_CONTEXTS.join(", ")}`
+    );
+    console.log(
+      values.json ? JSON.stringify({ success: false, responses: responses2 }) : text
+    );
+    process.exit(1);
+  }
   const [artifact] = extractArtifactsFromItems([
     {
       artifactId: values["artifact-id"],
@@ -535,6 +594,7 @@ async function main() {
   const fileResult = await validateCodeblock(
     filename,
     rawFileType,
+    rawContext,
     content
   );
   const responses = attachArtifactIds(
@@ -552,6 +612,7 @@ async function main() {
     toolUseId: values["tool-use-id"],
     filename,
     filetype: rawFileType,
+    context: rawContext,
     code: content,
     artifactId: artifact.artifactId,
     revision: artifact.revision
@@ -584,6 +645,7 @@ main().catch(async (error) => {
     toolUseId: values["tool-use-id"],
     filename: values.filename,
     filetype: values.filetype,
+    context: values.context,
     code: capturedCode,
     artifactId: artifact.artifactId,
     revision: artifact.revision

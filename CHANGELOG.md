@@ -1,5 +1,23 @@
 # shopify-plugin
 
+## 1.5.0
+
+### Minor Changes
+
+- f9cef30: Add Codex repo marketplace metadata for installing the Shopify plugin from a marketplace source.
+
+### Patch Changes
+
+- 4d50229: App review now retrieves the requirements page with the Shopify CLI's `shopify doc fetch`, giving a cleaner, more predictable fetch of the canonical Markdown than ad-hoc browser or web-fetch retrieval.
+- 5cf5a15: Fix invalid `s-badge tone="success"` examples in the checkout and customer-account extension instructions (their badge tone is `auto`/`neutral`/`critical`).
+- 0da06ce: store execute attribution: add an `m:<model>` tag to `SHOPIFY_CLI_AGENT_INFO`, give concrete per-field examples, disambiguate the version field, and add a "use `none` if unknown" rule so agent-run CLI commands stop reporting generic provider/version values and start capturing the actual model.
+- 6897a17: Remove stale JS template-literal `\$` escapes from the Functions instructions so example GraphQL operations use valid `$variable` syntax.
+- b222a16: Reduce false positives in theme validation by skipping single-codeblock checks that require co-resident files, including snippets/assets/blocks/locales.
+
+  Treat `WARNING` and `INFO` theme-check findings as advice rather than failures across MCP and CLI theme validators, while still surfacing them in result detail.
+
+- 87b0111: Reject duplicate theme codeblock paths instead of silently overwriting them, and document the `--context <theme|app>` flag in the stateless validation instructions.
+
 ## 1.4.1
 
 ### Patch Changes

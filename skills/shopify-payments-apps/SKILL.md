@@ -4,7 +4,7 @@ description: "The Payments Apps API enables payment providers to integrate their
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.10.0"
+  version: "1.11.0"
 hooks:
   PostToolUse:
     - matcher: Skill

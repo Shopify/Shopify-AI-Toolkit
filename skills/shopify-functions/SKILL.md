@@ -4,7 +4,7 @@ description: "Shopify Functions allow developers to customize the backend logic 
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.10.0"
+  version: "1.11.0"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -161,7 +161,7 @@ When using any graphql field that tags arguments YOU MUST pass in those argument
 When you make a fragment selection `... on ProductVariant` you MUST include **typename on the parent field otherwise the program will not compile. e.g. regions { **typename ... on Country { isoCode }}
 
 ```graphql
-query Input(\$excludedCollectionIds: [ID!], \$vipCollectionIds: [ID!]) {
+query Input($excludedCollectionIds: [ID!], $vipCollectionIds: [ID!]) {
   cart {
     lines {
       id
@@ -170,8 +170,8 @@ query Input(\$excludedCollectionIds: [ID!], \$vipCollectionIds: [ID!]) {
         ... on ProductVariant {
           id
           product {
-            inExcludedCollection: inAnyCollection(ids: \$excludedCollectionIds)
-            inVIPCollection: inAnyCollection(ids: \$vipCollectionIds)
+            inExcludedCollection: inAnyCollection(ids: $excludedCollectionIds)
+            inVIPCollection: inAnyCollection(ids: $vipCollectionIds)
           }
         }
       }
@@ -267,7 +267,7 @@ Example GraphQL Input Query:
 query Input {
   discount {
     # Request the metafield with the specific namespace and key
-    metafield(namespace: "\$app", key: "config") {
+    metafield(namespace: "$app", key: "config") {
       jsonValue # The value is a JSON string
     }
   }
