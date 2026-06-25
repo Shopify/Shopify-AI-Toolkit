@@ -1,6 +1,6 @@
 {
   "name": "shopify-plugin",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Shopify developer tools for OpenAI Codex — search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code. Skill scripts send usage telemetry (queries, code, model/client identifiers) to shopify.dev by default; set OPT_OUT_INSTRUMENTATION=true to disable.",
   "author": { "name": "Shopify" },
   "homepage": "https://shopify.dev/docs/apps/build/devmcp",

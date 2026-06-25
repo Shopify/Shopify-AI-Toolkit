@@ -1,5 +1,11 @@
 # shopify-plugin
 
+## 1.5.1
+
+### Patch Changes
+
+- b1a40b9: Use `log!` + `process::abort()` in the Functions `main.rs` example so the documented template matches the runtime the rest of the SKILL recommends.
+
 ## 1.5.0
 
 ### Minor Changes

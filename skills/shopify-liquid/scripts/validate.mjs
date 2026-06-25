@@ -21,7 +21,7 @@ import { themeCheckRun } from "@shopify/theme-check-node";
 // src/validation/format.ts
 import { randomUUID } from "crypto";
 
-// src/validation/index.ts
+// src/validation/graphql.ts
 function hasFailedValidation(responses) {
   return responses.some(
     (response) => response.result === "failed" /* FAILED */
@@ -252,7 +252,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-liquid",
-          skillVersion: "1.11.0",
+          skillVersion: "1.12.0",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -268,7 +268,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.11.0",
+        packageVersion: "1.12.0",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });
