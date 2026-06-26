@@ -17303,14 +17303,6 @@ import { fileURLToPath as fileURLToPath2 } from "url";
 import path2 from "path";
 import { parseArgs } from "util";
 
-// src/validation/index.ts
-var import_graphql2 = __toESM(require_graphql2(), 1);
-
-// src/schemaOperations/loadAPISchemas.ts
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-
 // src/types/api-types.ts
 var Visibility = {
   PUBLIC: "public",
@@ -17733,290 +17725,6 @@ var SHOPIFY_APIS = defineApis({
     frontmatterExtras: { context: "fork", maintainer: "Shopify" }
   }
 });
-
-// src/schemaOperations/loadAPISchemas.ts
-function getDataDirectory() {
-  const currentDir = path.dirname(fileURLToPath(import.meta.url));
-  if (currentDir.includes("dev-mcp") && currentDir.includes("dist") && !currentDir.includes("shopify-dev-tools")) {
-    return path.join(currentDir, "data");
-  }
-  if (currentDir.includes("/dist") || currentDir.includes("\\dist")) {
-    const distIndex = currentDir.lastIndexOf(path.sep + "dist");
-    if (distIndex !== -1) {
-      const distRoot = currentDir.substring(0, distIndex + 5);
-      return path.join(distRoot, "data");
-    } else {
-      return path.join(currentDir, "data");
-    }
-  }
-  return path.resolve(currentDir, "../data");
-}
-var dataDir = getDataDirectory();
-function configuredSchemaPath(api) {
-  const apiConfig = SHOPIFY_APIS[api];
-  if (apiConfig?.gqlSchemaPath) return apiConfig.gqlSchemaPath;
-  if (apiConfig?.gqlSchemaFileName) {
-    return path.join(dataDir, apiConfig.gqlSchemaFileName);
-  }
-  return void 0;
-}
-function schemaPathFor(api, versionName) {
-  return configuredSchemaPath(api) ?? path.join(dataDir, `${api}_${versionName}.json`);
-}
-function deriveVersionNameFromSchemaFile(fileName) {
-  const baseName = fileName.replace(/\.json(?:\.gz)?$/, "");
-  const versionSeparatorIndex = baseName.lastIndexOf("_");
-  return versionSeparatorIndex === -1 ? "latest" : baseName.slice(versionSeparatorIndex + 1);
-}
-function loadAPISchemas(apis, schemaOptions) {
-  if (apis.length === 0) {
-    throw new Error("No APIs provided");
-  }
-  if (schemaOptions) {
-    if (apis.length !== 1) {
-      throw new Error(
-        "schemaOptions can only be provided when requesting a single API"
-      );
-    }
-    return [
-      {
-        ...schemaOptions,
-        api: apis[0],
-        schemaPath: schemaOptions.schemaPath ?? schemaPathFor(apis[0], schemaOptions.name)
-      }
-    ];
-  }
-  const schemasPath = path.join(dataDir, "supported-versions-schema.json");
-  const schemasConfig = JSON.parse(
-    readFileSync(schemasPath, "utf-8")
-  );
-  const apiVersions = [];
-  for (const api of apis) {
-    const versions = schemasConfig[api];
-    if (versions) {
-      const versionsWithApi = versions.map((v) => ({
-        ...v,
-        api,
-        schemaPath: schemaPathFor(api, v.name)
-      }));
-      apiVersions.push(...versionsWithApi);
-    } else {
-      const apiConfig = SHOPIFY_APIS[api];
-      const configuredPath = configuredSchemaPath(api);
-      if (!configuredPath) continue;
-      apiVersions.push({
-        name: apiConfig?.gqlSchemaFileName ? deriveVersionNameFromSchemaFile(apiConfig.gqlSchemaFileName) : "latest",
-        latestVersion: true,
-        api,
-        schemaPath: configuredPath
-      });
-    }
-  }
-  return apiVersions;
-}
-
-// src/schemaOperations/loadSchemaContent.ts
-import { existsSync } from "node:fs";
-import fs from "node:fs/promises";
-import zlib from "node:zlib";
-
-// src/schemaOperations/schemaCache.ts
-var SchemaCache = class {
-  cache = /* @__PURE__ */ new Map();
-  get(path3) {
-    return this.cache.get(path3);
-  }
-  set(path3, content) {
-    this.cache.set(path3, content);
-  }
-};
-var schemaCache = new SchemaCache();
-
-// src/schemaOperations/loadSchemaContent.ts
-async function convertSdlToIntrospectionJson(schemaPath) {
-  const { buildSchema, introspectionFromSchema } = await Promise.resolve().then(() => __toESM(require_graphql2(), 1));
-  const sdl = await fs.readFile(schemaPath, "utf-8");
-  const introspection = introspectionFromSchema(buildSchema(sdl));
-  return JSON.stringify({ data: introspection });
-}
-async function loadSchemaContent(schema) {
-  const schemaPath = schema.schemaPath;
-  const cached = schemaCache.get(schemaPath);
-  if (cached) {
-    return cached;
-  }
-  try {
-    let content;
-    if (schemaPath.endsWith(".gz")) {
-      const compressedData = await fs.readFile(schemaPath);
-      content = zlib.gunzipSync(compressedData).toString("utf-8");
-    } else if (schemaPath.endsWith(".graphql") || schemaPath.endsWith(".graphqls") || schemaPath.endsWith(".gql")) {
-      content = await convertSdlToIntrospectionJson(schemaPath);
-    } else if (existsSync(schemaPath)) {
-      content = await fs.readFile(schemaPath, "utf-8");
-    } else {
-      const gzPath = `${schemaPath}.gz`;
-      if (existsSync(gzPath)) {
-        const compressedData = await fs.readFile(gzPath);
-        content = zlib.gunzipSync(compressedData).toString("utf-8");
-      } else {
-        throw new Error(`Schema file not found at ${schemaPath} or ${gzPath}`);
-      }
-    }
-    schemaCache.set(schemaPath, content);
-    return content;
-  } catch (error) {
-    console.error(`[graphql-schema-utils] Error loading schema: ${error}`);
-    throw error;
-  }
-}
-
-// src/schemaOperations/offlineScopes.ts
-var import_graphql = __toESM(require_graphql2(), 1);
-function getScopes(data, typeName, fieldName) {
-  const entry = data.items.find((item) => {
-    if (fieldName) {
-      return item.type === "field" && item.typeName === typeName && item.fieldName === fieldName;
-    }
-    return item.type === "type" && item.typeName === typeName;
-  });
-  return entry?.offlineScopes || [];
-}
-function getFieldReturnType(data, typeName, fieldName) {
-  const entry = data.items.find(
-    (item) => item.type === "field" && item.typeName === typeName && item.fieldName === fieldName
-  );
-  return entry?.returnType;
-}
-async function analyzeRequiredOfflineScopes(parsedQueryAST, offlineScopeData, schemaName = "admin") {
-  const offlineScopes = /* @__PURE__ */ new Set();
-  const fragmentMap = new Map(
-    parsedQueryAST.definitions.filter(
-      (def) => def.kind === import_graphql.Kind.FRAGMENT_DEFINITION
-    ).map((fragDef) => [fragDef.name.value, fragDef])
-  );
-  for (const definition of parsedQueryAST.definitions) {
-    if (definition.kind === import_graphql.Kind.OPERATION_DEFINITION) {
-      const operationDef = definition;
-      if (operationDef.selectionSet) {
-        const rootTypeName = getRootTypeName(
-          operationDef.operation,
-          schemaName
-        );
-        const rootTypeScopes = getScopes(offlineScopeData, rootTypeName);
-        rootTypeScopes.forEach((scope) => offlineScopes.add(scope));
-        walkSelectionSet(
-          operationDef.selectionSet,
-          rootTypeName,
-          offlineScopeData,
-          offlineScopes,
-          fragmentMap
-        );
-      }
-    }
-  }
-  return Array.from(offlineScopes);
-}
-function processFieldSelection(field, parentTypeName, scopeData, offlineScopes) {
-  const fieldName = field.name.value;
-  const fieldScopes = getScopes(scopeData, parentTypeName, fieldName);
-  fieldScopes.forEach((scope) => offlineScopes.add(scope));
-  if (!field.selectionSet) {
-    return { nextSelectionSet: null, nextTypeName: null };
-  }
-  const returnType = getFieldReturnType(scopeData, parentTypeName, fieldName);
-  if (returnType) {
-    const typeScopes = getScopes(scopeData, returnType);
-    typeScopes.forEach((scope) => offlineScopes.add(scope));
-  }
-  return {
-    nextSelectionSet: field.selectionSet,
-    nextTypeName: returnType || null
-  };
-}
-function processFragmentSpread(fragmentSpread, fragmentMap, visitedFragments, scopeData, offlineScopes) {
-  const fragmentName = fragmentSpread.name.value;
-  if (visitedFragments.has(fragmentName)) {
-    return { nextSelectionSet: null, nextTypeName: null };
-  }
-  visitedFragments.add(fragmentName);
-  const fragment = fragmentMap.get(fragmentName);
-  if (!fragment?.selectionSet) {
-    return { nextSelectionSet: null, nextTypeName: null };
-  }
-  const typeName = fragment.typeCondition.name.value;
-  const typeScopes = getScopes(scopeData, typeName);
-  typeScopes.forEach((scope) => offlineScopes.add(scope));
-  return {
-    nextSelectionSet: fragment.selectionSet,
-    nextTypeName: typeName
-  };
-}
-function processInlineFragment(inlineFragment, parentTypeName, scopeData, offlineScopes) {
-  if (!inlineFragment.selectionSet) {
-    return { nextSelectionSet: null, nextTypeName: null };
-  }
-  const typeName = inlineFragment.typeCondition?.name.value || parentTypeName;
-  const typeScopes = getScopes(scopeData, typeName);
-  typeScopes.forEach((scope) => offlineScopes.add(scope));
-  return {
-    nextSelectionSet: inlineFragment.selectionSet,
-    nextTypeName: typeName
-  };
-}
-function walkSelectionSet(selectionSet, parentTypeName, scopeData, offlineScopes, fragmentMap, visitedFragments = /* @__PURE__ */ new Set()) {
-  for (const selection of selectionSet.selections) {
-    let context;
-    if (selection.kind === import_graphql.Kind.FIELD) {
-      context = processFieldSelection(
-        selection,
-        parentTypeName,
-        scopeData,
-        offlineScopes
-      );
-    } else if (selection.kind === import_graphql.Kind.FRAGMENT_SPREAD) {
-      context = processFragmentSpread(
-        selection,
-        fragmentMap,
-        visitedFragments,
-        scopeData,
-        offlineScopes
-      );
-    } else if (selection.kind === import_graphql.Kind.INLINE_FRAGMENT) {
-      context = processInlineFragment(
-        selection,
-        parentTypeName,
-        scopeData,
-        offlineScopes
-      );
-    } else {
-      continue;
-    }
-    if (context.nextSelectionSet && context.nextTypeName) {
-      walkSelectionSet(
-        context.nextSelectionSet,
-        context.nextTypeName,
-        scopeData,
-        offlineScopes,
-        fragmentMap,
-        visitedFragments
-      );
-    }
-  }
-}
-function getRootTypeName(operation, schemaName = "admin") {
-  if (schemaName === "admin") {
-    return operation === "mutation" ? "Mutation" : "QueryRoot";
-  }
-  return operation === "mutation" ? "Mutation" : "Query";
-}
-function formatScopes(scopes) {
-  if (!scopes || scopes.length === 0) {
-    return "";
-  }
-  return `
-Required scopes: ${scopes.join(", ")}`;
-}
 
 // src/data/supported-versions-schema.json
 var supported_versions_schema_default = {
@@ -18502,7 +18210,305 @@ function resolveVersion(apiName2, requested) {
   return { ok: true, version: latest, source: "default", supportedVersions };
 }
 
-// src/validation/index.ts
+// src/validation/graphql.ts
+var import_graphql2 = __toESM(require_graphql2(), 1);
+
+// src/schemaOperations/loadAPISchemas.ts
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+// src/schemaOperations/loadSchemaContent.ts
+import { existsSync } from "node:fs";
+import fs from "node:fs/promises";
+import zlib from "node:zlib";
+
+// src/schemaOperations/schemaCache.ts
+var SchemaCache = class {
+  cache = /* @__PURE__ */ new Map();
+  get(path3) {
+    return this.cache.get(path3);
+  }
+  set(path3, content) {
+    this.cache.set(path3, content);
+  }
+};
+var schemaCache = new SchemaCache();
+
+// src/schemaOperations/loadSchemaContent.ts
+async function convertSdlToIntrospectionJson(schemaPath) {
+  const { buildSchema, introspectionFromSchema } = await Promise.resolve().then(() => __toESM(require_graphql2(), 1));
+  const sdl = await fs.readFile(schemaPath, "utf-8");
+  const introspection = introspectionFromSchema(buildSchema(sdl));
+  return JSON.stringify({ data: introspection });
+}
+async function loadSchemaContent(schema) {
+  const schemaPath = schema.schemaPath;
+  const cached = schemaCache.get(schemaPath);
+  if (cached) {
+    return cached;
+  }
+  try {
+    let content;
+    if (schemaPath.endsWith(".gz")) {
+      const compressedData = await fs.readFile(schemaPath);
+      content = zlib.gunzipSync(compressedData).toString("utf-8");
+    } else if (schemaPath.endsWith(".graphql") || schemaPath.endsWith(".graphqls") || schemaPath.endsWith(".gql")) {
+      content = await convertSdlToIntrospectionJson(schemaPath);
+    } else if (existsSync(schemaPath)) {
+      content = await fs.readFile(schemaPath, "utf-8");
+    } else {
+      const gzPath = `${schemaPath}.gz`;
+      if (existsSync(gzPath)) {
+        const compressedData = await fs.readFile(gzPath);
+        content = zlib.gunzipSync(compressedData).toString("utf-8");
+      } else {
+        throw new Error(`Schema file not found at ${schemaPath} or ${gzPath}`);
+      }
+    }
+    schemaCache.set(schemaPath, content);
+    return content;
+  } catch (error) {
+    console.error(`[graphql-schema-utils] Error loading schema: ${error}`);
+    throw error;
+  }
+}
+
+// src/schemaOperations/loadAPISchemas.ts
+function getDataDirectory() {
+  const currentDir = path.dirname(fileURLToPath(import.meta.url));
+  if (currentDir.includes("dev-mcp") && currentDir.includes("dist") && !currentDir.includes("shopify-dev-tools")) {
+    return path.join(currentDir, "data");
+  }
+  if (currentDir.includes("/dist") || currentDir.includes("\\dist")) {
+    const distIndex = currentDir.lastIndexOf(path.sep + "dist");
+    if (distIndex !== -1) {
+      const distRoot = currentDir.substring(0, distIndex + 5);
+      return path.join(distRoot, "data");
+    } else {
+      return path.join(currentDir, "data");
+    }
+  }
+  return path.resolve(currentDir, "../data");
+}
+var dataDir = getDataDirectory();
+var diskSchemaSource = {
+  readVersionCatalog() {
+    const schemasPath = path.join(dataDir, "supported-versions-schema.json");
+    return JSON.parse(readFileSync(schemasPath, "utf-8"));
+  },
+  readSchemaContent(schema) {
+    return loadSchemaContent(schema);
+  }
+};
+function configuredSchemaPath(api) {
+  const apiConfig = SHOPIFY_APIS[api];
+  if (apiConfig?.gqlSchemaPath) return apiConfig.gqlSchemaPath;
+  if (apiConfig?.gqlSchemaFileName) {
+    return path.join(dataDir, apiConfig.gqlSchemaFileName);
+  }
+  return void 0;
+}
+function schemaPathFor(api, versionName) {
+  return configuredSchemaPath(api) ?? path.join(dataDir, `${api}_${versionName}.json`);
+}
+function deriveVersionNameFromSchemaFile(fileName) {
+  const baseName = fileName.replace(/\.json(?:\.gz)?$/, "");
+  const versionSeparatorIndex = baseName.lastIndexOf("_");
+  return versionSeparatorIndex === -1 ? "latest" : baseName.slice(versionSeparatorIndex + 1);
+}
+function loadAPISchemas(apis, schemaOptions, source = diskSchemaSource) {
+  if (apis.length === 0) {
+    throw new Error("No APIs provided");
+  }
+  if (schemaOptions) {
+    if (apis.length !== 1) {
+      throw new Error(
+        "schemaOptions can only be provided when requesting a single API"
+      );
+    }
+    return [
+      {
+        ...schemaOptions,
+        api: apis[0],
+        schemaPath: schemaOptions.schemaPath ?? schemaPathFor(apis[0], schemaOptions.name)
+      }
+    ];
+  }
+  const schemasConfig = source.readVersionCatalog();
+  const apiVersions = [];
+  for (const api of apis) {
+    const versions = schemasConfig[api];
+    if (versions) {
+      const versionsWithApi = versions.map((v) => ({
+        ...v,
+        api,
+        schemaPath: schemaPathFor(api, v.name)
+      }));
+      apiVersions.push(...versionsWithApi);
+    } else {
+      const apiConfig = SHOPIFY_APIS[api];
+      const configuredPath = configuredSchemaPath(api);
+      if (!configuredPath) continue;
+      apiVersions.push({
+        name: apiConfig?.gqlSchemaFileName ? deriveVersionNameFromSchemaFile(apiConfig.gqlSchemaFileName) : "latest",
+        latestVersion: true,
+        api,
+        schemaPath: configuredPath
+      });
+    }
+  }
+  return apiVersions;
+}
+
+// src/schemaOperations/offlineScopes.ts
+var import_graphql = __toESM(require_graphql2(), 1);
+function getScopes(data, typeName, fieldName) {
+  const entry = data.items.find((item) => {
+    if (fieldName) {
+      return item.type === "field" && item.typeName === typeName && item.fieldName === fieldName;
+    }
+    return item.type === "type" && item.typeName === typeName;
+  });
+  return entry?.offlineScopes || [];
+}
+function getFieldReturnType(data, typeName, fieldName) {
+  const entry = data.items.find(
+    (item) => item.type === "field" && item.typeName === typeName && item.fieldName === fieldName
+  );
+  return entry?.returnType;
+}
+async function analyzeRequiredOfflineScopes(parsedQueryAST, offlineScopeData, schemaName = "admin") {
+  const offlineScopes = /* @__PURE__ */ new Set();
+  const fragmentMap = new Map(
+    parsedQueryAST.definitions.filter(
+      (def) => def.kind === import_graphql.Kind.FRAGMENT_DEFINITION
+    ).map((fragDef) => [fragDef.name.value, fragDef])
+  );
+  for (const definition of parsedQueryAST.definitions) {
+    if (definition.kind === import_graphql.Kind.OPERATION_DEFINITION) {
+      const operationDef = definition;
+      if (operationDef.selectionSet) {
+        const rootTypeName = getRootTypeName(
+          operationDef.operation,
+          schemaName
+        );
+        const rootTypeScopes = getScopes(offlineScopeData, rootTypeName);
+        rootTypeScopes.forEach((scope) => offlineScopes.add(scope));
+        walkSelectionSet(
+          operationDef.selectionSet,
+          rootTypeName,
+          offlineScopeData,
+          offlineScopes,
+          fragmentMap
+        );
+      }
+    }
+  }
+  return Array.from(offlineScopes);
+}
+function processFieldSelection(field, parentTypeName, scopeData, offlineScopes) {
+  const fieldName = field.name.value;
+  const fieldScopes = getScopes(scopeData, parentTypeName, fieldName);
+  fieldScopes.forEach((scope) => offlineScopes.add(scope));
+  if (!field.selectionSet) {
+    return { nextSelectionSet: null, nextTypeName: null };
+  }
+  const returnType = getFieldReturnType(scopeData, parentTypeName, fieldName);
+  if (returnType) {
+    const typeScopes = getScopes(scopeData, returnType);
+    typeScopes.forEach((scope) => offlineScopes.add(scope));
+  }
+  return {
+    nextSelectionSet: field.selectionSet,
+    nextTypeName: returnType || null
+  };
+}
+function processFragmentSpread(fragmentSpread, fragmentMap, visitedFragments, scopeData, offlineScopes) {
+  const fragmentName = fragmentSpread.name.value;
+  if (visitedFragments.has(fragmentName)) {
+    return { nextSelectionSet: null, nextTypeName: null };
+  }
+  visitedFragments.add(fragmentName);
+  const fragment = fragmentMap.get(fragmentName);
+  if (!fragment?.selectionSet) {
+    return { nextSelectionSet: null, nextTypeName: null };
+  }
+  const typeName = fragment.typeCondition.name.value;
+  const typeScopes = getScopes(scopeData, typeName);
+  typeScopes.forEach((scope) => offlineScopes.add(scope));
+  return {
+    nextSelectionSet: fragment.selectionSet,
+    nextTypeName: typeName
+  };
+}
+function processInlineFragment(inlineFragment, parentTypeName, scopeData, offlineScopes) {
+  if (!inlineFragment.selectionSet) {
+    return { nextSelectionSet: null, nextTypeName: null };
+  }
+  const typeName = inlineFragment.typeCondition?.name.value || parentTypeName;
+  const typeScopes = getScopes(scopeData, typeName);
+  typeScopes.forEach((scope) => offlineScopes.add(scope));
+  return {
+    nextSelectionSet: inlineFragment.selectionSet,
+    nextTypeName: typeName
+  };
+}
+function walkSelectionSet(selectionSet, parentTypeName, scopeData, offlineScopes, fragmentMap, visitedFragments = /* @__PURE__ */ new Set()) {
+  for (const selection of selectionSet.selections) {
+    let context;
+    if (selection.kind === import_graphql.Kind.FIELD) {
+      context = processFieldSelection(
+        selection,
+        parentTypeName,
+        scopeData,
+        offlineScopes
+      );
+    } else if (selection.kind === import_graphql.Kind.FRAGMENT_SPREAD) {
+      context = processFragmentSpread(
+        selection,
+        fragmentMap,
+        visitedFragments,
+        scopeData,
+        offlineScopes
+      );
+    } else if (selection.kind === import_graphql.Kind.INLINE_FRAGMENT) {
+      context = processInlineFragment(
+        selection,
+        parentTypeName,
+        scopeData,
+        offlineScopes
+      );
+    } else {
+      continue;
+    }
+    if (context.nextSelectionSet && context.nextTypeName) {
+      walkSelectionSet(
+        context.nextSelectionSet,
+        context.nextTypeName,
+        scopeData,
+        offlineScopes,
+        fragmentMap,
+        visitedFragments
+      );
+    }
+  }
+}
+function getRootTypeName(operation, schemaName = "admin") {
+  if (schemaName === "admin") {
+    return operation === "mutation" ? "Mutation" : "QueryRoot";
+  }
+  return operation === "mutation" ? "Mutation" : "Query";
+}
+function formatScopes(scopes) {
+  if (!scopes || scopes.length === 0) {
+    return "";
+  }
+  return `
+Required scopes: ${scopes.join(", ")}`;
+}
+
+// src/validation/graphql.ts
 function isAPIVersionWithAPI(options) {
   return options && typeof options.schemaPath === "string";
 }
@@ -18519,17 +18525,21 @@ async function validateGraphQLOperation(graphqlCode, api, options) {
   }
   let apiVersion;
   let failOnDeprecated = true;
+  let schemaSource = diskSchemaSource;
   if (options) {
     if (isAPIVersionWithAPI(options)) {
       apiVersion = options;
     } else {
       apiVersion = options.apiVersion;
       failOnDeprecated = options.failOnDeprecated ?? true;
+      schemaSource = options.schemaSource ?? diskSchemaSource;
     }
   }
   if (apiVersion?.name) {
-    const supported = SUPPORTED_API_VERSIONS[api];
-    if (supported && supported.length > 0 && !supported.includes(apiVersion.name)) {
+    const supported = (schemaSource.readVersionCatalog()[api] ?? []).map(
+      (version) => version.name
+    );
+    if (supported.length > 0 && !supported.includes(apiVersion.name)) {
       throw new Error(
         `Unsupported version "${apiVersion.name}" for API "${api}". Available versions: ${supported.join(", ")}.`
       );
@@ -18539,12 +18549,12 @@ async function validateGraphQLOperation(graphqlCode, api, options) {
   let offlineScopes;
   let schemaObj;
   try {
-    const schemas = loadAPISchemas([api], apiVersion);
+    const schemas = loadAPISchemas([api], apiVersion, schemaSource);
     if (schemas.length === 0) {
       throw new Error(`No schema configuration found for API "${api}"`);
     }
     schemaObj = schemas.find((s) => s.latestVersion) ?? schemas[0];
-    const result = await loadAndBuildGraphQLSchema(schemaObj);
+    const result = await loadAndBuildGraphQLSchema(schemaObj, schemaSource);
     graphQLSchema = result.graphQLSchema;
     offlineScopes = result.offlineScopes;
   } catch (error) {
@@ -18578,11 +18588,11 @@ function hasFailedValidation(responses) {
     (response) => response.result === "failed" /* FAILED */
   );
 }
-async function loadAndBuildGraphQLSchema(apiVersion) {
+async function loadAndBuildGraphQLSchema(apiVersion, source) {
   if (!apiVersion || Object.keys(apiVersion).length === 0) {
     throw new Error("No API version provided");
   }
-  const schemaContent = await loadSchemaContent(apiVersion);
+  const schemaContent = await source.readSchemaContent(apiVersion);
   const schemaJson = JSON.parse(schemaContent);
   const schemaData = schemaJson.data;
   if (apiVersion.api.startsWith("functions_") && schemaData.__schema && schemaData.__schema.types) {
@@ -18937,7 +18947,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-admin",
-          skillVersion: "1.11.0",
+          skillVersion: "1.12.0",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -18953,7 +18963,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.11.0",
+        packageVersion: "1.12.0",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });

@@ -4,7 +4,7 @@ description: "Shopify Functions allow developers to customize the backend logic 
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.11.0"
+  version: "1.12.0"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -340,8 +340,8 @@ pub mod schema {
 }
 
 fn main() {
-    eprintln!("Please invoke a named export.");
-    process::exit(1);
+    log!("Please invoke a named export.");
+    process::abort();
 }
 ```
 
