@@ -6,29 +6,52 @@ The Toolkit gives your agent access to Shopify's documentation, API schemas, and
 
 ## Install
 
-- **For Claude Code**: Run these two commands in a chat:
+- **For Claude Code**: In your terminal, run `claude plugin install`:
 
   ```
-  /plugin marketplace add Shopify/shopify-ai-toolkit
-  /plugin install shopify-plugin@shopify-ai-toolkit
+  claude plugin install shopify-ai-toolkit@claude-plugins-official
   ```
 
-- **For Cursor**: Install from the [Cursor Marketplace](https://cursor.com/marketplace/shopify).
-- **For Gemini CLI**: Run this command in your terminal:
+- **For OpenAI Codex**: In your terminal, run `codex plugin add`:
 
   ```
-  gemini extensions install https://github.com/Shopify/shopify-ai-toolkit
+  codex plugin add shopify@openai-curated
   ```
 
-- **For OpenAI Codex**: In the Codex CLI, run `/plugins`, search for **Shopify**, and select **Add to Codex**.
-
-- **For VS Code**: Open the Command Palette (`CMD+SHIFT+P`) and run **Chat: Install Plugin From Source**.
-
-  Then paste:
+- **For Antigravity CLI**: In your terminal, install the Shopify plugin:
 
   ```
-  https://github.com/Shopify/shopify-ai-toolkit
+  agy plugin install https://github.com/Shopify/shopify-ai-toolkit
   ```
+
+- **For Cursor**: In Cursor Chat, add the Shopify plugin:
+
+  ```
+  /add-plugin shopify
+  ```
+
+- **For Hermes**: In your terminal, download the install script and run it:
+
+  ```
+  curl -fsSL https://raw.githubusercontent.com/Shopify/Shopify-AI-Toolkit/main/.hermes-plugin/install.sh -o /tmp/shopify-hermes-install.sh
+  bash /tmp/shopify-hermes-install.sh
+  ```
+
+- **For VS Code**:
+
+  1. Ensure the [Agent plugins](https://code.visualstudio.com/docs/copilot/customization/agent-plugins) preview is enabled in your VS Code settings.
+
+  2. Open the Command Palette (`Cmd+Shift+P` on macOS, `Ctrl+Shift+P` on Windows/Linux) and run:
+
+     ```
+     Chat: Install Plugin From Source
+     ```
+
+  3. When prompted, enter the repository URL:
+
+     ```
+     https://github.com/Shopify/shopify-ai-toolkit
+     ```
 
 ## What you get
 

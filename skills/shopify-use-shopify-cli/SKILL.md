@@ -4,7 +4,7 @@ description: "Choose when the user needs **Shopify CLI** to run or fix something
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.11.0"
+  version: "1.12.0"
 hooks:
   PostToolUse:
     - matcher: Skill
