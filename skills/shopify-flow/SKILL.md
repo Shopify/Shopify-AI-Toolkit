@@ -1,27 +1,31 @@
 ---
 name: shopify-flow
-description: "Build, edit, inspect, or debug Shopify Flow workflows. Use for Flow templates, tasks, workflow JSON, environment paths, conditions, Liquid in Flow, shop resource lookups, ShopifyQL fields, test-event planning, and the workflow IaC lifecycle (validate / push / pull / diff / activate). Uses a bundled CLI script for execution; do not call Flow or internal HTTP endpoints directly."
+description: "Build, edit, inspect, or debug Shopify Flow workflows. Use for Flow templates, tasks, workflow JSON, environment paths, conditions, Liquid in Flow, shop resource lookups, ShopifyQL fields, test-event planning, and the workflow IaC lifecycle (validate / push / pull / diff / activate). Uses a CLI script for execution; do not call Flow or internal HTTP endpoints directly."
 compatibility: Requires Node.js 18+
 metadata:
   author: Shopify
-  version: "0.8.0"
+  version: "0.9.0"
 ---
 
 You are helping a developer work with Shopify Flow workflows from their IDE.
 Flow is Shopify's automation product: workflows are directed graphs of triggers, conditions, actions, waits, and loops that run against a shop's data.
 
-The skill ships a bundled CLI script at `scripts/flow.mjs`. Use it for all Flow operations — do not call Flow or Sidekick HTTP endpoints directly.
+The skill ships a bundled CLI at `scripts/flow.mjs`. Use it for all Flow operations — do not call Flow or Sidekick HTTP endpoints directly.
 
-## Auth setup
+## Auth
 
-The script needs an Identity OAuth token with the `https://api.shopify.com/auth/flow.workflows.manage` scope.
+The CLI authenticates with a **store access token** obtained via `shopify store auth` (the same credential `shopify store execute` uses). Authenticate the target shop once, then every Flow command reuses the cached token automatically:
 
-Set it once in your shell before running any commands:
 ```bash
-export SHOPIFY_FLOW_TOKEN=<token>
+shopify store auth --store shop.myshopify.com   # one-time, opens browser (PKCE)
+node scripts/flow.mjs workflow list --store shop.myshopify.com
 ```
 
-Or pass it per-invocation with `--token <token>`. To obtain a token, run `shopify store info --store <store>` (requires Shopify CLI) and copy the identity token from the CLI session store.
+There is **no Identity / device-login step** — the token is scoped to the store, not to a Shopify user. `shopify store auth` can hold credentials for several stores at once, so each Flow command still needs to know which store via `--store` or `flow.toml` (see below).
+
+If the cached token is missing or expired, the command exits with a re-auth instruction. Run the printed `shopify store auth --store <shop> …` command, then retry — do not guess scopes or retry blindly.
+
+Requires Node.js 18+ and a network connection.
 
 ## Local dev environment
 
@@ -30,7 +34,7 @@ When the target shop's domain ends with `.shop.dev` (e.g. `shop1.my.shop.dev`), 
 ```bash
 export SHOPIFY_SERVICE_ENV=local
 # or prefix each invocation:
-SHOPIFY_SERVICE_ENV=local node scripts/flow.mjs workflow status
+SHOPIFY_SERVICE_ENV=local node scripts/flow.mjs workflow:status
 ```
 
 For production `*.myshopify.com` stores, leave it unset.
@@ -99,6 +103,7 @@ Load `skills/workflow-iac/SKILL.md` for the full lifecycle walkthrough.
 ## Rules
 
 - Always have a store. Pass `--store`, or run inside a project with `flow.toml`. Ask if neither is available.
+- The store must be authenticated with `shopify store auth --store <shop>` first. If a command fails with a re-auth instruction, run the printed `shopify store auth …` command and retry.
 - Search templates (`template search`) before designing a new workflow.
 - `task search` then `task describe` before referencing a task ID, version, field ID, port, or return field.
 - `env search` before writing conditions or Liquid paths. Run it at most twice — pick the best match from the results rather than issuing a third search.
