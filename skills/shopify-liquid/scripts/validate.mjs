@@ -252,7 +252,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-liquid",
-          skillVersion: "1.12.0",
+          skillVersion: "1.12.1",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -268,7 +268,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.12.0",
+        packageVersion: "1.12.1",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });

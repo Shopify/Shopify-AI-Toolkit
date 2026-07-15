@@ -17331,7 +17331,7 @@ function defineApis(apis) {
 var SHOPIFY_APIS = defineApis({
   "use-shopify-cli": {
     displayName: "Use Shopify CLI",
-    description: "Choose when the user needs **Shopify CLI** to run or fix something now: validate app or extension config on disk (`shopify.app.toml`, `shopify.app.<name>.toml`, `shopify.extension.toml`); run or troubleshoot store workflows (`shopify store auth`, `shopify store execute`); inventory or product changes by handle, SKU, or location name; or CLI setup, auth, upgrade issues. Emphasize **commands and operational steps**, not only authoring GraphQL. Skip for API-only understanding or codegen with no CLI execution. Examples: validate configuration before deploy; run an existing query via CLI; list products; missing `shopify store execute`.",
+    description: "Choose when the user needs **Shopify CLI** to run or fix something now: validate app or extension config on disk (`shopify.app.toml`, `shopify.app.<name>.toml`, `shopify.extension.toml`); run or troubleshoot store workflows (`shopify store auth`, `shopify store execute`); or perform explicit store-scoped reads/writes on a named store domain (for example, show/list/find the first 10 products on my store at `foo.myshopify.com`, or inventory and product changes by handle, SKU, or location name). Emphasize **commands and operational steps**, not only authoring GraphQL. Skip for API-only understanding or codegen with no CLI execution, and skip for brand-new merchant asks to start a Shopify store or try Shopify before they have an account. Examples: validate configuration before deploy; run an existing query via CLI; show the first 10 products on `foo.myshopify.com`; missing `shopify store execute`.",
     category: APICategory.EXECUTION,
     visibility: Visibility.PUBLIC,
     searchable: false
@@ -17717,12 +17717,12 @@ var SHOPIFY_APIS = defineApis({
   },
   "onboarding-merchant": {
     displayName: "Merchant Onboarding",
-    description: "Set up and connect a Shopify store from your AI assistant. Use when the user wants to: set up my Shopify store, connect my store, install Shopify plugin, get started with Shopify, manage my store, add products to my store, merchant onboarding, start selling online, Shopify setup help, create my first store, how do I set up an online store, import products, migrate from Square, migrate from WooCommerce, migrate from Etsy, migrate from Amazon, migrate from eBay, migrate from Wix, import from Google Merchant Center, migrate from Clover, migrate from Lightspeed, move products to Shopify, import catalog, replatform to Shopify. This is for store owners \u2014 not developers.",
+    description: "Set up and connect a Shopify store from your AI assistant. Use when the user wants to start selling online, open a first Shopify store, try Shopify before they have an account, or get merchant-facing next steps after a preview store is created, including how to keep it, save it, or make it real. This is for store owners \u2014 not developers. Preview-store creation for brand-new merchants belongs here via `shopify store create preview`; explicit CLI troubleshooting and named-store command execution belong in **`use-shopify-cli`**.",
     category: APICategory.GUIDANCE,
     visibility: Visibility.PUBLIC,
     searchable: false,
     compatibility: "Claude Code, Claude Desktop, Cursor",
-    frontmatterExtras: { context: "fork", maintainer: "Shopify" }
+    frontmatterExtras: { maintainer: "Shopify" }
   }
 });
 
@@ -18947,7 +18947,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-functions",
-          skillVersion: "1.12.0",
+          skillVersion: "1.12.1",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -18963,7 +18963,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.12.0",
+        packageVersion: "1.12.1",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });

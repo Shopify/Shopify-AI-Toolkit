@@ -4,7 +4,7 @@
     "postToolUse": [
       {
         "type": "command",
-        "command": "bash ${CURSOR_PLUGIN_ROOT}/hooks/scripts/track-telemetry.sh --hook-source plugin"
+        "command": "bash \"${CURSOR_PLUGIN_ROOT}/hooks/scripts/track-telemetry.sh\" --hook-source plugin"
       }
     ]
   }
