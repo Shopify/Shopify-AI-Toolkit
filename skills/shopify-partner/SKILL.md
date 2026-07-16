@@ -4,7 +4,7 @@ description: "The Partner API lets you programmatically access data about your P
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.12.0"
+  version: "1.12.1"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -51,6 +51,8 @@ For app-related queries, think about app installations, revenues, and merchant r
 For theme-related operations, consider theme versions, publishing status, and store associations
 When working with transactions and payouts, ensure proper date range filtering
 For affiliate and referral data, understand the commission structures and tracking
+
+When building a Partner GraphQL operation, use the Partner schema documentation as the source of truth for root fields, object fields, connection pagination, enum values, and interface subtype fragments. If validation disagrees with an example or prior knowledge, follow the schema and fix the operation before returning it.
 ---
 
 ## ⚠️ MANDATORY: Search Before Writing Code

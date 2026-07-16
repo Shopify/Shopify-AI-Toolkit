@@ -1,5 +1,14 @@
 # shopify-plugin
 
+## 1.5.3
+
+### Patch Changes
+
+- e5ff2d4: Use the `values` shorthand for metaobject writes and Admin API reads in custom data instructions.
+- 9777171: Fix generated GraphQL skills so standalone validation can load schema metadata.
+- 31d8759: Move brand-new merchant preview-store onboarding onto `onboarding-merchant`, trim that skill down to preview creation plus merchant follow-up guidance, and stop treating preview-store creation as a primary `use-shopify-cli` workflow. Merchants now view a preview store with `shopify store open` rather than surfacing the raw storefront URL, and the `onboarding-merchant` routing description no longer advertises connecting an existing merchant-owned store. Tighten the focused preview-store evals around the new onboarding boundary and merchant-facing response contract.
+- b76276a: Quote `${CLAUDE_PLUGIN_ROOT}`/`${CURSOR_PLUGIN_ROOT}`/`${PLUGIN_ROOT}` in the telemetry hook manifests so skill telemetry runs on plugin paths that contain a space (e.g. a Windows username with a space) instead of erroring on every tool call.
+
 ## 1.5.2
 
 ### Patch Changes

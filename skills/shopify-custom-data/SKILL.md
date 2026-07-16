@@ -4,7 +4,7 @@ description: "MUST be used first when prompts mention Metafields or Metaobjects.
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.12.0"
+  version: "1.12.1"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -115,11 +115,8 @@ mutation {
   metaobjectUpsert(handle: {
     type: "$app:author",
     handle: "my-metaobject",
-  }, metaobject: {
-    fields: [{
-      key: "example",
-      value: "Hello, world!"
-    }]
+  }, values: {
+    example: "Hello, world!"
   }) { ... }
 }
 ```
@@ -160,9 +157,7 @@ query {
   metaobjects(type: "$app:author", first: 10) {
     nodes {
       handle
-      example: field(key: "example") {
-        jsonValue
-      }
+      values
     }
   }
 }
