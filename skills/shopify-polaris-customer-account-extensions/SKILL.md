@@ -4,7 +4,7 @@ description: "Build custom functionality that merchants can install at defined p
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.12.1"
+  version: "1.12.2"
 hooks:
   PostToolUse:
     - matcher: Skill

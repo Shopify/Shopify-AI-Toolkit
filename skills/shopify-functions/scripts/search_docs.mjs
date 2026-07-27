@@ -92,6 +92,24 @@ async function shopifyDevFetch(uri, options) {
 
 // src/data/supported-versions-schema.json
 var supported_versions_schema_default = {
+  shopifyql: [
+    {
+      name: "unstable"
+    },
+    {
+      name: "2026-07",
+      latestVersion: true
+    },
+    {
+      name: "2026-04"
+    },
+    {
+      name: "2026-01"
+    },
+    {
+      name: "2025-10"
+    }
+  ],
   admin: [
     {
       name: "unstable"
@@ -632,7 +650,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-functions",
-          skillVersion: "1.12.1",
+          skillVersion: "1.12.2",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -648,7 +666,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.12.1",
+        packageVersion: "1.12.2",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });
@@ -696,7 +714,7 @@ async function performSearch(query2, apiName, apiVersion) {
     },
     body: JSON.stringify(body),
     instrumentation: {
-      packageVersion: "1.12.1",
+      packageVersion: "1.12.2",
       timestamp: (/* @__PURE__ */ new Date()).toISOString()
     }
   });

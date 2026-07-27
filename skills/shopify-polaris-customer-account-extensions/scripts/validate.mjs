@@ -60,6 +60,18 @@ var SHOPIFY_APIS = defineApis({
       context: "creating a product"
     }
   },
+  shopifyql: {
+    displayName: "ShopifyQL",
+    versioned: true,
+    description: 'Answer a merchant\'s **analytics and reporting** questions with **ShopifyQL** \u2014 Shopify\'s query language for aggregated store metrics that the Admin GraphQL API cannot compute. Choose this (not `admin`) whenever the ask is for **numbers, totals, trends, or breakdowns** rather than fetching or mutating individual records: including but not limited to total/gross/net sales and revenue, order counts, average order value, refunds, quantity sold, sessions, conversion rate, and traffic \u2014 sliced by product, channel, region, or customer, trended over time, or compared period-over-period. Examples: "total sales last 7 days", "orders by sales channel this month", "top products by revenue", "conversion rate this week", "sales this year vs last year". This topic covers writing the ShopifyQL query; if the merchant wants to run it against their store, execution is handed off to `use-shopify-cli`. Not for general Admin GraphQL record operations \u2014 fetching or mutating individual resources (use `admin`).',
+    category: APICategory.GUIDANCE,
+    visibility: Visibility.PUBLIC,
+    exampleVectorStoreQuery: {
+      query: "ShopifyQL total sales over time",
+      context: "querying aggregated store analytics with ShopifyQL"
+    },
+    compatibility: "Claude Code, Claude Desktop, Cursor"
+  },
   "storefront-graphql": {
     displayName: "Storefront GraphQL API",
     versioned: true,
@@ -438,6 +450,24 @@ function publicPackageAppliesToVersion(entry, apiVersion) {
 
 // src/data/supported-versions-schema.json
 var supported_versions_schema_default = {
+  shopifyql: [
+    {
+      name: "unstable"
+    },
+    {
+      name: "2026-07",
+      latestVersion: true
+    },
+    {
+      name: "2026-04"
+    },
+    {
+      name: "2026-01"
+    },
+    {
+      name: "2025-10"
+    }
+  ],
   admin: [
     {
       name: "unstable"
@@ -2694,7 +2724,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-polaris-customer-account-extensions",
-          skillVersion: "1.12.1",
+          skillVersion: "1.12.2",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -2710,7 +2740,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.12.1",
+        packageVersion: "1.12.2",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });

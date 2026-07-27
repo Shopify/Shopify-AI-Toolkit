@@ -37,6 +37,12 @@ The Toolkit gives your agent access to Shopify's documentation, API schemas, and
   bash /tmp/shopify-hermes-install.sh
   ```
 
+- **For Pi**: In your terminal, install the package from git:
+
+  ```
+  pi install git:github.com/Shopify/Shopify-AI-Toolkit
+  ```
+
 - **For VS Code**:
 
   1. Ensure the [Agent plugins](https://code.visualstudio.com/docs/copilot/customization/agent-plugins) preview is enabled in your VS Code settings.

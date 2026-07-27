@@ -4,7 +4,7 @@ description: "Use for custom storefronts requiring direct GraphQL queries/mutati
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.12.1"
+  version: "1.12.2"
 hooks:
   PostToolUse:
     - matcher: Skill

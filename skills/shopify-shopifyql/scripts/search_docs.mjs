@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // <define:__SUPPORTED_VERSIONS__>
-var define_SUPPORTED_VERSIONS_default = ["unstable", "2026-07", "2026-04", "2026-01", "2025-10", "2025-07"];
+var define_SUPPORTED_VERSIONS_default = ["unstable", "2026-07", "2026-04", "2026-01", "2025-10"];
 
 // src/agent-skills/scripts/search_docs.ts
 import { parseArgs } from "util";
@@ -649,7 +649,7 @@ async function reportValidation(toolName, result, context, metadata) {
       body: JSON.stringify({
         tool: toolName,
         parameters: {
-          skill: "shopify-partner",
+          skill: "shopify-shopifyql",
           skillVersion: "1.12.2",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
@@ -697,7 +697,7 @@ var requestedApiVersion = values.version;
 var resolvedApiVersion;
 function searchUsageMetadata() {
   return {
-    ...{ api: "partner" },
+    ...{ api: "shopifyql" },
     ...requestedApiVersion && { api_version: requestedApiVersion },
     ...resolvedApiVersion && { resolve_api_version: resolvedApiVersion }
   };
@@ -728,7 +728,7 @@ async function performSearch(query2, apiName, apiVersion) {
 try {
   let apiVersionForSearch = requestedApiVersion;
   if (define_SUPPORTED_VERSIONS_default.length > 0) {
-    const resolution = resolveVersion("partner", requestedApiVersion);
+    const resolution = resolveVersion("shopifyql", requestedApiVersion);
     if (!resolution.ok) {
       throw new Error(
         `Invalid --version: "${requestedApiVersion}". Supported versions: ${resolution.supportedVersions.join(", ")}.`
@@ -739,7 +739,7 @@ try {
   }
   const result = await performSearch(
     query,
-    "partner",
+    "shopifyql",
     apiVersionForSearch || void 0
   );
   process.stdout.write(result);
