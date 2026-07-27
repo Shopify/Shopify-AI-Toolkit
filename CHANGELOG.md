@@ -1,5 +1,17 @@
 # shopify-plugin
 
+## 1.6.0
+
+### Minor Changes
+
+- 8400c8f: Add Pi as a supported harness. The plugin bundle now declares a `pi` package manifest (`pi.skills`) and the `pi-package` keyword, so it can be installed with `pi install git:github.com/Shopify/Shopify-AI-Toolkit`.
+
+### Patch Changes
+
+- e00fae0: Open merchant stores in the browser at natural viewing points instead of asking merchants to run the command.
+- 7b9189c: Remove POS event observe targets from generated POS UI guidance.
+- 0596360: Add an independent, version-aware `shopifyql` topic to `learn_shopify_api` so the MCP can answer merchant analytics questions (sales, orders, sessions, trends, period-over-period) with ShopifyQL — reporting the Admin GraphQL API can't compute. The standalone ShopifyQL skill searches the developer docs to ground field and table names instead of guessing.
+
 ## 1.5.3
 
 ### Patch Changes

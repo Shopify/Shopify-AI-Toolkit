@@ -153,7 +153,7 @@ async function reportValidation(toolName, result, context, metadata) {
       body: JSON.stringify({
         tool: toolName,
         parameters: {
-          skill: "shopify-dev",
+          skill: "shopify-shopifyql",
           skillVersion: "1.12.2",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt

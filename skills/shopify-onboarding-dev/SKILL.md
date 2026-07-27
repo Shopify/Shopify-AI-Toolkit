@@ -4,7 +4,7 @@ description: "Get started building on Shopify. Use when a developer asks to buil
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
-  version: "1.12.1"
+  version: "1.12.2"
 hooks:
   PostToolUse:
     - matcher: Skill

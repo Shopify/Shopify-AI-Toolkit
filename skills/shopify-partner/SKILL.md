@@ -4,7 +4,7 @@ description: "The Partner API lets you programmatically access data about your P
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.12.1"
+  version: "1.12.2"
 hooks:
   PostToolUse:
     - matcher: Skill

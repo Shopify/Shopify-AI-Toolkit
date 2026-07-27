@@ -5,7 +5,7 @@ compatibility: Claude Code, Claude Desktop, Cursor
 maintainer: Shopify
 metadata:
   author: Shopify
-  version: "1.12.1"
+  version: "1.12.2"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -90,11 +90,10 @@ A good fallback shape is:
 
 After the preview store is created:
 
-- Open the store using the command line `shopify store open --store <store-domain>` immediately after the store is created.
+- When the merchant is ready to view the store, run `shopify store open --store <store-domain>` yourself; never give them the command. Open each store once, then have them refresh the existing tab unless they ask to reopen it, the link expired, or the first launch failed.
 - Lead with a short success confirmation.
 - Summarize the store details in merchant language.
 - Preserve `store.saveUrl` when the CLI returns it; that is the direct save/account-claim link for this specific store.
-- When the merchant asks to view or open their store, open the store right away using the command line `shopify store open --store <store-domain>`.
 - Do not foreground backend-only fields such as `access_url`, `preview_url`, `storefront_preview_url`, or other storefront-preview URLs when `store.storefrontUrl` is available.
 - If the CLI auto-generated the name, tell the merchant and mention they can rename it later.
 - Do not surface raw JSON, standalone tokens, scopes, or command-line implementation details unless the merchant asks. If the CLI returns an opaque URL containing query parameters, pass along the URL as a link without explaining its internals.
@@ -105,7 +104,7 @@ After the preview store is created:
 >
 > Here are some things you can do next:
 >
-> - View your store with `shopify store open --store <store-domain>`. The URL stays active for about 30 minutes once you open it for security reasons. If it expires, you can always ask to view the store again.
+> - View your store. Preview links expire after about 30 minutes.
 > - Edit your store design
 > - Add products, collections, or pages
 > - Set up shipping

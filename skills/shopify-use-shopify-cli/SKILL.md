@@ -4,7 +4,7 @@ description: "Choose when the user needs **Shopify CLI** to run or fix something
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.12.1"
+  version: "1.12.2"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -148,6 +148,13 @@ Apply this section only when the user explicitly wants to run a GraphQL operatio
 - If the validated operation is read-only, keep the final `shopify store execute --store ... --query '...'` command without `--allow-mutations`.
 - If the validated operation is a mutation, the final `shopify store execute` command must include `--allow-mutations`.
 - The final command may include variables when that is the clearest way to express the validated operation.
+
+### ShopifyQL analytics
+
+- Merchant analytics and reporting questions (sales, orders, revenue, sessions, conversion, trends) are answered with **ShopifyQL**, run through the `shopifyqlQuery` Admin GraphQL field. Author the ShopifyQL with the `shopify-shopifyql` guidance, then run it through this same store-execution flow.
+- The operation wraps the ShopifyQL in a triple-quoted block string: `query { shopifyqlQuery(query: """FROM … SHOW …""") { tableData { columns { name dataType } rows } parseErrors } }`.
+- ShopifyQL is read-only: use `--scopes read_reports` on `shopify store auth`, and never add `--allow-mutations`.
+- Read `parseErrors` from the result to check validity — a non-empty `parseErrors` means the ShopifyQL is invalid; fix it and re-run. The rows and columns come back in `tableData`.
 
 ### Store execution constraints
 

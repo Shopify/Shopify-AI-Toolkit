@@ -4,7 +4,7 @@ description: "Shopify Functions allow developers to customize the backend logic 
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.12.1"
+  version: "1.12.2"
 hooks:
   PostToolUse:
     - matcher: Skill

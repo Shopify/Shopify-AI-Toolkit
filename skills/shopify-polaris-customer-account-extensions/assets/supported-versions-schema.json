@@ -1,4 +1,22 @@
 {
+  "shopifyql": [
+    {
+      "name": "unstable"
+    },
+    {
+      "name": "2026-07",
+      "latestVersion": true
+    },
+    {
+      "name": "2026-04"
+    },
+    {
+      "name": "2026-01"
+    },
+    {
+      "name": "2025-10"
+    }
+  ],
   "admin": [
     {
       "name": "unstable"
