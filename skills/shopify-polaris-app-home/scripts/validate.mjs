@@ -452,7 +452,8 @@ function publicPackageAppliesToVersion(entry, apiVersion) {
 var supported_versions_schema_default = {
   shopifyql: [
     {
-      name: "unstable"
+      name: "2026-10",
+      releaseCandidate: true
     },
     {
       name: "2026-07",
@@ -473,21 +474,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   "storefront-graphql": [
@@ -495,21 +496,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   partner: [
@@ -518,11 +519,10 @@ var supported_versions_schema_default = {
     },
     {
       name: "2026-07",
-      releaseCandidate: true
+      latestVersion: true
     },
     {
-      name: "2026-04",
-      latestVersion: true
+      name: "2026-04"
     },
     {
       name: "2026-01"
@@ -539,21 +539,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   "payments-apps": [
@@ -561,32 +561,31 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   "polaris-app-home": [],
   "polaris-admin-extensions": [
     {
       name: "2026-04",
-      releaseCandidate: true
+      latestVersion: true
     },
     {
-      name: "2026-01",
-      latestVersion: true
+      name: "2026-01"
     },
     {
       name: "2025-10"
@@ -598,11 +597,10 @@ var supported_versions_schema_default = {
   "polaris-checkout-extensions": [
     {
       name: "2026-07",
-      releaseCandidate: true
+      latestVersion: true
     },
     {
-      name: "2026-04",
-      latestVersion: true
+      name: "2026-04"
     },
     {
       name: "2026-01"
@@ -617,11 +615,10 @@ var supported_versions_schema_default = {
   "polaris-customer-account-extensions": [
     {
       name: "2026-07",
-      releaseCandidate: true
+      latestVersion: true
     },
     {
-      name: "2026-04",
-      latestVersion: true
+      name: "2026-04"
     },
     {
       name: "2026-01"
@@ -636,11 +633,10 @@ var supported_versions_schema_default = {
   "pos-ui": [
     {
       name: "2026-07",
-      releaseCandidate: true
+      latestVersion: true
     },
     {
-      name: "2026-04",
-      latestVersion: true
+      name: "2026-04"
     },
     {
       name: "2026-01"
@@ -673,21 +669,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   functions_cart_transform: [
@@ -695,21 +691,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   functions_delivery_customization: [
@@ -717,21 +713,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   functions_discount: [
@@ -739,21 +735,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   functions_discounts_allocator: [
@@ -767,21 +763,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   functions_local_pickup_delivery_option_generator: [
@@ -795,21 +791,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   functions_order_routing_location_rule: [
@@ -817,21 +813,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   functions_payment_customization: [
@@ -839,21 +835,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   functions_pickup_point_delivery_option_generator: [
@@ -867,21 +863,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ],
   functions_shipping_discounts: [
@@ -889,21 +885,21 @@ var supported_versions_schema_default = {
       name: "unstable"
     },
     {
-      name: "2026-07",
+      name: "2026-10",
       releaseCandidate: true
     },
     {
-      name: "2026-04",
+      name: "2026-07",
       latestVersion: true
+    },
+    {
+      name: "2026-04"
     },
     {
       name: "2026-01"
     },
     {
       name: "2025-10"
-    },
-    {
-      name: "2025-07"
     }
   ]
 };
@@ -2724,7 +2720,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-polaris-app-home",
-          skillVersion: "1.12.2",
+          skillVersion: "1.12.3",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -2740,7 +2736,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.12.2",
+        packageVersion: "1.12.3",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });

@@ -1,5 +1,11 @@
 # shopify-plugin
 
+## 1.6.1
+
+### Patch Changes
+
+- 167ca4f: Hermes plugin now advertises all 21 skills (adds `shopify-shopifyql`) and the current version in its install output.
+
 ## 1.6.0
 
 ### Minor Changes

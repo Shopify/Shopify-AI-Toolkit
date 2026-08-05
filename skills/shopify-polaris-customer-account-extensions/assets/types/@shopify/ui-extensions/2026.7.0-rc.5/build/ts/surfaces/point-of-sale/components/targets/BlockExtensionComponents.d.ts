@@ -1,5 +1,0 @@
-/**
- * @publicDocs
- */
-export type BlockExtensionComponents = 'Badge' | 'Box' | 'Button' | 'DatePicker' | 'DateSpinner' | 'Dialog' | 'Heading' | 'Icon' | 'Image' | 'Modal' | 'POSBlock' | 'PosBlock' | 'POSBlockRow' | 'PrintPreview' | 'Section' | 'Stack' | 'Text' | 'TimePicker';
-//# sourceMappingURL=BlockExtensionComponents.d.ts.map

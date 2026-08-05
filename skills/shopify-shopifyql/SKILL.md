@@ -4,7 +4,7 @@ description: "Answer a merchant's **analytics and reporting** questions with **S
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
-  version: "1.12.2"
+  version: "1.12.3"
 hooks:
   PostToolUse:
     - matcher: Skill
