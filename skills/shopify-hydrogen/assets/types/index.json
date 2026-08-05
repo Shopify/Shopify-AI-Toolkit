@@ -3,23 +3,23 @@
     "2026-04": [
       {
         "package": "@shopify/hydrogen",
-        "version": "2026.4.2"
+        "version": "2026.4.4"
       },
       {
         "package": "@shopify/hydrogen-react",
-        "version": "2026.4.2"
+        "version": "2026.4.3"
       },
       {
         "package": "react-router",
-        "version": "7.14.0"
+        "version": "7.16.0"
       },
       {
         "package": "@react-router/dev",
-        "version": "7.14.0"
+        "version": "7.16.0"
       },
       {
         "package": "graphql",
-        "version": "16.14.0"
+        "version": "17.0.2"
       },
       {
         "package": "type-fest",
@@ -49,7 +49,7 @@
       },
       {
         "package": "graphql",
-        "version": "16.14.0"
+        "version": "17.0.2"
       },
       {
         "package": "type-fest",
@@ -79,7 +79,7 @@
       },
       {
         "package": "graphql",
-        "version": "16.14.0"
+        "version": "17.0.2"
       },
       {
         "package": "type-fest",
@@ -109,7 +109,7 @@
       },
       {
         "package": "graphql",
-        "version": "16.14.0"
+        "version": "17.0.2"
       },
       {
         "package": "type-fest",
@@ -124,7 +124,7 @@
   "_always_loaded": [
     {
       "package": "preact",
-      "version": "10.29.2"
+      "version": "10.29.7"
     },
     {
       "package": "@types/react",

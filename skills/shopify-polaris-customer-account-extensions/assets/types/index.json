@@ -3,25 +3,25 @@
     "2026-07": [
       {
         "package": "@shopify/ui-extensions",
-        "version": "2026.7.0-rc.5"
+        "version": "2026.7.1"
       }
     ],
     "2026-04": [
       {
         "package": "@shopify/ui-extensions",
-        "version": "2026.4.3"
+        "version": "2026.4.4"
       }
     ],
     "2026-01": [
       {
         "package": "@shopify/ui-extensions",
-        "version": "2026.1.4"
+        "version": "2026.1.5"
       }
     ],
     "2025-10": [
       {
         "package": "@shopify/ui-extensions",
-        "version": "2025.10.15"
+        "version": "2025.10.16"
       }
     ],
     "2025-07": [
@@ -62,7 +62,7 @@
   "_always_loaded": [
     {
       "package": "preact",
-      "version": "10.29.2"
+      "version": "10.29.7"
     },
     {
       "package": "@types/react",

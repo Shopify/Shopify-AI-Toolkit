@@ -4,7 +4,7 @@ description: "Search Shopify developer documentation across all APIs. Use only w
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.12.2"
+  version: "1.12.3"
 hooks:
   PostToolUse:
     - matcher: Skill
