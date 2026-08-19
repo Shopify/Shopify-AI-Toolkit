@@ -4,7 +4,7 @@ description: "Run a pre-submission compliance check against your Shopify app's c
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
-  version: "1.12.3"
+  version: "1.12.4"
 hooks:
   PostToolUse:
     - matcher: Skill

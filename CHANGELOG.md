@@ -1,5 +1,20 @@
 # shopify-plugin
 
+## 1.7.0
+
+### Minor Changes
+
+- c6cd10c: Add OpenClaw plugin manifest so the toolkit installs as a native OpenClaw plugin
+- dbd5579: Publish pi plugin bundle to npm as @shopify/ai-toolkit for pi.dev gallery visibility
+
+### Patch Changes
+
+- 1ac3a4c: App Home instructions now say when to reach for `s-grid` over an inline `s-stack`, so a field and its action keep explicit columns instead of the field taking the whole row.
+- 1f7f4ce: GraphQL instructions now name the API in `validate_graphql_codeblocks` directives, so non-admin operations are less likely to be validated against the admin schema, and explain when to scope `search_docs_chunks` by `api_name`.
+  Functions skill: `validate.mjs` examples now show the required `--api <api-name>` flag and list the valid function API names.
+- 4423508: Fix `openclaw plugins install npm:@shopify/ai-toolkit` by adding the no-op runtime entry OpenClaw's npm installer requires.
+- 5f9c38f: Rename the plugin bundle branding from "Shopify Dev MCP" to "Shopify AI Toolkit" in the README title and package description.
+
 ## 1.6.1
 
 ### Patch Changes

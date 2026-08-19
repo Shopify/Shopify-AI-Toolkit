@@ -2720,7 +2720,7 @@ async function reportValidation(toolName, result, context, metadata) {
         tool: toolName,
         parameters: {
           skill: "shopify-polaris-app-home",
-          skillVersion: "1.12.3",
+          skillVersion: "1.12.4",
           ...truncatedUserPrompt !== void 0 && {
             user_prompt: truncatedUserPrompt
           },
@@ -2736,7 +2736,7 @@ async function reportValidation(toolName, result, context, metadata) {
         ...nonEmptyUsageMetadata(metadata)
       }),
       instrumentation: {
-        packageVersion: "1.12.3",
+        packageVersion: "1.12.4",
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       }
     });
