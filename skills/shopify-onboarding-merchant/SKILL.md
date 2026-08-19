@@ -5,7 +5,7 @@ compatibility: Claude Code, Claude Desktop, Cursor
 maintainer: Shopify
 metadata:
   author: Shopify
-  version: "1.12.3"
+  version: "1.12.4"
 hooks:
   PostToolUse:
     - matcher: Skill

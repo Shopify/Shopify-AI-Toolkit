@@ -1,4 +1,4 @@
-# Shopify Dev MCP - AI Agent Plugin
+# Shopify AI Toolkit - AI Agent Plugin
 
 Connect your AI tools to the Shopify platform.
 
@@ -37,7 +37,21 @@ The Toolkit gives your agent access to Shopify's documentation, API schemas, and
   bash /tmp/shopify-hermes-install.sh
   ```
 
-- **For Pi**: In your terminal, install the package from git:
+- **For OpenClaw**: In your terminal, install the package from npm:
+
+  ```
+  openclaw plugins install npm:@shopify/ai-toolkit
+  ```
+
+  Alternatively, install directly from the git mirror with `openclaw plugins install git:github.com/Shopify/Shopify-AI-Toolkit`. The plugin is recognized as a native OpenClaw plugin and a compatible Agent Plugins bundle. Once published to ClawHub, `openclaw plugins install clawhub:@shopify/ai-toolkit` also works.
+
+- **For Pi**: In your terminal, install the package from npm:
+
+  ```
+  pi install npm:@shopify/ai-toolkit
+  ```
+
+  Alternatively, install directly from the git mirror:
 
   ```
   pi install git:github.com/Shopify/Shopify-AI-Toolkit

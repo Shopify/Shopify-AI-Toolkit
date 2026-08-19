@@ -1,5 +1,5 @@
 name: shopify-plugin
-version: 1.6.1
+version: 1.7.0
 description: >
   Shopify developer tools for Hermes — search Shopify docs, generate and
   validate GraphQL, Liquid, and UI extension code, plus a `hermes shopify`

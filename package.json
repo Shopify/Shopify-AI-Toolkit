@@ -1,8 +1,8 @@
 {
   "name": "shopify-plugin",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "private": true,
-  "description": "AI agent plugin manifests for the Shopify Dev MCP server",
+  "description": "Shopify AI Toolkit — agent skills to search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code, and manage stores through the Shopify CLI.",
   "author": "Shopify",
   "license": "MIT",
   "keywords": [
@@ -15,9 +15,15 @@
     "plugin",
     "pi-package"
   ],
+  "openclaw": {
+    "extensions": [
+      "./openclaw.extension.mjs"
+    ]
+  },
   "pi": {
     "skills": [
       "./skills"
-    ]
+    ],
+    "image": "https://raw.githubusercontent.com/Shopify/Shopify-AI-Toolkit/main/assets/shopify_glyph.png"
   }
 }
