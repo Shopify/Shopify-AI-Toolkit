@@ -39,6 +39,24 @@ shopify store execute --store shop.myshopify.com --version unstable --query '…
 
 Without it the field is not in the schema and the query fails to validate. Omitting `--version` defaults to the latest *stable* version, which does not expose these fields.
 
+## Workflow IDs
+
+Flow identifies a workflow by a **bare UUID** — that is the form you get from Flow URLs, workflow JSON, and lockfiles:
+
+```
+0191d649-8d00-76ee-8f9b-320fa3433012
+```
+
+The Admin API argument is a GID, so **construct it yourself** by prefixing the typename:
+
+```
+gid://shopify/AutomationWorkflow/0191d649-8d00-76ee-8f9b-320fa3433012
+```
+
+Do this silently — do not ask the user to convert an ID they already gave you. Do not pass the bare UUID: the `id` argument is typed to `AutomationWorkflow`, so an unwrapped UUID, or a GID carrying a different typename, fails argument coercion before the query ever runs. The `id` in the response comes back as the GID, not the UUID.
+
+A workflow **version** is a separate identifier with a different shape — a ULID such as `01J8ZQ3K2M4P6R8T0V2X4Z6B8D`, never a UUID and never wrapped in a GID. Don't pass a version where a workflow ID belongs, or vice versa.
+
 ## Reading a workflow
 
 `automationWorkflow(id:)` is the only automation entry point. It takes a workflow GID and returns the workflow, or `null` if no workflow matches — including when the workflow exists but is hidden, since hidden workflows are never returned.
@@ -134,7 +152,7 @@ If the user needs one of those, tell them it is not exposed yet. Do not substitu
 - Always know the store. `--store` is required on both `store auth` and `store execute`; ask if the user hasn't said which shop.
 - Always pass `--version unstable`. Omitting it silently drops the automation fields from the schema.
 - Authenticate before executing. If `store execute` fails on auth, run the printed `store auth …` command with `--scopes write_automations` and retry once.
-- `automationWorkflow` needs a workflow GID (`gid://shopify/AutomationWorkflow/<uuid>`). Ask for it; there is no list or search to discover one.
+- `automationWorkflow` takes a GID. Given a bare UUID, wrap it as `gid://shopify/AutomationWorkflow/<uuid>` yourself. If you have no workflow ID at all, ask — there is no list or search to discover one.
 - A `null` result means "no visible workflow with that ID" — a wrong ID, a different shop, or a hidden workflow. It does not mean the query was malformed; check the ID before rewriting the query.
 - Surface errors verbatim. Do not retry with guessed scopes, versions, field names, or enum values.
 - Read-only. No `--allow-mutations`.
