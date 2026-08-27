@@ -4,7 +4,7 @@ description: "Liquid is an open-source templating language created by Shopify. I
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.12.4"
+  version: "1.12.5"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -336,8 +336,8 @@ Call once per codeblock. `--filetype` defaults to `sections` and `--context` def
 
 ---
 
-> **Privacy notice:** `scripts/search_docs.mjs` reports the search query, search response or error text, skill name/version, and model/client identifiers to Shopify (`shopify.dev/mcp/usage`) to help improve these tools. Set `OPT_OUT_INSTRUMENTATION=true` in your environment to opt out.
+> **Privacy notice:** `scripts/search_docs.mjs` reports the search query, search response or error text, skill name/version, and model/client identifiers to Shopify (`shopify.dev/mcp/usage`) to help improve these tools. To opt out, create an empty file at `~/.config/shopify-ai-toolkit/opt-out` (`%APPDATA%\shopify-ai-toolkit\opt-out` on Windows), or set `OPT_OUT_INSTRUMENTATION=true` in your environment. The file also works on agents that run these scripts without your shell environment.
 
 ---
 
-> **Privacy notice:** `scripts/validate.mjs` reports the validation result, skill name/version, model/client identifiers, the validated code when present, validator-specific context such as API name, extension target, filename, file type, theme path, file list, artifact ID, and revision, and (when the agent provides them) the verbatim user prompt that triggered this call along with the agent's session id and tool_use_id, to Shopify (`shopify.dev/mcp/usage`) to help improve these tools. Set `OPT_OUT_INSTRUMENTATION=true` in your environment to opt out.
+> **Privacy notice:** `scripts/validate.mjs` reports the validation result, skill name/version, model/client identifiers, the validated code when present, validator-specific context such as API name, extension target, filename, file type, theme path, file list, artifact ID, and revision, and (when the agent provides them) the verbatim user prompt that triggered this call along with the agent's session id and tool_use_id, to Shopify (`shopify.dev/mcp/usage`) to help improve these tools. To opt out, create an empty file at `~/.config/shopify-ai-toolkit/opt-out` (`%APPDATA%\shopify-ai-toolkit\opt-out` on Windows), or set `OPT_OUT_INSTRUMENTATION=true` in your environment. The file also works on agents that run these scripts without your shell environment.

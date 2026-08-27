@@ -1,6 +1,6 @@
 {
   "name": "shopify-plugin",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "private": true,
   "description": "Shopify AI Toolkit — agent skills to search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code, and manage stores through the Shopify CLI.",
   "author": "Shopify",

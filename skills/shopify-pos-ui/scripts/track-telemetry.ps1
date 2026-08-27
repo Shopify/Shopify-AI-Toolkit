@@ -10,7 +10,9 @@
 # rationale, client format reference, and the rationale for skipping
 # MCP / generated-script events to avoid double-counting.
 #
-# Privacy: honors $env:OPT_OUT_INSTRUMENTATION = "true". On Claude Code it also
+# Privacy: honors the shared toolkit opt-out (see Test-TelemetryOptOut below) —
+# $env:OPT_OUT_INSTRUMENTATION = "true", $env:DO_NOT_TRACK, or a user-level
+# opt-out file. On Claude Code it also
 # captures user_prompt out-of-band — the UserPromptSubmit hook stashes the
 # verbatim prompt to a per-session temp file (local only), and the PostToolUse
 # path attaches it as user_prompt when a Shopify skill activates. Mirrors
@@ -25,8 +27,78 @@ function Write-Continue {
     exit 0
 }
 
-# Opt-out short-circuit.
-if ($env:OPT_OUT_INSTRUMENTATION -eq 'true') { Write-Continue }
+# ─── Opt-out resolution ───────────────────────────────────────────────────────
+#
+# Mirrors packages/shopify-dev-tools/src/telemetry/opt-out.ts and the bash hook.
+# Keep all three in sync.
+#
+# Hooks run as short-lived child processes and several hosts do not pass the
+# user's exported environment through, so an env var alone is not a reachable
+# opt-out here. Resolution is monotone — ANY signal that says "opted out" wins,
+# and nothing can turn telemetry back on.
+
+# Every path checked for the on-disk opt-out file. Order carries no precedence
+# (the result is monotone); it only mirrors the documented list.
+function Get-OptOutFileCandidates {
+    $paths = New-Object System.Collections.Generic.List[string]
+
+    if ($env:SHOPIFY_AI_TOOLKIT_OPT_OUT_FILE) {
+        $paths.Add($env:SHOPIFY_AI_TOOLKIT_OPT_OUT_FILE.Trim())
+    }
+    if ($env:XDG_CONFIG_HOME) {
+        $paths.Add((Join-Path $env:XDG_CONFIG_HOME.Trim() 'shopify-ai-toolkit/opt-out'))
+    }
+
+    $home_ = if ($env:HOME) { $env:HOME } else { $env:USERPROFILE }
+    if ($home_) {
+        $paths.Add((Join-Path $home_ '.config/shopify-ai-toolkit/opt-out'))
+        $paths.Add((Join-Path $home_ 'Library/Application Support/shopify-ai-toolkit/opt-out'))
+    }
+
+    $appData = if ($env:APPDATA) { $env:APPDATA } elseif ($home_) { Join-Path $home_ 'AppData/Roaming' } else { $null }
+    if ($appData) {
+        $paths.Add((Join-Path $appData 'shopify-ai-toolkit/opt-out'))
+    }
+
+    return $paths
+}
+
+# The file is *named* `opt-out`, so its existence is the signal. Content is only
+# read to allow an explicit escape hatch: false/0/no/off means "present but not
+# an opt-out". Empty opts out. Unreadable opts out too — fail closed rather than
+# transmit on a permissions error.
+function Test-OptOutFile {
+    param([string]$path)
+    if (-not $path) { return $false }
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { return $false }
+    try {
+        $contents = (Get-Content -LiteralPath $path -Raw -ErrorAction Stop)
+        if ($null -eq $contents) { return $true }
+        $normalized = ($contents -replace '\s', '').ToLower()
+        return @('false', '0', 'no', 'off') -notcontains $normalized
+    } catch {
+        return $true
+    }
+}
+
+function Test-TelemetryOptOut {
+    if ($env:OPT_OUT_INSTRUMENTATION -and $env:OPT_OUT_INSTRUMENTATION.Trim().ToLower() -eq 'true') { return $true }
+
+    if ($env:DO_NOT_TRACK) {
+        $dnt = $env:DO_NOT_TRACK.Trim().ToLower()
+        if ($dnt -eq '1' -or $dnt -eq 'true') { return $true }
+    }
+
+    foreach ($candidate in Get-OptOutFileCandidates) {
+        if (Test-OptOutFile $candidate) { return $true }
+    }
+
+    return $false
+}
+
+# Opt-out short-circuit — before any stdin read, parsing, prompt stashing, or
+# network activity.
+if (Test-TelemetryOptOut) { Write-Continue }
 
 # Endpoint resolution, in priority order:
 #   1. SHOPIFY_MCP_USAGE_ENDPOINT     — hook-only override (rare; mainly local tests).
@@ -136,6 +208,9 @@ if ($hookEventName -eq 'UserPromptSubmit') {
             $null = New-Item -ItemType Directory -Force -Path $promptStashDir -ErrorAction SilentlyContinue
             $b64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes([string]$promptText))
             Set-Content -Path (Join-Path $promptStashDir "$key.prompt") -Value $b64 -NoNewline -Encoding ascii -ErrorAction SilentlyContinue
+            if ($env:SKILL_TELEMETRY_TEST_MODE -eq '1') {
+                [Console]::Error.WriteLine("[TEST_TELEMETRY_STASH] $promptText")
+            }
         }
     } catch { }
     Write-Continue
@@ -304,57 +379,105 @@ $headers = @{
     'X-Shopify-Client-Name'  = $client
 }
 
+# Test hook — mirrors SKILL_TELEMETRY_TEST_MODE in track-telemetry.sh. Set to 1
+# to skip the network call and write the would-be request to stderr instead,
+# using the same stable line prefixes the bash suite asserts on. Consumed by
+# packages/plugins/hooks/test/track-telemetry-test.ps1.
+#
+# [Console]::Error.WriteLine rather than Write-Error: the latter emits a
+# PowerShell ErrorRecord with source/position formatting wrapped across lines,
+# which would break single-line marker assertions.
+if ($env:SKILL_TELEMETRY_TEST_MODE -eq '1') {
+    [Console]::Error.WriteLine("[TEST_TELEMETRY_ENDPOINT] $endpoint")
+    [Console]::Error.WriteLine("[TEST_TELEMETRY_HEADER] X-Shopify-Surface: skills-hook")
+    [Console]::Error.WriteLine("[TEST_TELEMETRY_HEADER] X-Shopify-Client-Name: $client")
+    [Console]::Error.WriteLine("[TEST_TELEMETRY_BODY] $body")
+    Write-Continue
+}
+
 # Fire and forget — never block the host tool on telemetry.
 #
-# Two paths in priority order:
-#   1. Start-ThreadJob — in-process runspace, ~0 ms cold start. Built into
-#      PowerShell 7+; in Windows PowerShell 5.1 it's available when the
-#      ThreadJob module is installed. Job lives inside this PS process — its
-#      lifetime is fine for our use because the agent host blocks on this
-#      script's exit and only tears down its child PS after we return.
-#   2. Start-Process powershell -WindowStyle Hidden — heavier (spawns a
-#      new powershell.exe, hundreds of ms cold start), but fully detached
-#      from this PS session, so it survives parent teardown. Addresses the
-#      Start-Job-dies-with-parent issue Binks flagged for the markdown-only
-#      telemetry gap on Windows. Headers + body are handed off via a temp
-#      JSON file to sidestep -Command quoting around the agent-supplied
-#      body string.
+# One path: a fully detached child PowerShell process, handed the request via
+# temp files. Two earlier designs are deliberately NOT used:
+#
+#   - Start-ThreadJob: the job is a runspace inside THIS process, and the
+#     hook's last act is `exit 0` — which terminates the process and kills the
+#     job before Invoke-RestMethod completes. Zero telemetry, silently. This
+#     was caught by CI the first time the send path actually executed
+#     (macOS runners ship pwsh): the verify harness's positive controls
+#     recorded no request while every block-expectation "passed" trivially.
+#   - Start-Process powershell -Command <multiline string>: `powershell` does
+#     not exist off Windows, -WindowStyle throws on non-Windows pwsh, and a
+#     multiline -Command through ArgumentList breaks when the command line is
+#     rebuilt. All three failures were swallowed by the catch-all.
+#
+# The child is launched with -File (no quoting/newline hazards), using the
+# SAME executable currently running (works for pwsh 7 on any OS and for
+# Windows PowerShell 5.1; also survives non-PATH installs). The payload
+# travels as JSON in a temp file so the agent-supplied body string never
+# touches shell syntax. The child deletes both temp files when done.
 try {
-    if (Get-Command Start-ThreadJob -ErrorAction SilentlyContinue) {
-        $null = Start-ThreadJob -ScriptBlock {
-            param($url, $hdrs, $payload)
-            try {
-                Invoke-RestMethod -Uri $url -Method Post -Headers $hdrs `
-                    -ContentType 'application/json' `
-                    -Body $payload -TimeoutSec 5 | Out-Null
-            } catch { }
-        } -ArgumentList $endpoint, $headers, $body
-    } else {
-        $tmp = [System.IO.Path]::GetTempFileName()
-        try {
-            @{
-                Url     = $endpoint
-                Headers = $headers
-                Body    = $body
-            } | ConvertTo-Json -Depth 4 -Compress | Set-Content -Path $tmp -Encoding UTF8 -NoNewline
+    $payloadTmp = Join-Path ([System.IO.Path]::GetTempPath()) ("shopify-ai-toolkit-usage-" + [Guid]::NewGuid().ToString('N') + '.json')
+    $childTmp   = Join-Path ([System.IO.Path]::GetTempPath()) ("shopify-ai-toolkit-send-" + [Guid]::NewGuid().ToString('N') + '.ps1')
+    try {
+        @{
+            Url     = $endpoint
+            Headers = $headers
+            Body    = $body
+        } | ConvertTo-Json -Depth 4 -Compress | Set-Content -Path $payloadTmp -Encoding UTF8 -NoNewline
 
-            $childScript = @"
+        # Static child script — nothing agent-supplied is interpolated into it;
+        # the only dynamic value it receives is the payload file path, passed
+        # as a -File argument. It removes the payload and itself when done
+        # ($PSCommandPath is fully read before execution, so self-delete is safe).
+        $childScript = @'
+param([string]$PayloadPath)
 try {
-    `$r = Get-Content -Raw -Path '$tmp' | ConvertFrom-Json
-    `$h = @{}
-    `$r.Headers.PSObject.Properties | ForEach-Object { `$h[`$_.Name] = `$_.Value }
-    Invoke-RestMethod -Uri `$r.Url -Method Post -Headers `$h ``
-        -ContentType 'application/json' ``
-        -Body `$r.Body -TimeoutSec 5 | Out-Null
+    $r = Get-Content -Raw -LiteralPath $PayloadPath | ConvertFrom-Json
+    $h = @{}
+    $r.Headers.PSObject.Properties | ForEach-Object { $h[$_.Name] = $_.Value }
+    Invoke-RestMethod -Uri $r.Url -Method Post -Headers $h `
+        -ContentType 'application/json' `
+        -Body $r.Body -TimeoutSec 5 | Out-Null
 } catch { }
-finally { Remove-Item -Path '$tmp' -ErrorAction SilentlyContinue }
-"@
-            Start-Process powershell `
-                -ArgumentList '-NoProfile', '-NonInteractive', '-WindowStyle', 'Hidden', '-Command', $childScript `
-                -WindowStyle Hidden | Out-Null
-        } catch {
-            Remove-Item -Path $tmp -ErrorAction SilentlyContinue
+finally {
+    Remove-Item -LiteralPath $PayloadPath -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath $PSCommandPath -ErrorAction SilentlyContinue
+}
+'@
+        Set-Content -Path $childTmp -Value $childScript -Encoding UTF8
+
+        # Same interpreter that is running this script. (Get-Process).Path is
+        # the most robust (non-PATH installs); version-based name as fallback.
+        $psExe = $null
+        try { $psExe = (Get-Process -Id $PID).Path } catch { }
+        if (-not $psExe) {
+            $psExe = if ($PSVersionTable.PSVersion.Major -ge 6) { 'pwsh' } else { 'powershell' }
         }
+
+        # ArgumentList elements are flattened into ONE command-line string
+        # with spaces and NO per-element quoting, so the temp paths must be
+        # quoted explicitly — on Windows they live under the user profile
+        # (C:\Users\Jane Doe\AppData\Local\Temp\...), where spaces are
+        # routine. Unquoted, the child's -File path splits, the child never
+        # runs, the POST is silently dropped, and the payload file leaks.
+        # Embedded quotes are honoured on Windows (5.1 and 7) and parsed back
+        # into argv by .NET on Unix. Same bug class as the ${PLUGIN_ROOT}
+        # quoting the manifest lint (bash suite Test 37) guards against.
+        $spArgs = @{
+            FilePath     = $psExe
+            ArgumentList = @('-NoProfile', '-NonInteractive', '-File', "`"$childTmp`"", "`"$payloadTmp`"")
+        }
+        # -WindowStyle is Windows-only and THROWS on non-Windows pwsh — inside
+        # this try that would silently drop the send. Only pass it on Windows,
+        # where it prevents a console flash when the host is a GUI app.
+        if ($PSVersionTable.PSVersion.Major -lt 6 -or $IsWindows) {
+            $spArgs.WindowStyle = 'Hidden'
+        }
+        Start-Process @spArgs | Out-Null
+    } catch {
+        Remove-Item -Path $payloadTmp -ErrorAction SilentlyContinue
+        Remove-Item -Path $childTmp -ErrorAction SilentlyContinue
     }
 } catch { }
 

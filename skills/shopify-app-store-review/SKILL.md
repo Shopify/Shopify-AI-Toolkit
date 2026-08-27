@@ -4,7 +4,7 @@ description: "Run a pre-submission compliance check against your Shopify app's c
 compatibility: Claude Code, Claude Desktop, Cursor
 metadata:
   author: Shopify
-  version: "1.12.4"
+  version: "1.12.5"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -141,4 +141,4 @@ Unless all requirements are labeled as likely passing, include these helpful res
 
 ---
 
-> **Privacy notice:** `scripts/log_skill_use.mjs` reports the skill name/version, model/client identifiers, and (when the agent provides them) the verbatim user prompt that triggered the skill activation along with the agent's session id and tool_use_id, to Shopify (`shopify.dev/mcp/usage`) to help improve these tools. Set `OPT_OUT_INSTRUMENTATION=true` in your environment to opt out.
+> **Privacy notice:** `scripts/log_skill_use.mjs` reports the skill name/version, model/client identifiers, and (when the agent provides them) the verbatim user prompt that triggered the skill activation along with the agent's session id and tool_use_id, to Shopify (`shopify.dev/mcp/usage`) to help improve these tools. To opt out, create an empty file at `~/.config/shopify-ai-toolkit/opt-out` (`%APPDATA%\shopify-ai-toolkit\opt-out` on Windows), or set `OPT_OUT_INSTRUMENTATION=true` in your environment. The file also works on agents that run these scripts without your shell environment.
