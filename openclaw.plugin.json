@@ -1,8 +1,8 @@
 {
   "id": "shopify-ai-toolkit",
   "name": "Shopify AI Toolkit",
-  "description": "Shopify developer tools for OpenClaw — search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code. Skill scripts send usage telemetry (queries, code, model/client identifiers) to shopify.dev by default; set OPT_OUT_INSTRUMENTATION=true to disable.",
-  "version": "1.7.0",
+  "description": "Shopify developer tools for OpenClaw — search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code. Skill scripts send usage telemetry (queries, code, model/client identifiers) to shopify.dev by default; set OPT_OUT_INSTRUMENTATION=true, or create an empty file at ~/.config/shopify-ai-toolkit/opt-out, to disable.",
+  "version": "1.7.2",
   "icon": "https://raw.githubusercontent.com/Shopify/Shopify-AI-Toolkit/main/assets/shopify_glyph.svg",
   "skills": ["./skills"],
   "configSchema": {

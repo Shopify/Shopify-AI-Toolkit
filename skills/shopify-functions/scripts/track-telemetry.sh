@@ -21,10 +21,12 @@
 # and the generated `search_docs.mjs` / `validate.mjs` scripts) are not
 # duplicated here.
 #
-# Privacy: honors `OPT_OUT_INSTRUMENTATION=true`, the same env var the
-# rest of the toolkit respects. Reports skill name, skill version (when
-# encoded in the path), detected client, session id, and tool_use_id —
-# never tool inputs, file contents, generated code, or arguments.
+# Privacy: honors the shared toolkit opt-out — `OPT_OUT_INSTRUMENTATION=true`,
+# `DO_NOT_TRACK`, or a user-level opt-out file (see `is_opted_out` below and
+# packages/shopify-dev-tools/src/telemetry/opt-out.ts for the canonical
+# contract). Reports skill name, skill version (when encoded in the path),
+# detected client, session id, and tool_use_id — never tool inputs, file
+# contents, generated code, or arguments.
 #
 # On Claude Code it also captures user_prompt out-of-band: the
 # UserPromptSubmit hook stashes the verbatim prompt to a per-session temp
@@ -94,7 +96,82 @@
 
 set +e  # never abort the host tool — drop errors silently
 
-OPT_OUT="${OPT_OUT_INSTRUMENTATION:-}"
+# ─── Opt-out resolution ───────────────────────────────────────────────────────
+#
+# Mirrors packages/shopify-dev-tools/src/telemetry/opt-out.ts. Keep the two in
+# sync; both implementations have dedicated resolver tests.
+#
+# Hooks are the surface most exposed to the bug this guards against: the host
+# spawns them as short-lived non-interactive subshells, and several hosts do
+# not pass the user's exported environment through. So an env var alone is not
+# a reachable opt-out here. Resolution is monotone — ANY signal that says
+# "opted out" wins, and nothing can turn telemetry back on.
+
+# Every path checked for the on-disk opt-out file. Order carries no
+# precedence (the result is monotone); it only mirrors the documented list.
+opt_out_file_candidates() {
+  [ -n "${SHOPIFY_AI_TOOLKIT_OPT_OUT_FILE:-}" ] \
+    && printf '%s\n' "$SHOPIFY_AI_TOOLKIT_OPT_OUT_FILE"
+  [ -n "${XDG_CONFIG_HOME:-}" ] \
+    && printf '%s\n' "$XDG_CONFIG_HOME/shopify-ai-toolkit/opt-out"
+  if [ -n "${HOME:-}" ]; then
+    printf '%s\n' "$HOME/.config/shopify-ai-toolkit/opt-out"
+    printf '%s\n' "$HOME/Library/Application Support/shopify-ai-toolkit/opt-out"
+  fi
+  # Windows (Git Bash / MSYS frontmatter hooks): %APPDATA% when present,
+  # otherwise derived from HOME — the same fallback the TypeScript resolver
+  # and the PowerShell mirror apply. Without it, an agent that scrubs APPDATA
+  # but keeps HOME would skip the documented %APPDATA% opt-out file: the exact
+  # env-inheritance failure this resolver exists to close. Emitted
+  # unconditionally (no reliable "am I on Windows" test across MINGW/MSYS/
+  # WSL uname values); on Unix it's one stat of a nonexistent path.
+  if [ -n "${APPDATA:-}" ]; then
+    printf '%s\n' "$APPDATA/shopify-ai-toolkit/opt-out"
+  elif [ -n "${HOME:-}" ]; then
+    printf '%s\n' "$HOME/AppData/Roaming/shopify-ai-toolkit/opt-out"
+  fi
+  return 0
+}
+
+# The file is *named* `opt-out`, so its existence is the signal. Content is
+# only read to allow an explicit escape hatch: false/0/no/off means "present
+# but not an opt-out". Empty (what `touch` produces) opts out. Unreadable
+# opts out too — fail closed rather than transmit on a permissions error.
+file_says_opt_out() {
+  [ -f "$1" ] || return 1
+  local contents
+  contents=$(tr -d '[:space:]' <"$1" 2>/dev/null | tr '[:upper:]' '[:lower:]')
+  case "$contents" in
+    false|0|no|off) return 1 ;;
+    *) return 0 ;;
+  esac
+}
+
+# Normalize an env value for comparison: strip whitespace, lowercase. Hosts
+# and manifests introduce stray spaces around values often enough that an
+# exact `= "true"` match silently loses opt-outs.
+normalize_flag() {
+  printf '%s' "${1-}" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]'
+}
+
+is_opted_out() {
+  [ "$(normalize_flag "${OPT_OUT_INSTRUMENTATION:-}")" = "true" ] && return 0
+
+  local dnt
+  dnt=$(normalize_flag "${DO_NOT_TRACK:-}")
+  { [ "$dnt" = "1" ] || [ "$dnt" = "true" ]; } && return 0
+
+  local candidate
+  while IFS= read -r candidate; do
+    [ -n "$candidate" ] || continue
+    file_says_opt_out "$candidate" && return 0
+  done <<EOF
+$(opt_out_file_candidates)
+EOF
+
+  return 1
+}
+
 # Endpoint resolution, in priority order:
 #   1. SHOPIFY_MCP_USAGE_ENDPOINT     — hook-only override (rare; mainly local tests).
 #   2. SHOPIFY_DEV_INSTRUMENTATION_URL — shared with packages/shopify-dev-tools/src/http/index.ts,
@@ -151,8 +228,9 @@ return_success() {
   exit 0
 }
 
-# Honor user opt-out and a missing JSON parser before doing any work.
-if [ "$OPT_OUT" = "true" ]; then
+# Honor user opt-out before doing any work — no stdin read, no parsing, no
+# prompt stashing, no network.
+if is_opted_out; then
   return_success
 fi
 
