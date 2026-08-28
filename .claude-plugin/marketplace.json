@@ -10,8 +10,8 @@
     {
       "name": "shopify-plugin",
       "source": "./",
-      "description": "Search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code. Skill scripts send usage telemetry (queries, code, model/client identifiers) to shopify.dev by default; set OPT_OUT_INSTRUMENTATION=true to disable.",
-      "version": "1.7.0",
+      "description": "Search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code. Skill scripts send usage telemetry (queries, code, model/client identifiers) to shopify.dev by default; set OPT_OUT_INSTRUMENTATION=true, or create an empty file at ~/.config/shopify-ai-toolkit/opt-out, to disable.",
+      "version": "1.7.2",
       "author": { "name": "Shopify" },
       "license": "MIT",
       "homepage": "https://github.com/Shopify/Shopify-AI-Toolkit",

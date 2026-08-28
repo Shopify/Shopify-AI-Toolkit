@@ -58,7 +58,6 @@ The Toolkit gives your agent access to Shopify's documentation, API schemas, and
   ```
 
 - **For VS Code**:
-
   1. Ensure the [Agent plugins](https://code.visualstudio.com/docs/copilot/customization/agent-plugins) preview is enabled in your VS Code settings.
 
   2. Open the Command Palette (`Cmd+Shift+P` on macOS, `Ctrl+Shift+P` on Windows/Linux) and run:
@@ -105,11 +104,39 @@ The same script is also injected into each generated SKILL.md as a `hooks:` fron
 
 The hook does not report tool inputs, file contents, generated code, or other tool arguments. On Claude Code it can additionally attach `user_prompt` (the most recent prompt verbatim) via the `UserPromptSubmit` stash, but only when a Shopify skill activates. On other hosts (Cursor, Copilot) the hook carries no prompt and `user_prompt` capture happens on the script surfaces only (`validate.mjs` for skills with validation, `log_skill_use.mjs` for skills without). See [`hooks/README.md`](./hooks/README.md) for full coverage details.
 
-This is **on by default**. To opt out — for skill scripts, the MCP server, and the hook — set the environment variable:
+### Opting out
 
+Telemetry is **on by default**. Opting out applies to every surface at once — skill scripts, the MCP server, and the hooks — and also stops local capture (no prompt is stashed to disk).
+
+There are two ways to opt out. Either is sufficient on its own.
+
+**1. A user-level opt-out file (recommended).** This is the only method that reliably works everywhere, because it does not depend on the agent passing your shell environment through to the processes it spawns:
+
+```sh
+mkdir -p ~/.config/shopify-ai-toolkit && touch ~/.config/shopify-ai-toolkit/opt-out
 ```
-OPT_OUT_INSTRUMENTATION=true
+
+The file is checked at:
+
+| Platform      | Path                                                                                       |
+| ------------- | ------------------------------------------------------------------------------------------ |
+| Linux / macOS | `$XDG_CONFIG_HOME/shopify-ai-toolkit/opt-out`, else `~/.config/shopify-ai-toolkit/opt-out` |
+| macOS (also)  | `~/Library/Application Support/shopify-ai-toolkit/opt-out`                                 |
+| Windows       | `%APPDATA%\shopify-ai-toolkit\opt-out`                                                     |
+
+An empty file opts you out — the filename is the signal. Writing `false`, `0`, `no`, or `off` into it means "present, but do not opt me out", which is useful if the file is managed by a dotfiles repo. Set `SHOPIFY_AI_TOOLKIT_OPT_OUT_FILE` to point every surface at a different absolute path.
+
+**2. An environment variable.**
+
+```sh
+export OPT_OUT_INSTRUMENTATION=true
 ```
+
+`DO_NOT_TRACK=1` ([donottrack.sh](https://donottrack.sh/)) is honored as well.
+
+Environment variables only reach a telemetry surface if the process emitting it inherits your exported environment. Several hosts spawn skill scripts, hooks, MCP child processes, and sub-agents from non-interactive subshells that do not — Hermes' `terminal` tool, Codex's `exec` mode, and GUI-launched MCP servers among them. If you use one of those, use the file.
+
+**Opt-out is monotone.** Any signal that says "opted out" wins, and nothing can turn telemetry back on for that process. In particular, a wrapper script or CI image exporting `OPT_OUT_INSTRUMENTATION=false` cannot override the file you created.
 
 ## Other install methods
 

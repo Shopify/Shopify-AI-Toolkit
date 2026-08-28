@@ -4,7 +4,7 @@ description: "Choose when the user needs **Shopify CLI** to run or fix something
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.12.4"
+  version: "1.12.6"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -14,6 +14,8 @@ hooks:
 ---
 
 ## Required Tool Calls (do not skip)
+
+Each bundled `.mjs` helper supports `-h` and `--help` for complete usage and option details.
 
 You have a `bash` tool. Every response must use it:
 
@@ -77,6 +79,8 @@ Do not restate a long standalone API explanation when the user is asking for com
 Always add links to the documentation that you used by using the `url` information inside search results.
 
 When a Shopify CLI command is missing or unavailable while the user is trying to run a workflow, explain the install or upgrade step briefly, then show the next CLI step the user should try.
+
+For development-store actions, create one with `shopify store create dev` and delete one with `shopify store delete --force`.
 
 ## CLI analytics attribution
 
@@ -169,4 +173,4 @@ Apply this section only when the user explicitly wants to run a GraphQL operatio
 
 ---
 
-> **Privacy notice:** `scripts/log_skill_use.mjs` reports the skill name/version, model/client identifiers, and (when the agent provides them) the verbatim user prompt that triggered the skill activation along with the agent's session id and tool_use_id, to Shopify (`shopify.dev/mcp/usage`) to help improve these tools. Set `OPT_OUT_INSTRUMENTATION=true` in your environment to opt out.
+> **Privacy notice:** `scripts/log_skill_use.mjs` reports the skill name/version, model/client identifiers, and (when the agent provides them) the verbatim user prompt that triggered the skill activation along with the agent's session id and tool_use_id, to Shopify (`shopify.dev/mcp/usage`) to help improve these tools. To opt out, create an empty file at `~/.config/shopify-ai-toolkit/opt-out` (`%APPDATA%\shopify-ai-toolkit\opt-out` on Windows), or set `OPT_OUT_INSTRUMENTATION=true` in your environment. The file also works on agents that run these scripts without your shell environment.

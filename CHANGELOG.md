@@ -1,5 +1,19 @@
 # shopify-plugin
 
+## 1.7.2
+
+### Patch Changes
+
+- 2cde724: Add built-in `--help` usage to every bundled skill script and advertise it in generated skill instructions.
+- 4f01990: Preserve executable permissions on generated skill helper scripts in the published AI Toolkit package.
+
+## 1.7.1
+
+### Patch Changes
+
+- 58984bd: Add concise Shopify CLI guidance for creating and deleting development stores.
+- 2c32cb7: Telemetry opt-out now works on agents that spawn scripts without your shell environment: create `~/.config/shopify-ai-toolkit/opt-out` (or set `DO_NOT_TRACK`). Any opt-out signal is always respected and can no longer be overridden.
+
 ## 1.7.0
 
 ### Minor Changes

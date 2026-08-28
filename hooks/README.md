@@ -50,7 +50,7 @@ plugin-manifest hook API nor frontmatter hook support.
 
 ## Source labeling and downstream dedup
 
-When the plugin is installed on Claude Code, *both* the plugin-manifest
+When the plugin is installed on Claude Code, _both_ the plugin-manifest
 hook and the skill-frontmatter hook fire for the same
 `Skill("shopify-admin")` invocation. Each event is labeled so consumers
 can collapse duplicates after the fact:
@@ -101,7 +101,7 @@ X-Shopify-Client-Name: claude-code | cursor | copilot-cli | vscode | vscode-insi
 ```
 
 The hook does not report tool inputs, file contents, generated code, or
-other tool arguments. It *does* capture `user_prompt` on Claude Code,
+other tool arguments. It _does_ capture `user_prompt` on Claude Code,
 out-of-band: a `UserPromptSubmit` hook stashes the verbatim prompt to a
 per-session file under a per-user (per-uid) temp directory
 (`${TMPDIR:-/tmp}/shopify-ai-toolkit-telemetry-$(id -u)/`), written `0600`
@@ -128,13 +128,33 @@ The hook always also supplies the dedup keys (`sessionId` + `toolUseId`).
 
 ## Opt-out
 
-The hook honors `OPT_OUT_INSTRUMENTATION=true` — the same env var the
-rest of the toolkit respects. Setting it disables every telemetry
-surface in one place:
+The hook honors the shared toolkit opt-out. Any one of these disables
+every telemetry surface at once — skill scripts (`reportValidation()`),
+MCP server tool calls (`recordUsage()`), and this hook:
 
-- Skill scripts (`reportValidation()`).
-- MCP server tool calls (`recordUsage()`).
-- This hook.
+- A user-level opt-out file: `$XDG_CONFIG_HOME/shopify-ai-toolkit/opt-out`,
+  `~/.config/shopify-ai-toolkit/opt-out`,
+  `~/Library/Application Support/shopify-ai-toolkit/opt-out` (macOS), or
+  `%APPDATA%\shopify-ai-toolkit\opt-out` (Windows). An empty file is
+  enough; `false`/`0`/`no`/`off` inside it means "not an opt-out".
+  `SHOPIFY_AI_TOOLKIT_OPT_OUT_FILE` overrides the location.
+- `OPT_OUT_INSTRUMENTATION=true`.
+- `DO_NOT_TRACK=1`.
+
+Hooks are the surface most exposed to the env-var gap: the host spawns
+them as short-lived subshells, and several hosts do not pass the user's
+exported environment through (Shopify-AI-Toolkit#32). The file is read
+from disk, so it is the signal that always applies — prefer it.
+
+Resolution is **monotone**: any signal saying "opted out" wins, and
+nothing re-enables telemetry. A wrapper exporting
+`OPT_OUT_INSTRUMENTATION=false` cannot override the file.
+
+Opting out also disables _capture_, not just transmission — no prompt is
+stashed to disk.
+
+Canonical implementation and the contract these scripts mirror:
+`packages/shopify-dev-tools/src/telemetry/opt-out.ts`.
 
 ## Failure semantics
 
@@ -162,9 +182,17 @@ echo '{"hook_event_name":"PostToolUse","tool_name":"Skill","tool_input":{"skill"
 echo '{"hook_event_name":"PostToolUse","tool_name":"read_file","tool_use_id":"x__vscode","tool_input":{"path":"/Users/me/.vscode/agent-plugins/github.com/Shopify/shopify-ai-toolkit/.github/plugins/shopify-ai-toolkit/skills/shopify-liquid/SKILL.md"}}' \
   | bash scripts/track-telemetry.sh
 
-# Opt-out (no network call)
+# Opt-out via env var (no network call)
 echo '{"tool_name":"Skill","tool_input":{"skill":"shopify-admin"}}' \
   | OPT_OUT_INSTRUMENTATION=true bash scripts/track-telemetry.sh
+
+# Opt-out via the on-disk file, with the environment scrubbed — this is the
+# shape that hosts like Hermes and Codex exec actually produce.
+sandbox=$(mktemp -d)
+mkdir -p "$sandbox/.config/shopify-ai-toolkit" && touch "$sandbox/.config/shopify-ai-toolkit/opt-out"
+echo '{"tool_name":"Skill","tool_input":{"skill":"shopify-admin"}}' \
+  | env -i PATH="$PATH" HOME="$sandbox" SKILL_TELEMETRY_TEST_MODE=1 bash scripts/track-telemetry.sh
+# Expect: only {"continue":true} — no [TEST_TELEMETRY_BODY] marker on stderr.
 ```
 
 Override the endpoint for staging or local tests via `SHOPIFY_MCP_USAGE_ENDPOINT` (hook-only) or `SHOPIFY_DEV_INSTRUMENTATION_URL` (shared with `packages/shopify-dev-tools/src/http/index.ts`, used by the evals harness to black-hole telemetry — set this to redirect both hook and TS-side telemetry to the same target).
@@ -179,9 +207,20 @@ bash packages/plugins/hooks/test/track-telemetry-test.sh
 
 Bash plus `jq` (the suite guards for `jq` up front and fails with a clear message if it's missing) — no bats. Runs on every PR (ubuntu-latest + macos-latest) via `.github/workflows/test.yml`, so sed-portability regressions are caught on both GNU sed (Linux) and BSD sed (macOS).
 
-The script supports a hidden `SKILL_TELEMETRY_TEST_MODE=1` env var that skips the curl call and writes the would-be request to stderr as `[TEST_TELEMETRY_ENDPOINT]`, `[TEST_TELEMETRY_HEADER]`, and `[TEST_TELEMETRY_BODY]` markers — that's the surface the test suite asserts on.
+Both scripts support a hidden `SKILL_TELEMETRY_TEST_MODE=1` env var that skips the network call and writes the would-be request to stderr as `[TEST_TELEMETRY_ENDPOINT]`, `[TEST_TELEMETRY_HEADER]`, and `[TEST_TELEMETRY_BODY]` markers — that's the surface both test suites assert on.
 
-PowerShell parity tests are out of scope today (no `pwsh` in CI matrix); the `.ps1` mirrors the bash logic and the bash tests act as a proxy for shape correctness.
+### PowerShell
+
+```powershell
+pwsh -NoProfile -File packages/plugins/hooks/test/track-telemetry-test.ps1
+
+# Windows PowerShell 5.1 — the version that ships with Windows 10/11.
+powershell -NoProfile -File packages\plugins\hooks\test\track-telemetry-test.ps1
+```
+
+This suite is deliberately self-contained: it needs only PowerShell and the hook script — no pnpm, Node, or monorepo install — so it runs on a bare Windows VM.
+
+**It does not run in CI.** The test matrix has no Windows runner (`shop/setup-javascript-action` lacks Windows support), and the `.ps1` is a separate implementation from the `.sh`, so the bash suite is not a substitute. Run this manually on Windows when changing either hook — especially the opt-out resolution (mirrored across both) and the detached sender (Test 14 is the only automated coverage of the real send path; it caught both the ThreadJob-dies-with-parent and the unquoted-spaced-temp-path bugs).
 
 ## Mirror layout
 
@@ -191,7 +230,7 @@ and rsyncs to `/hooks/` at the root of the public
 plugin loader expects (`${CLAUDE_PLUGIN_ROOT}/hooks/...`,
 `${CURSOR_PLUGIN_ROOT}/hooks/...`, `${PLUGIN_ROOT}/hooks/...`).
 
-The two script files (`track-telemetry.sh`, `.ps1`) are *also* copied
+The two script files (`track-telemetry.sh`, `.ps1`) are _also_ copied
 into each generated skill's `scripts/` directory by
 `packages/shopify-dev-tools/scripts/generate-agent-skills.ts`. The
 skill-frontmatter hook invokes `$CLAUDE_PLUGIN_ROOT/scripts/track-telemetry.sh`:
