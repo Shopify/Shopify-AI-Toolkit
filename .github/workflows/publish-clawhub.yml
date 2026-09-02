@@ -164,7 +164,9 @@ jobs:
       actions: read
       contents: read
       id-token: write
-    uses: openclaw/clawhub/.github/workflows/package-publish.yml@87ca030c30f3cfb78ab15c8e66b5ff1469c8f9c8 # v0.23.3
+    # v0.23.3 predates the categories/topics workflow inputs. Pin the
+    # verified upstream commit that added them and subsequent publish hardening.
+    uses: openclaw/clawhub/.github/workflows/package-publish.yml@845c6d3bdb1a36573d8d28be2a8fb85a3c476720
     with:
       owner: shopify
       family: bundle-plugin
