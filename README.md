@@ -43,7 +43,7 @@ The Toolkit gives your agent access to Shopify's documentation, API schemas, and
   openclaw plugins install npm:@shopify/ai-toolkit
   ```
 
-  Alternatively, install directly from the git mirror with `openclaw plugins install git:github.com/Shopify/Shopify-AI-Toolkit`. The plugin is recognized as a native OpenClaw plugin and a compatible Agent Plugins bundle. Once published to ClawHub, `openclaw plugins install clawhub:@shopify/ai-toolkit` also works.
+  Alternatively, install from ClawHub with `openclaw plugins install clawhub:@shopify/ai-toolkit`, or directly from the git mirror with `openclaw plugins install git:github.com/Shopify/Shopify-AI-Toolkit`. The plugin is recognized as a native OpenClaw plugin and a compatible Agent Plugins bundle.
 
 - **For Pi**: In your terminal, install the package from npm:
 

@@ -1,0 +1,182 @@
+name: Publish Shopify AI Toolkit to ClawHub
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - package.json
+  repository_dispatch:
+    types:
+      - publish-clawhub
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-clawhub-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CLAWHUB_CLI_VERSION: 0.23.3
+  PACKAGE_NAME: "@shopify/ai-toolkit"
+  NPM_REGISTRY: "https://registry.npmjs.org"
+  CLAWHUB_REGISTRY: "https://clawhub.ai"
+
+jobs:
+  prepare:
+    name: Fetch npm release
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    outputs:
+      should_publish: ${{ steps.clawhub_state.outputs.should_publish }}
+      version: ${{ steps.package.outputs.version }}
+      artifact_name: ${{ steps.package.outputs.artifact_name }}
+      artifact_path: ${{ steps.package.outputs.artifact_path }}
+    steps:
+      - name: Checkout public mirror
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Resolve released version
+        id: package
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          version=$(node -p "require('./package.json').version")
+          artifact_name="shopify-ai-toolkit-${version}"
+          artifact_path="shopify-ai-toolkit-${version}.tgz"
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "artifact_name=$artifact_name" >> "$GITHUB_OUTPUT"
+          echo "artifact_path=$artifact_path" >> "$GITHUB_OUTPUT"
+
+      - name: Download exact npm artifact
+        shell: bash
+        env:
+          VERSION: ${{ steps.package.outputs.version }}
+          ARTIFACT_PATH: ${{ steps.package.outputs.artifact_path }}
+        run: |
+          set -euo pipefail
+
+          # npm and the mirror are released by separate jobs. The mirror is
+          # normally merged after npm is live, but retry briefly so a fast
+          # mirror merge cannot race registry propagation.
+          for attempt in $(seq 1 30); do
+            published_version=$(npm view "$PACKAGE_NAME@$VERSION" version --registry "$NPM_REGISTRY" 2>/dev/null || true)
+            if [ "$published_version" = "$VERSION" ]; then
+              break
+            fi
+
+            if [ "$attempt" -eq 30 ]; then
+              echo "::error::$PACKAGE_NAME@$VERSION did not become available on npm within 10 minutes."
+              exit 1
+            fi
+
+            echo "Waiting for $PACKAGE_NAME@$VERSION on npm (attempt $attempt/30)..."
+            sleep 20
+          done
+
+          packed_file=$(npm pack "$PACKAGE_NAME@$VERSION" --registry "$NPM_REGISTRY" --silent)
+          if [ "$packed_file" != "$ARTIFACT_PATH" ]; then
+            mv "$packed_file" "$ARTIFACT_PATH"
+          fi
+
+          tarball_name=$(tar -xOf "$ARTIFACT_PATH" package/package.json | node -e '
+            let input = "";
+            process.stdin.on("data", (chunk) => input += chunk);
+            process.stdin.on("end", () => {
+              const pkg = JSON.parse(input);
+              process.stdout.write(`${pkg.name}\n${pkg.version}\n`);
+            });
+          ')
+          actual_name=$(printf '%s\n' "$tarball_name" | sed -n '1p')
+          actual_version=$(printf '%s\n' "$tarball_name" | sed -n '2p')
+
+          if [ "$actual_name" != "$PACKAGE_NAME" ] || [ "$actual_version" != "$VERSION" ]; then
+            echo "::error::Downloaded artifact identity is $actual_name@$actual_version; expected $PACKAGE_NAME@$VERSION."
+            exit 1
+          fi
+
+      - name: Configure ClawHub authentication
+        shell: bash
+        env:
+          CLAWHUB_TOKEN: ${{ secrets.CLAWHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          : "${CLAWHUB_TOKEN:?Add CLAWHUB_TOKEN to the Shopify-AI-Toolkit repository Actions secrets before merging a mirror release}"
+
+          config_path="$RUNNER_TEMP/clawhub-config.json"
+          CONFIG_PATH="$config_path" node -e '
+            const fs = require("fs");
+            fs.writeFileSync(process.env.CONFIG_PATH, JSON.stringify({
+              registry: process.env.CLAWHUB_REGISTRY,
+              token: process.env.CLAWHUB_TOKEN,
+            }));
+          '
+          chmod 600 "$config_path"
+          echo "CLAWHUB_CONFIG_PATH=$config_path" >> "$GITHUB_ENV"
+
+      - name: Check ClawHub release state
+        id: clawhub_state
+        shell: bash
+        env:
+          VERSION: ${{ steps.package.outputs.version }}
+          ARTIFACT_PATH: ${{ steps.package.outputs.artifact_path }}
+        run: |
+          set -euo pipefail
+
+          inspect_output=$(mktemp)
+          if npx --yes "clawhub@$CLAWHUB_CLI_VERSION" package inspect "$PACKAGE_NAME" --version "$VERSION" --json >"$inspect_output" 2>&1; then
+            echo "$PACKAGE_NAME@$VERSION already exists on ClawHub; verifying artifact identity."
+            npx --yes "clawhub@$CLAWHUB_CLI_VERSION" package verify "$ARTIFACT_PATH" \
+              --package "$PACKAGE_NAME" \
+              --version "$VERSION" \
+              --json
+            echo "should_publish=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if grep -Eq 'Package not found|Version not found|not visible to this account' "$inspect_output"; then
+            echo "$PACKAGE_NAME@$VERSION is not on ClawHub yet."
+            echo "should_publish=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          cat "$inspect_output"
+          echo "::error::Could not determine the ClawHub state for $PACKAGE_NAME@$VERSION."
+          exit 1
+
+      - name: Upload npm artifact
+        if: steps.clawhub_state.outputs.should_publish == 'true'
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: ${{ steps.package.outputs.artifact_name }}
+          path: ${{ steps.package.outputs.artifact_path }}
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    name: Publish npm artifact to ClawHub
+    needs: prepare
+    if: github.ref == 'refs/heads/main' && needs.prepare.outputs.should_publish == 'true'
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    uses: openclaw/clawhub/.github/workflows/package-publish.yml@87ca030c30f3cfb78ab15c8e66b5ff1469c8f9c8 # v0.23.3
+    with:
+      owner: shopify
+      family: bundle-plugin
+      dry_run: false
+      wait_for_publication: true
+      publication_timeout_minutes: 30
+      package_artifact_name: ${{ needs.prepare.outputs.artifact_name }}
+      package_artifact_path: ${{ needs.prepare.outputs.artifact_path }}
+      source_repo: Shopify/Shopify-AI-Toolkit
+      source_commit: ${{ github.sha }}
+      source_ref: main
+      categories: tools
+      topics: shopify,commerce,graphql,liquid,developer-tools
+    secrets:
+      clawhub_token: ${{ secrets.CLAWHUB_TOKEN }}

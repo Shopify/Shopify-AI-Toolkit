@@ -1,5 +1,17 @@
 # shopify-plugin
 
+## 1.8.0
+
+### Minor Changes
+
+- 240b92e: Add an `app-pricing` topic that routes supported app monetization to required unscoped Shopify.dev search, with explicit handoffs for Manual Pricing exceptions and merchant product subscriptions.
+
+### Patch Changes
+
+- 0c78d28: Publish each mirrored Shopify AI Toolkit npm release to ClawHub automatically.
+- 61e53ec: Publish matching `vX.Y.Z` tags and GitHub releases when versioned content reaches the public mirror.
+- 1df934b: Generated skills now bundle a once-per-turn `scripts/log_feedback.mjs` capability-scorecard finalizer, with a matching SKILL.md instruction and privacy notice. Skill telemetry emitters honor `SKILL_TELEMETRY_TEST_MODE=1` (print the would-be request to stderr instead of sending), matching the bash telemetry hook.
+
 ## 1.7.2
 
 ### Patch Changes

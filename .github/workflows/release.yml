@@ -1,0 +1,86 @@
+name: Release mirrored AI Toolkit
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - package.json
+      - CHANGELOG.md
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout public mirror
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Resolve release metadata
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Expected a major.minor.patch version, got: $VERSION" >&2
+            exit 1
+          fi
+
+          TAG="v${VERSION}"
+          NOTES_FILE="${RUNNER_TEMP}/release-notes.md"
+
+          node - "$VERSION" "$NOTES_FILE" <<'NODE'
+          const fs = require("node:fs");
+
+          const [, , version, outputPath] = process.argv;
+          const changelog = fs.readFileSync("CHANGELOG.md", "utf8");
+          const heading = `## ${version}`;
+          const start = changelog.indexOf(heading);
+
+          if (start === -1) {
+            throw new Error(`Could not find changelog section for ${version}`);
+          }
+
+          const bodyStart = start + heading.length;
+          const nextVersionStart = changelog.indexOf("\n## ", bodyStart);
+          const notes = changelog
+            .slice(bodyStart, nextVersionStart === -1 ? undefined : nextVersionStart)
+            .trim();
+
+          fs.writeFileSync(outputPath, `${notes || `Release ${version}`}\n`);
+          NODE
+
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "notes_file=$NOTES_FILE" >> "$GITHUB_OUTPUT"
+
+      - name: Create tag and GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NOTES_FILE: ${{ steps.release.outputs.notes_file }}
+          TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          set -euo pipefail
+
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $TAG already exists."
+            exit 0
+          fi
+
+          if git show-ref --verify --quiet "refs/tags/$TAG"; then
+            TARGET_ARGS=(--verify-tag)
+          else
+            TARGET_ARGS=(--target "$GITHUB_SHA")
+          fi
+
+          gh release create "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            "${TARGET_ARGS[@]}" \
+            --title "$TAG" \
+            --notes-file "$NOTES_FILE"

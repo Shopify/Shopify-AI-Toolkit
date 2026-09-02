@@ -1,5 +1,5 @@
 name: shopify-plugin
-version: 1.7.2
+version: 1.8.0
 description: >
   Shopify developer tools for Hermes — search Shopify docs, generate and
   validate GraphQL, Liquid, and UI extension code, plus a `hermes shopify`
@@ -14,6 +14,7 @@ homepage: https://github.com/Shopify/Shopify-AI-Toolkit
 # Hermes loads them on demand via skill_view("shopify-plugin:<skill-name>").
 provides_skills:
   - shopify-admin
+  - shopify-app-pricing
   - shopify-app-store-review
   - shopify-custom-data
   - shopify-customer
