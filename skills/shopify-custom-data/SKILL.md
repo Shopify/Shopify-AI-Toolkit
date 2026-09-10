@@ -4,7 +4,7 @@ description: "MUST be used first when prompts mention Metafields or Metaobjects.
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.13.0"
+  version: "1.14.0"
 hooks:
   PostToolUse:
     - matcher: Skill

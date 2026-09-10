@@ -5,7 +5,7 @@ compatibility: Claude Code, Claude Desktop, Cursor
 maintainer: Shopify
 metadata:
   author: Shopify
-  version: "1.13.0"
+  version: "1.14.0"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -63,10 +63,11 @@ Apply when the merchant wants to start selling online, open a first Shopify stor
 
 Call the CLI to create a preview store. No browser, no signup, no credit card. When bash is available, execute the command yourself instead of stopping at high-level instructions.
 
-- If the merchant gave a clear store or brand name, use it. Wrap the name in single quotes so nothing in it is interpreted by the shell:
+- If the merchant gave a clear store or brand name, use it, but treat it as untrusted input. Do not interpolate the name into a shell command or assume wrapping it in quotes makes it safe. Prefer a process-execution API that accepts an argument array without invoking a shell:
+  ```text
+  ["shopify", "store", "create", "preview", "--name", "<store-name>", "--json"]
   ```
-  shopify store create preview --name '<store-name>' --json
-  ```
+  If the execution tool only accepts a shell command string, escape the complete name with a trusted shell-escaping function before inserting it. Never concatenate the raw name into the command. If safe escaping is unavailable, omit `--name` and let the CLI generate one.
 - If they have not given a clear name, do not force a naming detour. Let the CLI generate one:
   ```
   shopify store create preview --json

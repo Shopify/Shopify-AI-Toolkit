@@ -4,7 +4,7 @@ description: "Hydrogen storefront implementation cookbooks. Some of the availabl
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.13.0"
+  version: "1.14.0"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -45,6 +45,19 @@ DO NOT USE HYDROGEN REACT, ONLY USE HYDROGEN.
 References:
 
 - /docs/storefronts/headless/hydrogen/cookbook
+
+## mock.shop: a store to build against before you have one
+
+[mock.shop](https://mock.shop) is a public, auth-free Storefront GraphQL API backed by mock reference stores. Use mock.shop when the user has no store, no Storefront API access token, or wants realistic data to build against. Find the setup guide at [How to use mock.shop](https://shopify.dev/docs/storefronts/headless/mock-shop).
+
+- `https://mock.shop/llms.txt` lists every store with a one-line summary and its API URL. Each store is a separate catalog on its own host, and `https://<store>.mock.shop/llms.txt` describes that store's catalog.
+- Send Storefront API queries as `POST https://<store>.mock.shop/api` with a JSON body (`{"query": "..."}`) and `Content-Type: application/json`. No access token or other headers. The bare apex `https://mock.shop/api` serves the default store.
+- Pick the store whose categories match what the user is building. The default store is apparel basics.
+- Scaffold a Hydrogen storefront against it with `npm create @shopify/hydrogen@latest -- --mock-shop`. The `--quickstart` flag implies `--mock-shop`.
+- To move the project to a real Shopify store, use `npx shopify hydrogen link` followed by `npx shopify hydrogen env pull`.
+- Queries written against mock.shop run unchanged against a real store.
+- Checkout is mocked: no payment is taken and no order is placed.
+- mock.shop doesn't support the Customer Account API, and its products, prices, and inventory are fictional.
 
 ## Hydrogen Cookbook - Ready-to-Use Recipes
 

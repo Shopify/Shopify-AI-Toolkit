@@ -4,7 +4,7 @@ description: "Use for custom storefronts requiring direct GraphQL queries/mutati
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.13.0"
+  version: "1.14.0"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -48,6 +48,17 @@ Think about all the steps required to generate a GraphQL query or mutation for t
 Search the developer documentation for Storefront API information using the specific operation or resource name (e.g., "create cart", "product variants query", "checkout complete")
 When search results contain a mutation that directly matches the requested action, prefer it over indirect approaches
 Include only essential fields to minimize payload size for customer-facing experiences
+
+## mock.shop: a store to build against before you have one
+
+[mock.shop](https://mock.shop) is a public, auth-free Storefront GraphQL API backed by mock reference stores. Use mock.shop when the user has no store, no Storefront API access token, or wants realistic data to build against. Find the setup guide at [How to use mock.shop](https://shopify.dev/docs/storefronts/headless/mock-shop).
+
+- `https://mock.shop/llms.txt` lists every store with a one-line summary and its API URL. Each store is a separate catalog on its own host, and `https://<store>.mock.shop/llms.txt` describes that store's catalog.
+- Send Storefront API queries as `POST https://<store>.mock.shop/api` with a JSON body (`{"query": "..."}`) and `Content-Type: application/json`. No access token or other headers. The bare apex `https://mock.shop/api` serves the default store. mock.shop also answers the real endpoint shape, `https://<store>.mock.shop/api/<version>/graphql.json`, and ignores the access-token header, so a client written for a real store works against it unchanged.
+- Pick the store whose categories match what the user is building. The default store is apparel basics.
+- The GraphQL operations run unchanged against a real store, so build against mock.shop first. Moving means pointing the client at the store's `https://<store>.myshopify.com/api/<version>/graphql.json` and sending its Storefront access token in the `X-Shopify-Storefront-Access-Token` header; a client built on the versioned endpoint shape needs only the domain and token changed.
+- Checkout is mocked: no payment is taken and no order is placed.
+- mock.shop doesn't support the Customer Account API, and its products, prices, and inventory are fictional.
 ---
 
 ## ⚠️ MANDATORY: Search Before Writing Code

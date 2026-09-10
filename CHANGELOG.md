@@ -1,5 +1,11 @@
 # shopify-plugin
 
+## 1.8.1
+
+### Patch Changes
+
+- 7ff9a83: Point the Hydrogen and Storefront GraphQL topics at mock.shop for building without a store: the store directory at mock.shop/llms.txt, the `/api` recipe, and the Hydrogen `--mock-shop` flag.
+
 ## 1.8.0
 
 ### Minor Changes

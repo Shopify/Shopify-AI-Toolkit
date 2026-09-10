@@ -4,7 +4,7 @@ description: "Merchant product subscriptions such as selling plans and subscript
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.13.0"
+  version: "1.14.0"
 hooks:
   PostToolUse:
     - matcher: Skill

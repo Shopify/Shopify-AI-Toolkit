@@ -164,9 +164,9 @@ jobs:
       actions: read
       contents: read
       id-token: write
-    # v0.23.3 predates the categories/topics workflow inputs. Pin the
-    # verified upstream commit that added them and subsequent publish hardening.
-    uses: openclaw/clawhub/.github/workflows/package-publish.yml@845c6d3bdb1a36573d8d28be2a8fb85a3c476720
+    # Pin the verified upstream revision that stages ClawPacks above the public
+    # edge limit and gives staged package publication a five-minute timeout.
+    uses: openclaw/clawhub/.github/workflows/package-publish.yml@d118f17fd366e5cdc3ad9c8abcea51941b97636f
     with:
       owner: shopify
       family: bundle-plugin
