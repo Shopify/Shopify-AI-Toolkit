@@ -14,7 +14,7 @@
     "longDescription": "Shopify for ChatGPT makes starting, running, and growing an online store as easy as having a conversation. Turn a small business idea into an ecommerce website with Shopify’s AI store builder: describe what you sell, create your store, add products, and sell online. Already have a Shopify store? Connect it to manage inventory across locations, create discount codes, review orders and customer details, and pull analytics on your store’s performance. Shopify supports selling online, in person, B2B, on marketplaces, and selling internationally. Whether you run a print on demand business, sell digital products, operate an online boutique, dropship, or serve wholesale buyers, Shopify gives you the foundation to build, sell, and grow.",
     "developerName": "Shopify",
     "category": "Business & Operations",
-    "capabilities": [],
+    "capabilities": ["Read", "Write"],
     "logo": "./assets/shopify_bag_fullcolor_256.png",
     "composerIcon": "./assets/shopify_bag_fullcolor_256.png",
     "brandColor": "#008060",
@@ -24,7 +24,7 @@
     "supportURL": "https://help.shopify.com/en/manual/your-account/contact-shopify-support",
     "defaultPrompt": [
       "Upload and add this product to my store.",
-      "How do I create a product using the Shopify Admin API?",
+      "Create a Shopify Flow workflow that tags every new order.",
       "Show me my store's sales for the past three weeks."
     ]
   }

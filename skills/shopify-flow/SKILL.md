@@ -1,163 +1,138 @@
 ---
 name: shopify-flow
-description: "Inspect Shopify Flow automation workflows on a store through the **Admin GraphQL API**, run with plain Shopify CLI (`shopify store auth`, `shopify store execute`). Use when the user wants to read a workflow's status, version, trigger, or definition JSON by ID. There is no Flow-specific CLI: every operation is an Admin GraphQL query executed by the normal `store execute` command. Read-only — no automation mutations exist yet. Skip for authoring workflow JSON offline with no store access."
-compatibility: Requires Node.js
+description: "Create draft Shopify Flow automation workflows on a store through the Admin GraphQL API with plain Shopify CLI (`shopify store auth`, `shopify store execute`). Use when the user asks an agent to build or create a workflow on a store from natural-language requirements. Only creation is currently exposed; skip for reading, updating, activating, listing, or deleting workflows."
 metadata:
   author: Shopify
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
-You are helping a developer inspect Shopify Flow automation workflows on a store.
+# Create a Shopify Flow workflow
 
-Flow is Shopify's automation product: a workflow is a directed graph of triggers, conditions, actions, waits, and loops that runs against a shop's data.
+Create Shopify Flow draft workflows through the Admin GraphQL API using the plain Shopify CLI. There is no `shopify flow` command group and no Flow-specific helper script. Do not call Flow, Sidekick, or an internal HTTP endpoint directly.
 
-**Flow is reached through the Admin GraphQL API, using the plain Shopify CLI.** There is no `shopify flow …` command group and no Flow-specific helper script. Every operation in this skill is an ordinary Admin API query run with `shopify store execute` — the same command any other Admin API call uses. Do not call Flow, Sidekick, or any internal HTTP endpoint directly.
+The currently exposed surface is `automationWorkflowCreate` only. It creates a draft; it does not activate the workflow.
+
+## Authorization boundary
+
+Creating a workflow changes the target store. A direct request such as “create this workflow on my store” authorizes one creation attempt matching that request. A request for instructions, JSON, or an example does not authorize execution.
+
+Before executing, know the `.myshopify.com` store domain and summarize the workflow name, trigger, and actions. If the store is missing, ask for it. Do not retry a mutation automatically after an ambiguous transport failure because the first request may have created a draft.
 
 ## Prerequisites
 
-Two things are non-obvious and both are mandatory. Get them wrong and the query returns `null` or an access error rather than a useful message.
-
-### 1. Authenticate with the `write_automations` scope
-
-`--scopes` is required on `store auth`:
+Authenticate the store with the internal `write_automations` scope:
 
 ```bash
-shopify store auth --store shop.myshopify.com --scopes write_automations
+shopify store auth \
+  --store shop.myshopify.com \
+  --scopes write_automations
 ```
 
-`write_automations` is an **internal** scope. Only first-party apps that have been granted it — the Shopify CLI app among them — can request it. If `store auth` rejects the scope, that is the reason: the app you are authenticating as does not hold the grant. Do not retry with guessed scope names (`read_automations`, `read_flow`, `write_flow` do not exist), and do not fall back to a broader scope hoping it covers automations.
+Only first-party apps approved for `write_automations` can request it. If authorization reports `missing_shopify_permission: write_automations`, the production Shopify CLI Connector App needs that approval-gated scope; broader or guessed scopes do not substitute for it.
 
-Re-run `store auth` if the stored token is missing, expired, or was created without this scope.
+Always execute against `unstable`. The mutation is hidden on stable API versions.
 
-### 2. Query against `unstable`
+## Build the configuration
 
-The automation fields are hidden on every stable API version. They are public only on the `automation_workflow_api` change, whose version handle is `unstable`, so `--version unstable` is required:
+Before authoring the JSON, read [references/workflow_structure_schema.json](references/workflow_structure_schema.json) completely and make the `configuration` value conform to it.
 
-```bash
-shopify store execute --store shop.myshopify.com --version unstable --query '…'
+Important server requirements beyond the structural schema:
+
+- Use `__metadata.version: 0.1`.
+- Give every step a unique UUID in `step_id`.
+- Include exactly one `TRIGGER` and at least one `ACTION` for an activatable draft.
+- Include `task_id`, `task_version`, `task_type`, and `config_field_values` on every step.
+- Connect steps through `root.links` and include `root.patched_fields`, using an empty array when none are needed.
+- Treat each config-field `value` as a string. Values that represent arrays or objects are JSON encoded inside that string.
+- Use task IDs, versions, and config-field IDs from an authoritative Shopify template, documentation source, or user-provided definition. Never invent task metadata. Structural schema validity does not prove a task is installed or its configuration is valid.
+
+### Verified recipe: order created → add order tags
+
+For requests equivalent to “when an order is created, add tags to the order,” read and adapt [references/order-created-add-order-tags.json](references/order-created-add-order-tags.json). Replace the workflow name, step UUIDs, and tags, but preserve the task IDs, versions, config-field IDs, and link ports.
+
+If a request needs other tasks and no authoritative task metadata is available, stop before mutation and explain which trigger/action metadata is missing. Do not approximate it with a plausible-looking ID.
+
+## Create the draft
+
+Use this operation:
+
+```graphql
+mutation AutomationWorkflowCreate($configuration: JSON!) {
+  automationWorkflowCreate(configuration: $configuration) {
+    automationWorkflow {
+      id
+      name
+      status
+      version
+      adminApiVersion
+      configuration
+      createdAt
+      updatedAt
+    }
+    validationErrors {
+      code
+      message
+      stepId
+      configFieldId
+    }
+    userErrors {
+      field
+      message
+      code
+    }
+  }
+}
 ```
 
-Without it the field is not in the schema and the query fails to validate. Omitting `--version` defaults to the latest *stable* version, which does not expose these fields.
-
-## Workflow IDs
-
-Flow identifies a workflow by a **bare UUID** — that is the form you get from Flow URLs, workflow JSON, and lockfiles:
-
-```
-0191d649-8d00-76ee-8f9b-320fa3433012
-```
-
-The Admin API argument is a GID, so **construct it yourself** by prefixing the typename:
-
-```
-gid://shopify/AutomationWorkflow/0191d649-8d00-76ee-8f9b-320fa3433012
-```
-
-Do this silently — do not ask the user to convert an ID they already gave you. Do not pass the bare UUID: the `id` argument is typed to `AutomationWorkflow`, so an unwrapped UUID, or a GID carrying a different typename, fails argument coercion before the query ever runs. The `id` in the response comes back as the GID, not the UUID.
-
-A workflow **version** is a separate identifier with a different shape — a ULID such as `01J8ZQ3K2M4P6R8T0V2X4Z6B8D`, never a UUID and never wrapped in a GID. Don't pass a version where a workflow ID belongs, or vice versa.
-
-## Reading a workflow
-
-`automationWorkflow(id:)` is the only automation entry point. It takes a workflow GID and returns the workflow, or `null` if no workflow matches — including when the workflow exists but is hidden, since hidden workflows are never returned.
+Put the operation and variables in temporary files, then execute the mutation explicitly:
 
 ```bash
 shopify store execute \
   --store shop.myshopify.com \
   --version unstable \
-  --query '
-    query AutomationWorkflow($id: ID!) {
-      automationWorkflow(id: $id) {
-        id
-        name
-        status
-        currentVersion
-        adminApiVersion
-        createdAt
-        updatedAt
-        trigger {
-          task {
-            taskId
-            version
-            label
-          }
-        }
-      }
+  --allow-mutations \
+  --query-file /tmp/automation-workflow-create.graphql \
+  --variable-file /tmp/automation-workflow-create-variables.json \
+  --json
+```
+
+The variables file wraps the workflow JSON under `configuration`:
+
+```json
+{
+  "configuration": {
+    "__metadata": { "version": 0.1 },
+    "root": {
+      "workflow_name": "Example workflow",
+      "steps": [],
+      "links": [],
+      "patched_fields": []
     }
-  ' \
-  --variables '{"id":"gid://shopify/AutomationWorkflow/0191d649-8d00-76ee-8f9b-320fa3433012"}'
+  }
+}
 ```
 
-Field reference for `AutomationWorkflow`:
+Replace the empty example arrays with a schema-conforming workflow before execution. Never execute the empty skeleton as the requested workflow.
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| `id` | `ID!` | Node ID. |
-| `name` | `String!` | The workflow name. |
-| `status` | `AutomationWorkflowStatus!` | `ACTIVE`, `DRAFT` (has unapplied draft changes), or `INACTIVE`. |
-| `currentVersion` | `String!` | Version identifier of the current definition. |
-| `adminApiVersion` | `String` | The Admin API version the workflow is pinned to. Nullable. |
-| `createdAt` / `updatedAt` | `DateTime!` | |
-| `trigger` | `AutomationTrigger` | Nullable. `trigger.task` gives `taskId`, `version`, `label`. |
-| `definition(version: String)` | `JSON!` | The workflow graph. See below. |
+## Interpret the result
 
-### The definition JSON
+Success for a complete workflow means:
 
-`definition` is a `JSON` scalar holding the whole workflow graph, and it takes an optional `version` argument to read a past version instead of the current one:
+- `automationWorkflow` is non-null and has status `DRAFT`;
+- `userErrors` is empty;
+- `validationErrors` is empty.
 
-```bash
-shopify store execute \
-  --store shop.myshopify.com \
-  --version unstable \
-  --query '
-    query WorkflowDefinition($id: ID!, $version: String) {
-      automationWorkflow(id: $id) {
-        name
-        currentVersion
-        definition(version: $version)
-      }
-    }
-  ' \
-  --variables '{"id":"gid://shopify/AutomationWorkflow/0191d649-8d00-76ee-8f9b-320fa3433012","version":null}'
-```
+The service can create a draft while returning `validationErrors`. Report that as “created but not activatable,” include every validation error, and do not silently create another draft. A non-empty `userErrors` response means the requested workflow was not created; surface each error verbatim.
 
-Pass `version: null` (or omit it) for the current definition; pass a version identifier from `currentVersion` or a prior read to fetch that revision.
+Return the created workflow ID, name, status, and any errors to the user. The response ID is a GID such as `gid://shopify/AutomationWorkflow/<uuid>`.
 
-Because it is one opaque scalar, `definition` is large. Select it only when the task actually needs the graph — for "is this workflow on?" or "when did it change?", the scalar fields above are enough. Use `--output-file` rather than STDOUT when you intend to read the graph, and `--json` when you want the full structured envelope:
+## Current limits
 
-```bash
-shopify store execute --store shop.myshopify.com --version unstable \
-  --query-file ./workflow.graphql --variables '{"id":"gid://shopify/AutomationWorkflow/…"}' \
-  --json --output-file ./workflow.json
-```
+Do not invent or call unshipped Flow Admin API fields. The current surface does not support:
 
-## Read-only today
+- reading or listing workflows;
+- updating, activating, deactivating, or deleting workflows;
+- searching tasks, templates, or environment paths;
+- validating without creating a draft.
 
-There are **no** automation mutations in the Admin API yet. Never pass `--allow-mutations` for Flow work, and never invent a mutation name — `automationWorkflowCreate`, `automationWorkflowUpdate`, `automationWorkflowActivate` and similar do not exist on any version.
-
-Concretely, these are **not** reachable through the Admin API, and you should say so plainly rather than approximating them:
-
-- creating, updating, pushing, or pulling a workflow
-- activating or deactivating a workflow
-- listing all workflows on a shop (the only lookup is by ID)
-- validating a workflow definition against the server
-- searching templates, tasks, or environment field paths
-- resolving ShopifyQL columns
-- creating or firing test events
-
-If the user needs one of those, tell them it is not exposed yet. Do not substitute a direct call to Flow's own endpoints, and do not reach for a Flow CLI — there isn't one.
-
-## Rules
-
-- Always know the store. `--store` is required on both `store auth` and `store execute`; ask if the user hasn't said which shop.
-- Always pass `--version unstable`. Omitting it silently drops the automation fields from the schema.
-- Authenticate before executing. If `store execute` fails on auth, run the printed `store auth …` command with `--scopes write_automations` and retry once.
-- `automationWorkflow` takes a GID. Given a bare UUID, wrap it as `gid://shopify/AutomationWorkflow/<uuid>` yourself. If you have no workflow ID at all, ask — there is no list or search to discover one.
-- A `null` result means "no visible workflow with that ID" — a wrong ID, a different shop, or a hidden workflow. It does not mean the query was malformed; check the ID before rewriting the query.
-- Surface errors verbatim. Do not retry with guessed scopes, versions, field names, or enum values.
-- Read-only. No `--allow-mutations`.
-
-## Related skills
-
-- `shopify-use-shopify-cli` — Shopify CLI setup, upgrades, auth troubleshooting, and `store auth` / `store execute` mechanics in general.
-- `shopify-admin` — authoring and explaining Admin GraphQL operations, with doc search and validation.
+If the user needs one of these operations, say it is not currently exposed through the Admin API.
