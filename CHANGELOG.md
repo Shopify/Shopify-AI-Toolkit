@@ -1,5 +1,11 @@
 # shopify-plugin
 
+## 2.1.1
+
+### Patch Changes
+
+- bd20150: The Cursor plugin's description, which Grok Bot's unified plugin also shows, now describes building and managing a Shopify store.
+
 ## 2.1.0
 
 ### Minor Changes
