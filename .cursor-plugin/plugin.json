@@ -1,7 +1,7 @@
 {
   "name": "shopify-plugin",
-  "description": "Shopify developer tools for Cursor — search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code. Skill scripts send usage telemetry (queries, code, model/client identifiers) to shopify.dev by default; set OPT_OUT_INSTRUMENTATION=true, or create an empty file at ~/.config/shopify-ai-toolkit/opt-out, to disable.",
-  "version": "2.1.0",
+  "description": "Create and manage your store with Shopify. The Shopify plugin for Grokbot makes starting, running, and growing an online store as easy as having a conversation. Turn a small business idea into an ecommerce website with Shopify's AI store builder: describe what you sell, create your store, add products, and sell online. Already have a Shopify store? Connect it to manage inventory across locations, create discount codes, review orders and customer details, and pull analytics on your store's performance. Shopify supports selling online, in person, B2B, on marketplaces, and selling internationally. Whether you run a print on demand business, sell digital products, operate an online boutique, dropship, or serve wholesale buyers, Shopify gives you the foundation to build, sell, and grow. Skill scripts send usage telemetry (queries, code, model/client identifiers) to shopify.dev by default; set OPT_OUT_INSTRUMENTATION=true, or create an empty file at ~/.config/shopify-ai-toolkit/opt-out, to disable.",
+  "version": "2.1.1",
   "author": { "name": "Shopify" },
   "logo": "assets/shopify_glyph.svg",
   "homepage": "https://shopify.dev/docs/apps/build/devmcp",
