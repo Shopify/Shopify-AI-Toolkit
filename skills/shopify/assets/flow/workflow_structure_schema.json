@@ -1,0 +1,141 @@
+{
+  "description": "JSON structure for a Shopify Flow workflow configuration.",
+  "type": "object",
+  "properties": {
+    "__metadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "description": "Version of the workflow configuration format.",
+          "type": "number",
+          "enum": [
+            0.1
+          ]
+        }
+      },
+      "required": [
+        "version"
+      ]
+    },
+    "root": {
+      "type": "object",
+      "properties": {
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "Step name. If supplied, it must match the task label, optionally followed by a number in parentheses (for example, `Run code (1)`). Omit or set to null to let Flow generate it.",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "step_id": {
+                "description": "Identifier for this step, unique within the workflow and referenced by links. For example, `order_created`.",
+                "type": [
+                  "integer",
+                  "string"
+                ]
+              },
+              "task_type": {
+                "type": "string",
+                "enum": [
+                  "TRIGGER",
+                  "CONDITION",
+                  "ACTION",
+                  "WAIT",
+                  "FOREACH"
+                ]
+              },
+              "config_field_values": {
+                "description": "Configuration values for this step’s task. Use the task’s configuration field definitions to find field IDs and expected value formats.",
+                "type": "array",
+                "items": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "config_field_id": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "config_field_id",
+                    "value"
+                  ]
+                }
+              },
+              "task_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "task_type",
+              "config_field_values",
+              "task_id"
+            ]
+          }
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "description": "Connects two steps using `from_step_id`, `from_port_id`, and `to_step_id`. Step IDs reference entries in `steps`; the port identifies the source step’s outgoing branch.",
+            "type": "object",
+            "examples": [
+              {
+                "from_step_id": "order_created",
+                "from_port_id": "output",
+                "to_step_id": "add_tags"
+              }
+            ]
+          }
+        },
+        "patched_fields": {
+          "description": "Makes fields requiring arguments, such as metafields, available in workflow expressions under a chosen handle.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string"
+              },
+              "arguments": {
+                "type": "object"
+              },
+              "handle": {
+                "type": "string"
+              },
+              "patched_type": {
+                "type": "string"
+              },
+              "key": {
+                "type": "string"
+              },
+              "namespace": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "handle",
+              "patched_type"
+            ]
+          }
+        }
+      },
+      "required": []
+    }
+  },
+  "required": [
+    "__metadata",
+    "root"
+  ]
+}

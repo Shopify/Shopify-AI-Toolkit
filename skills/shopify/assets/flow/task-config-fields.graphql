@@ -1,0 +1,135 @@
+fragment FlowTaskConfigField on AutomationTaskConfigField {
+  __typename
+  id
+  label
+  description
+  required
+  defaultValue
+  validations {
+    ...FlowTaskConfigFieldValidation
+  }
+  ... on AutomationApiCallConfigField {
+    supportsLiquid
+  }
+  ... on AutomationArrayConfigField {
+    supportsLiquid
+  }
+  ... on AutomationCodeConfigField {
+    language
+    role
+  }
+  ... on AutomationCommerceObjectConfigField {
+    possibleObjectTypes
+  }
+  ... on AutomationDurationConfigField {
+    durationUnits: possibleUnits
+  }
+  ... on AutomationEnumConfigField {
+    options {
+      label
+      value
+      deprecated
+    }
+  }
+  ... on AutomationIntegerConfigField {
+    supportsLiquid
+  }
+  ... on AutomationMapConfigField {
+    supportsLiquid
+    supportsSecrets
+  }
+  ... on AutomationMetafieldTypeConfigField {
+    options {
+      label
+      value
+      deprecated
+    }
+  }
+  ... on AutomationMultiResourceConfigField {
+    adminResourceType
+    supportsLiquid
+  }
+  ... on AutomationPathConfigField {
+    listsOnly
+    allowedTypes
+  }
+  ... on AutomationQueryPresetConfigField {
+    supportsLiquid
+    options {
+      label
+      description
+      value
+    }
+    queryFilters
+  }
+  ... on AutomationRecurrenceConfigField {
+    timeZones {
+      id
+      label
+    }
+  }
+  ... on AutomationSelectConfigField {
+    options {
+      label
+      value
+      deprecated
+    }
+  }
+  ... on AutomationShopifyEventsTriggerConfigField {
+    options {
+      label
+      value
+      deprecated
+    }
+    maxSelections
+  }
+  ... on AutomationSingleResourceConfigField {
+    adminResourceType
+    supportsLiquid
+  }
+  ... on AutomationSortConfigField {
+    options {
+      label
+      value
+      deprecated
+    }
+  }
+  ... on AutomationTextConfigField {
+    supportsLiquid
+    supportsSecrets
+  }
+  ... on AutomationTypedMetafieldConfigField {
+    ownerType
+    supportsLiquid
+    supportedTypes
+    requiredSubfields
+  }
+  ... on AutomationUntypedMetafieldConfigField {
+    ownerType
+    supportsLiquid
+    requiredSubfields
+  }
+  ... on AutomationWeightConfigField {
+    weightUnits: possibleUnits
+  }
+  ... on AutomationWeightInputConfigField {
+    weightUnits: possibleUnits
+  }
+}
+
+fragment FlowTaskConfigFieldValidation on AutomationTaskConfigFieldValidation {
+  __typename
+  subfield
+  errorMessage
+  ... on AutomationIncludesValidation {
+    values
+  }
+  ... on AutomationRangeValidation {
+    min
+    max
+  }
+  ... on AutomationMatchesPatternValidation {
+    pattern
+    flags
+  }
+}

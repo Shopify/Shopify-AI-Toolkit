@@ -3,28 +3,29 @@
     "version": 0.1
   },
   "root": {
-    "workflow_name": "Tag newly created orders",
     "steps": [
       {
-        "step_id": "01948c64-a46f-71b7-a2de-d83d48bdca28",
-        "step_position": [
-          60,
-          60
-        ],
+        "step_id": "order_created",
         "config_field_values": [],
         "task_id": "shopify::admin::order_created",
         "task_version": "0.1",
         "task_type": "TRIGGER",
-        "description": null,
-        "note": null,
         "name": null
       },
       {
-        "step_id": "01948c64-a46f-71b7-a2de-d83d48bdca29",
-        "step_position": [
-          380,
-          60
-        ],
+        "step_id": "has_vip_tag",
+        "task_id": "shopify::flow::condition",
+        "task_version": "0.1",
+        "task_type": "CONDITION",
+        "config_field_values": [
+          {
+            "config_field_id": "condition",
+            "value": "(order.tags any? |tags_item| (tags_item == 'vip'))"
+          }
+        ]
+      },
+      {
+        "step_id": "add_order_tags",
         "config_field_values": [
           {
             "config_field_id": "order_id",
@@ -38,16 +39,20 @@
         "task_id": "shopify::admin::add_order_tags",
         "task_version": "0.1",
         "task_type": "ACTION",
-        "description": null,
-        "note": null,
         "name": null
       }
     ],
     "links": [
       {
-        "from_step_id": "01948c64-a46f-71b7-a2de-d83d48bdca28",
+        "from_step_id": "order_created",
         "from_port_id": "output",
-        "to_step_id": "01948c64-a46f-71b7-a2de-d83d48bdca29",
+        "to_step_id": "has_vip_tag",
+        "to_port_id": "input"
+      },
+      {
+        "from_step_id": "has_vip_tag",
+        "from_port_id": "true",
+        "to_step_id": "add_order_tags",
         "to_port_id": "input"
       }
     ],

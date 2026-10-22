@@ -1,0 +1,43 @@
+{
+  "__metadata": {
+    "version": 0.1
+  },
+  "root": {
+    "steps": [
+      {
+        "step_id": "order_created",
+        "config_field_values": [],
+        "task_id": "shopify::admin::order_created",
+        "task_version": "0.1",
+        "task_type": "TRIGGER",
+        "name": null
+      },
+      {
+        "step_id": "add_order_tags",
+        "config_field_values": [
+          {
+            "config_field_id": "order_id",
+            "value": "order.id"
+          },
+          {
+            "config_field_id": "tags",
+            "value": "[\"created-by-ai-toolkit\"]"
+          }
+        ],
+        "task_id": "shopify::admin::add_order_tags",
+        "task_version": "0.1",
+        "task_type": "ACTION",
+        "name": null
+      }
+    ],
+    "links": [
+      {
+        "from_step_id": "order_created",
+        "from_port_id": "output",
+        "to_step_id": "add_order_tags",
+        "to_port_id": "input"
+      }
+    ],
+    "patched_fields": []
+  }
+}
