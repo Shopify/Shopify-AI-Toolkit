@@ -1,0 +1,189 @@
+# WARNING:
+# This file was generated automatically by running "scripts/generate-factory-configs"
+# Do not modify manually. Your changes will be overwritten.
+ignore:
+  - node_modules/**
+AssetPreload:
+  enabled: true
+  severity: 1
+BlockIdUsage:
+  enabled: true
+  severity: 1
+CdnPreconnect:
+  enabled: true
+  severity: 0
+ContentForHeaderModification:
+  enabled: true
+  severity: 0
+DeprecateBgsizes:
+  enabled: true
+  severity: 1
+DeprecateLazysizes:
+  enabled: true
+  severity: 1
+DeprecatedFilter:
+  enabled: true
+  severity: 1
+DeprecatedFontsOnSectionsAndBlocks:
+  enabled: true
+  severity: 1
+DeprecatedFontsOnSettingsSchema:
+  enabled: true
+  severity: 1
+DeprecatedTag:
+  enabled: true
+  severity: 1
+DuplicateContentForArguments:
+  enabled: true
+  severity: 1
+DuplicateRenderSnippetArguments:
+  enabled: true
+  severity: 1
+EmptyBlockContent:
+  enabled: true
+  severity: 1
+HardcodedRoutes:
+  enabled: true
+  severity: 1
+ImgWidthAndHeight:
+  enabled: true
+  severity: 0
+JSONMissingBlock:
+  enabled: true
+  severity: 0
+JSONSyntaxError:
+  enabled: true
+  severity: 0
+LiquidFreeSettings:
+  enabled: true
+  severity: 1
+LiquidHTMLSyntaxError:
+  enabled: true
+  severity: 0
+MatchingTranslations:
+  enabled: true
+  severity: 0
+MissingAsset:
+  enabled: true
+  severity: 0
+MissingContentForArguments:
+  enabled: true
+  severity: 1
+MissingRenderSnippetArguments:
+  enabled: true
+  severity: 1
+MissingTemplate:
+  enabled: true
+  severity: 0
+  ignoreMissing: []
+OrphanedSnippet:
+  enabled: true
+  severity: 1
+PaginationSize:
+  enabled: true
+  severity: 1
+  minSize: 1
+  maxSize: 250
+ParserBlockingScript:
+  enabled: true
+  severity: 0
+RemoteAsset:
+  enabled: true
+  severity: 1
+RequiredLayoutThemeObject:
+  enabled: true
+  severity: 0
+ReservedDocParamNames:
+  enabled: true
+  severity: 0
+SchemaPresetsBlockOrder:
+  enabled: true
+  severity: 1
+SchemaPresetsStaticBlocks:
+  enabled: true
+  severity: 0
+StaticStylesheetAndJavascriptTags:
+  enabled: true
+  severity: 0
+TranslationKeyExists:
+  enabled: true
+  severity: 0
+UnclosedHTMLElement:
+  enabled: true
+  severity: 1
+UndefinedObject:
+  enabled: true
+  severity: 1
+UniqueDocParamNames:
+  enabled: true
+  severity: 0
+UniqueSettingId:
+  enabled: true
+  severity: 0
+UniqueStaticBlockId:
+  enabled: true
+  severity: 0
+UnknownFilter:
+  enabled: true
+  severity: 0
+UnrecognizedContentForArguments:
+  enabled: true
+  severity: 1
+UnrecognizedRenderSnippetArguments:
+  enabled: true
+  severity: 1
+UnsupportedDocTag:
+  enabled: true
+  severity: 0
+UnusedAssign:
+  enabled: true
+  severity: 1
+UnusedDocParam:
+  enabled: true
+  severity: 1
+ValidBlockTarget:
+  enabled: true
+  severity: 0
+ValidContentForArgumentTypes:
+  enabled: true
+  severity: 1
+ValidContentForArguments:
+  enabled: true
+  severity: 0
+ValidDocParamTypes:
+  enabled: true
+  severity: 0
+ValidHTMLTranslation:
+  enabled: true
+  severity: 1
+ValidJSON:
+  enabled: true
+  severity: 0
+ValidLocalBlocks:
+  enabled: true
+  severity: 0
+ValidRenderSnippetArgumentTypes:
+  enabled: true
+  severity: 1
+ValidSchema:
+  enabled: true
+  severity: 0
+ValidSchemaName:
+  enabled: true
+  severity: 0
+ValidSchemaTranslations:
+  enabled: true
+  severity: 0
+ValidSettingsKey:
+  enabled: true
+  severity: 0
+ValidStaticBlockType:
+  enabled: true
+  severity: 0
+ValidVisibleIf:
+  enabled: true
+  severity: 0
+VariableName:
+  enabled: true
+  severity: 1
+  format: snake_case

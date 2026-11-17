@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Shopify Liquid Section or Block Preset Schema",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/presetWithBlocksArray"
+    },
+    {
+      "$ref": "#/definitions/presetWithBlocksHash"
+    }
+  ],
+  "definitions": {
+    "presetBase": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The preset name, which will show in the 'Add section' or 'Add block' picker of the theme editor.",
+          "markdownDescription": "The preset name, which will show in the 'Add section' or 'Add block' picker of the theme editor.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/sections/section-schema#presets)"
+        },
+        "category": {
+          "type": "string",
+          "description": "The category of the preset, which will show in the 'Add section' or 'Add block' picker of the theme editor.",
+          "markdownDescription": "The category of the preset, which will show in the 'Add section' or 'Add block' picker of the theme editor.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/sections/section-schema#presets)"
+        },
+        "settings": {
+          "$ref": "./default_setting_values.json"
+        }
+      }
+    },
+    "presetWithBlocksArray": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/presetBase"
+        }
+      ],
+      "properties": {
+        "name": true,
+        "category": true,
+        "settings": true,
+        "blocks": {
+          "$ref": "./preset_blocks.json#/definitions/blocksArray"
+        }
+      },
+      "additionalProperties": false
+    },
+    "presetWithBlocksHash": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/presetBase"
+        }
+      ],
+      "required": ["blocks"],
+      "properties": {
+        "name": true,
+        "settings": true,
+        "blocks": {
+          "$ref": "./preset_blocks.json#/definitions/blocksHash"
+        },
+        "block_order": {
+          "type": "array",
+          "description": "The order of blocks in the preset.",
+          "markdownDescription": "The order of blocks in the preset."
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

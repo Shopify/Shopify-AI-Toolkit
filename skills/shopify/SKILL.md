@@ -4,7 +4,7 @@ description: "Build anything on Shopify. One skill covering every Shopify develo
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.19.0"
+  version: "1.20.0"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -92,7 +92,7 @@ than that you are unsure.
 | `polaris-checkout-extensions` | Build custom functionality that merchants can install at defined points in the checkout flow, including product information, shipping, payment, order summary, and Shop Pay. Checkout UI Extensions also supports scaffolding new checkout extensions using Shopify CLI commands. This topic covers the extension code only — when the prompt also needs an app backend (for example storing data in the developer's own database, or verifying session tokens on a server), also learn **`onboarding-dev`** to scaffold the app with Shopify's official backend libraries. | `--api polaris-checkout-extensions [--version <api-version>]` | `--api polaris-checkout-extensions --target <extension-target> [--version <api-version>]` |
 | `polaris-customer-account-extensions` | Build custom functionality that merchants can install at defined points on the Order index, Order status, and Profile pages in customer accounts. | `--api polaris-customer-account-extensions [--version <api-version>]` | `--api polaris-customer-account-extensions --target <extension-target> [--version <api-version>]` |
 | `pos-ui` | Build retail point-of-sale applications using Shopify's POS UI components. | `--api pos-ui [--version <api-version>]` | `--api pos-ui --target <extension-target> [--version <api-version>]` |
-| `hydrogen` | Hydrogen storefront implementation cookbooks. Some of the available recipes are: B2B Commerce, Bundles, Combined Listings, Custom Cart Method, Dynamic Content with Metaobjects, Express Server, Google Tag Manager Integration, Infinite Scroll, Legacy Customer Account Flow, Markets, Partytown + Google Tag Manager, Subscriptions, Third-party API Queries and Caching. MANDATORY: Use this API for ANY Hydrogen storefront question - do NOT use Storefront GraphQL when 'Hydrogen' is mentioned. | `--api hydrogen [--version <api-version>]` | `--api hydrogen [--version <api-version>]` |
+| `hydrogen` | Hydrogen 2026-10 is an SDK for building custom storefronts in the developer's own framework, with the Storefront API client, cart, products, search, customer accounts, analytics, and Shop Pay. MANDATORY: Use this API for ANY Hydrogen storefront question - do NOT use Storefront GraphQL when 'Hydrogen' is mentioned. | `--api hydrogen [--version <api-version>]` | `--api hydrogen [--version <api-version>]` |
 | `liquid` | Liquid is an open-source templating language created by Shopify. | `--api liquid` | `--api liquid --filename <name.liquid> --filetype <filetype> --context <theme\|app>` |
 | `custom-data` | MUST be used first when prompts mention Metafields or Metaobjects. | — | — |
 | `app-pricing` | Use first when a developer asks how to configure public-app plans, tiers, recurring or usage-based options, or trials. | (no --api) | — |

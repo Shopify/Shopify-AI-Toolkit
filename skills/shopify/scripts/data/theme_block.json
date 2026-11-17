@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Shopify Liquid Theme Block Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name attribute determines the block title that's shown in the theme editor.",
+      "markdownDescription": "The `name` attribute determines the block title that's shown in the theme editor.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/blocks/theme-blocks/schema#name)"
+    },
+
+    "settings": {
+      "$ref": "./settings.json"
+    },
+
+    "blocks": {
+      "type": "array",
+      "description": "Theme blocks can accept other app and theme blocks as children using the blocks attribute of their schema.",
+      "markdownDescription": "Theme blocks can accept other app and theme blocks as children using the `blocks` attribute of their schema.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/blocks/theme-blocks/schema#blocks)",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of block that can be added to this block.",
+            "markdownDescription": "The type of block that can be added to this block.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/blocks/theme-blocks/schema#blocks)"
+          }
+        },
+        "$comment": "The allOf rule here exists because that's how we do discriminated unions in JSON schemas. If a rule matches, that rule will be used to document the type property. Otherwise we fallback to the docs above.",
+        "allOf": [
+          {
+            "if": { "required": ["type"], "properties": { "type": { "const": "@theme" } } },
+            "then": { "$ref": "./theme_block_entry.json" }
+          },
+          {
+            "if": { "required": ["type"], "properties": { "type": { "const": "@app" } } },
+            "then": { "$ref": "./app_block_entry.json" }
+          },
+          {
+            "if": {
+              "required": ["type"],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "not": { "enum": ["@app", "@theme"] }
+                }
+              }
+            },
+            "then": { "$ref": "./targetted_block_entry.json" }
+          }
+        ]
+      }
+    },
+
+    "presets": {
+      "type": "array",
+      "description": "Presets are default configurations of blocks that enable merchants to easily add a block to a JSON template through the theme editor.",
+      "markdownDescription": "Presets are default configurations of blocks that enable merchants to easily add a block to a JSON template through the theme editor.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/blocks/theme-blocks/schema#presets)",
+      "items": {
+        "$ref": "./preset.json"
+      }
+    },
+
+    "tag": {
+      "description": "The HTML element that is used to wrap the rendered block. Accepts any string up to 50 characters. Can be used to render custom HTML elements. Use null to render without a wrapping element.",
+      "markdownDescription": "The HTML element that is used to wrap the rendered block. Accepts any string up to 50 characters. Can be used to render custom HTML elements.\n\nUse `null` to render without a wrapping element.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/blocks/theme-blocks/schema#tag)",
+      "oneOf": [
+        {
+          "description": "If you don't want to use a <div>, then you can specify which kind of HTML element to use.",
+          "markdownDescription": "If you don't want to use a `<div>`, then you can specify which kind of HTML element to use.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/blocks/theme-blocks/schema#tag)",
+          "type": "string",
+          "maxLength": 50
+        },
+        {
+          "description": "Used to render the block without a wrapping element.",
+          "markdownDescription": "Used to render the block without a wrapping element.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/blocks/theme-blocks/schema#rendering-blocks-without-a-wrapper)",
+          "type": "null"
+        }
+      ]
+    },
+
+    "class": {
+      "type": "string",
+      "description": "When Shopify renders a block, it's wrapped in an HTML element with the shopify-block class. You can append other classes by using the class attribute.",
+      "markdownDescription": "When Shopify renders a block, it's wrapped in an HTML element with the `shopify-block` class. You can append other classes by using the class attribute.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/blocks/theme-blocks/schema#class)"
+    }
+  }
+}

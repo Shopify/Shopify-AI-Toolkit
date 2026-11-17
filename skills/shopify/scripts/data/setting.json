@@ -1,0 +1,1368 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "type": {
+      "description": "The type of the input or sidebar setting. This value determines the type of field that gets rendered into the editor.",
+      "markdownDescription": "The type of the input or sidebar setting. This value determines the type of field that gets rendered into the editor.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings)",
+      "enum": [
+        "article",
+        "article_list",
+        "blog",
+        "checkbox",
+        "collection",
+        "collection_list",
+        "color",
+        "color_background",
+        "color_scheme",
+        "color_scheme_group",
+        "font_picker",
+        "header",
+        "html",
+        "image_picker",
+        "inline_richtext",
+        "link_list",
+        "liquid",
+        "metaobject",
+        "metaobject_list",
+        "number",
+        "page",
+        "paragraph",
+        "product",
+        "product_list",
+        "radio",
+        "range",
+        "richtext",
+        "select",
+        "text",
+        "text_alignment",
+        "textarea",
+        "url",
+        "video",
+        "video_url"
+      ]
+    }
+  },
+
+  "$comment": "We're doing the weird allOf here so that we have better error messages when type is invalid. We're also doing the allOf so that we can use additionalProperties properly.",
+  "allOf": [
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "header" } } },
+      "then": { "$ref": "#/definitions/header" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "paragraph" } } },
+      "then": { "$ref": "#/definitions/paragraph" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "article" } } },
+      "then": { "$ref": "#/definitions/article" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "article_list" } } },
+      "then": { "$ref": "#/definitions/article_list" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "blog" } } },
+      "then": { "$ref": "#/definitions/blog" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "checkbox" } } },
+      "then": { "$ref": "#/definitions/checkbox" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "collection" } } },
+      "then": { "$ref": "#/definitions/collection" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "collection_list" } } },
+      "then": { "$ref": "#/definitions/collection_list" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "color" } } },
+      "then": { "$ref": "#/definitions/color" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "color_background" } } },
+      "then": { "$ref": "#/definitions/color_background" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "color_scheme" } } },
+      "then": { "$ref": "#/definitions/color_scheme" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "color_scheme_group" } } },
+      "then": { "$ref": "#/definitions/color_scheme_group" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "font_picker" } } },
+      "then": { "$ref": "#/definitions/font_picker" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "html" } } },
+      "then": { "$ref": "#/definitions/html" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "image_picker" } } },
+      "then": { "$ref": "#/definitions/image_picker" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "inline_richtext" } } },
+      "then": { "$ref": "#/definitions/inline_richtext" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "link_list" } } },
+      "then": { "$ref": "#/definitions/link_list" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "liquid" } } },
+      "then": { "$ref": "#/definitions/liquid" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "metaobject" } } },
+      "then": { "$ref": "#/definitions/metaobject" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "metaobject_list" } } },
+      "then": { "$ref": "#/definitions/metaobject_list" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "number" } } },
+      "then": { "$ref": "#/definitions/number" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "page" } } },
+      "then": { "$ref": "#/definitions/page" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "product" } } },
+      "then": { "$ref": "#/definitions/product" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "product_list" } } },
+      "then": { "$ref": "#/definitions/product_list" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "radio" } } },
+      "then": { "$ref": "#/definitions/radio" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "range" } } },
+      "then": { "$ref": "#/definitions/range" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "richtext" } } },
+      "then": { "$ref": "#/definitions/richtext" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "select" } } },
+      "then": { "$ref": "#/definitions/select" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "text" } } },
+      "then": { "$ref": "#/definitions/text" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "text_alignment" } } },
+      "then": { "$ref": "#/definitions/text_alignment" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "textarea" } } },
+      "then": { "$ref": "#/definitions/textarea" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "url" } } },
+      "then": { "$ref": "#/definitions/url" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "video" } } },
+      "then": { "$ref": "#/definitions/video" }
+    },
+    {
+      "if": { "required": ["type"], "properties": { "type": { "const": "video_url" } } },
+      "then": { "$ref": "#/definitions/video_url" }
+    }
+  ],
+
+  "definitions": {
+    "article": {
+      "allOf": [{ "$ref": "#/definitions/inputSettingsStandardAttributes" }],
+      "properties": {
+        "type": {
+          "const": "article",
+          "description": "A setting of type article outputs an article picker field that's automatically populated with the available articles for the store. You can use these fields to capture an article selection, such as the article to feature on the homepage.",
+          "markdownDescription": "A setting of type `article` outputs an article picker field that's automatically populated with the available articles for the store. You can use these fields to capture an article selection, such as the article to feature on the homepage.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#article)"
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true
+      },
+      "additionalProperties": false
+    },
+
+    "article_list": {
+      "allOf": [{ "$ref": "#/definitions/inputSettingsStandardAttributes" }],
+      "properties": {
+        "type": {
+          "const": "article_list",
+          "description": "A setting of type article_list outputs an article picker field that's automatically populated with the available articles for the store. You can use these fields to capture multiple articles, such as a group of articles to feature on the homepage.",
+          "markdownDescription": "A setting of type `article_list` outputs an article picker field that's automatically populated with the available products for the store. You can use these fields to capture multiple articles, such as a group of articles to feature on the homepage.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#article_list)"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "The maximum number that the merchant can select. The default limit, and the maximum limit you can set, is 50."
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true
+      },
+      "additionalProperties": false
+    },
+
+    "blog": {
+      "allOf": [{ "$ref": "#/definitions/inputSettingsStandardAttributes" }],
+      "properties": {
+        "type": {
+          "const": "blog",
+          "description": "A setting of type blog outputs a blog picker field that's automatically populated with the available blogs for the store. You can use these fields to capture a blog selection, such as the blog to feature in the sidebar.",
+          "markdownDescription": "A setting of type `blog` outputs a blog picker field that's automatically populated with the available blogs for the store. You can use these fields to capture a blog selection, such as the blog to feature in the sidebar.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#blog)"
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true
+      },
+      "additionalProperties": false
+    },
+
+    "checkbox": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "checkbox",
+          "description": "A setting of type checkbox outputs a checkbox field. These fields can be used for toggling features on and off, such as whether to show an announcement bar.",
+          "markdownDescription": "A setting of type `checkbox` outputs a checkbox field. These fields can be used for toggling features on and off, such as whether to show an announcement bar.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#checkbox)"
+        },
+        "default": { "type": "boolean" },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "collection": {
+      "allOf": [{ "$ref": "#/definitions/inputSettingsStandardAttributes" }],
+      "properties": {
+        "type": {
+          "const": "collection",
+          "description": "A setting of type collection outputs a collection picker field that's automatically populated with the available collections for the store. You can use these fields to capture a collection selection, such as a collection for featuring products on the homepage.",
+          "markdownDescription": "A setting of type `collection` outputs a collection picker field that's automatically populated with the available collections for the store. You can use these fields to capture a collection selection, such as a collection for featuring products on the homepage.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#collection)"
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true
+      },
+      "additionalProperties": false
+    },
+
+    "collection_list": {
+      "allOf": [{ "$ref": "#/definitions/inputSettingsStandardAttributes" }],
+      "properties": {
+        "type": {
+          "const": "collection_list",
+          "description": "A setting of type collection_list outputs a collection picker field that's automatically populated with the available collections for the store. You can use these fields to capture multiple collections, such as a group of collections to feature on the homepage.",
+          "markdownDescription": "A setting of type `collection_list` outputs a collection picker field that's automatically populated with the available collections for the store. You can use these fields to capture multiple collections, such as a group of collections to feature on the homepage.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#collection_list)"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "The maximum number that the merchant can select. The default limit, and the maximum limit you can set, is 50."
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true
+      },
+      "additionalProperties": false
+    },
+
+    "color": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "color",
+          "description": "A setting of type color outputs a color picker field. You can use these fields to capture a color selection for various theme elements, such as the body text color.",
+          "markdownDescription": "A setting of type `color` outputs a color picker field. You can use these fields to capture a color selection for various theme elements, such as the body text color.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#color)"
+        },
+        "default": { "type": "string" },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true,
+        "alpha": {
+          "type": "boolean",
+          "description": "A boolean value that determines whether the color picker should include an alpha slider. The default value is true.",
+          "markdownDescription": "A boolean value that determines whether the color picker should include an alpha slider. The default value is true.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#color)"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "color_background": {
+      "type": "object",
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "color_background",
+          "description": "A setting of type color_background outputs a text field for entering CSS background properties. You can use these fields to capture background settings for various theme elements, such as the store background.",
+          "markdownDescription": "A setting of type `color_background` outputs a text field for entering [CSS background](https://developer.mozilla.org/en-US/docs/Web/CSS/background) properties. You can use these fields to capture background settings for various theme elements, such as the store background.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#color_background)"
+        },
+        "default": { "type": "string" },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "color_scheme": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "color_scheme",
+          "description": "A setting of type color_scheme outputs a picker with all of the available theme color schemes, and a preview of the selected color scheme.",
+          "markdownDescription": "A setting of type `color_scheme` outputs a picker with all of the available theme color schemes, and a preview of the selected color scheme.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#color_scheme)"
+        },
+        "default": { "type": "string" },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "color_scheme_group": {
+      "allOf": [{ "$ref": "#/definitions/colorSchemeGroupStandardAttributes" }],
+      "properties": {
+        "type": {
+          "const": "color_scheme_group",
+          "description": "A setting of type color_scheme_group outputs a color scheme.",
+          "markdownDescription": "A setting of type `color_scheme_group` outputs a color scheme which is composed of the following input setting types:\n\n- `header`\n- `color`\n- `color_background`\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#color_scheme_group)"
+        },
+        "definition": {
+          "description": "An array of header, color and color_background input settings.",
+          "markdownDescription": "An array of `header`, `color` and `color_background` input settings.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#color_scheme_group)",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": ["header", "color", "color_background"]
+              },
+              "visible_if": {
+                "not": {
+                  "type": "string"
+                },
+                "errorMessage": "The property visible_if is not allowed within color_scheme_group"
+              }
+            },
+            "allOf": [
+              {
+                "if": { "required": ["type"], "properties": { "type": { "const": "header" } } },
+                "then": { "$ref": "#/definitions/header" }
+              },
+              {
+                "if": { "required": ["type"], "properties": { "type": { "const": "color" } } },
+                "then": { "$ref": "#/definitions/color" }
+              },
+              {
+                "if": {
+                  "required": ["type"],
+                  "properties": { "type": { "const": "color_background" } }
+                },
+                "then": { "$ref": "#/definitions/color_background" }
+              }
+            ]
+          }
+        },
+        "role": {
+          "type": "object",
+          "properties": {
+            "background": {
+              "description": "Renders the background color of the preview",
+              "oneOf": [{ "type": "string" }, { "$ref": "#/definitions/gradient" }]
+            },
+            "text": {
+              "description": "Renders the text color of the preview",
+              "type": "string"
+            },
+            "primary_button": {
+              "description": "Renders the first pill in the preview",
+              "oneOf": [{ "type": "string" }, { "$ref": "#/definitions/gradient" }]
+            },
+            "secondary_button": {
+              "description": "Renders the second pill in the preview",
+              "oneOf": [{ "type": "string" }, { "$ref": "#/definitions/gradient" }]
+            },
+            "primary_button_border": {
+              "description": "Render the first pills' border in the preview",
+              "type": "string"
+            },
+            "secondary_button_border": {
+              "description": "Render the second pills' border in the preview",
+              "type": "string"
+            },
+            "on_primary_button": {
+              "description": "Not used in the preview",
+              "type": "string"
+            },
+            "on_secondary_button": {
+              "description": "Not used in the preview",
+              "type": "string"
+            },
+            "links": {
+              "description": "Not used in the preview",
+              "type": "string"
+            },
+            "icons": {
+              "description": "Not used in the preview",
+              "type": "string"
+            }
+          },
+          "required": [
+            "background",
+            "text",
+            "primary_button",
+            "secondary_button",
+            "primary_button_border",
+            "secondary_button_border",
+            "on_primary_button",
+            "on_secondary_button",
+            "links",
+            "icons"
+          ]
+        },
+        "info": true,
+        "id": true
+      },
+      "required": ["definition", "role"],
+      "additionalProperties": false
+    },
+
+    "font_picker": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "font_picker",
+          "description": "A setting of type font_picker outputs a font picker field that's automatically populated with fonts from the Shopify font library. This library includes web-safe fonts, a selection of Google Fonts, and fonts licensed by Monotype.",
+          "markdownDescription": "A setting of type `font_picker` outputs a font picker field that's automatically populated with fonts from the [Shopify font library](https://shopify.dev/docs/themes/architecture/settings/fonts#shopify-font-library). This library includes web-safe fonts, a selection of Google Fonts, and fonts licensed by Monotype.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#font_picker)"
+        },
+        "default": {
+          "type": "string",
+          "description": "The default font from the Shopify font library.",
+          "markdownDescription": "The default font from the [Shopify font library](https://shopify.dev/docs/themes/architecture/settings/fonts#shopify-font-library)."
+        },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "required": ["default"],
+      "additionalProperties": false
+    },
+
+    "html": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "html",
+          "description": "A setting of type html outputs a multi-line text field that accepts HTML markup.",
+          "markdownDescription": "A setting of type `html` outputs a multi-line text field that accepts HTML markup.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#html)"
+        },
+        "default": {
+          "type": "string"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "A placeholder value for the input."
+        },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "image_picker": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "image_picker",
+          "description": "A setting of type image_picker outputs an image picker field that's automatically populated with the available images from the Files section of Shopify admin, and has the option to upload new images. Merchants also have an opportunity to enter alt text and select a focal point for their image.",
+          "markdownDescription": "A setting of type `image_picker` outputs an image picker field that's automatically populated with the available images from the [Files](https://help.shopify.com/manual/shopify-admin/productivity-tools/file-uploads) section of Shopify admin, and has the option to upload new images. Merchants also have an opportunity to enter alt text and select a [focal point](https://shopify.dev/docs/themes/architecture/settings/input-settings#image-focal-points) for their image.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#image_picker)"
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "inline_richtext": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "inline_richtext",
+          "description": "A setting of type inline_richtext outputs HTML markup that isn't wrapped in paragraph tags (<p>)",
+          "markdownDescription": "A setting of type `inline_richtext` outputs HTML markup that isn't wrapped in paragraph tags (`<p>`). The setting includes the following basic formatting options:\n\n- Bold\n- Italic\n- Link\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#inline_richtext)"
+        },
+        "default": { "type": "string" },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "link_list": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "link_list",
+          "description": "A setting of type link_list outputs a menu picker field that's automatically populated with the available menus for the store. You can use these fields to capture a menu selection, such as the menu to use for footer links.",
+          "markdownDescription": "A setting of type `link_list` outputs a menu picker field that's automatically populated with the available menus for the store. You can use these fields to capture a menu selection, such as the menu to use for footer links.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#link_list)"
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "liquid": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "liquid",
+          "description": "A setting of type liquid outputs a multi-line text field that accepts HTML and limited Liquid markup. You can use these fields to capture custom blocks of HTML and Liquid content, such as a product-specific message. Merchants can also use a liquid setting to add the code needed to integrate certain types of apps into your theme.",
+          "markdownDescription": "A setting of type `liquid` outputs a multi-line text field that accepts HTML and [limited](https://shopify.dev/docs/themes/architecture/settings/input-settings#limitations) Liquid markup. You can use these fields to capture custom blocks of HTML and Liquid content, such as a product-specific message. Merchants can also use a liquid setting to add the code needed to integrate certain types of [apps](https://shopify.dev/docs/apps/online-store) into your theme.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#liquid)"
+        },
+        "default": { "type": "string" },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "metaobject": {
+      "allOf": [{ "$ref": "#/definitions/inputSettingsStandardAttributes" }],
+      "properties": {
+        "type": {
+          "const": "metaobject",
+          "description": "A setting of type metaobject outputs a metaobject picker field that's automatically populated with the compatible metaobject entries for the store. You can use these fields to capture a metaobject entry selection for a known metaobject type.",
+          "markdownDescription": "A setting of type `metaobject` outputs a metaobject picker field that's automatically populated with the compatible metaobject entries for the store. You can use these fields to capture a metaobject entry selection for a known metaobject type. \n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#metaobject)"
+        },
+        "metaobject_type": {
+          "type": "string",
+          "description": "The metaobject type allowed by the picker."
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true
+      },
+      "required": ["metaobject_type"],
+      "additionalProperties": false
+    },
+
+    "metaobject_list": {
+      "allOf": [{ "$ref": "#/definitions/inputSettingsStandardAttributes" }],
+      "properties": {
+        "type": {
+          "const": "metaobject_list",
+          "description": "A setting of type metaobject_list outputs a metaobject picker field that's automatically populated with the compatible metaobject entries for the store. You can use these fields to capture multiple metaobject entry selections for a known metaobject type.",
+          "markdownDescription": "A setting of type `metaobject_list` outputs a metaobject picker field that's automatically populated with the compatible metaobject entries for the store. You can use these fields to capture multiple metaobject entry selections for a known metaobject type.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#metaobject_list)"
+        },
+        "metaobject_type": {
+          "type": "string",
+          "description": "The metaobject type allowed by the picker."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "The maximum number that the merchant can select. The default limit, and the maximum limit you can set, is 50."
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true
+      },
+      "required": ["metaobject_type"],
+      "additionalProperties": false
+    },
+    "number": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "number",
+          "description": "A setting of type number outputs a single number field.",
+          "markdownDescription": "A setting of type `number` outputs a single number field.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#number)"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "A placeholder value for the input."
+        },
+        "default": { "type": "number" },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "page": {
+      "allOf": [{ "$ref": "#/definitions/inputSettingsStandardAttributes" }],
+      "properties": {
+        "type": {
+          "const": "page",
+          "description": "A setting of type page outputs a page picker field that's automatically populated with the available pages for the store. You can use these fields to capture a page selection, such as the page to feature content for in a size-chart display.",
+          "markdownDescription": "A setting of type `page` outputs a page picker field that's automatically populated with the available pages for the store. You can use these fields to capture a page selection, such as the page to feature content for in a size-chart display.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#page)"
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true
+      },
+      "additionalProperties": false
+    },
+
+    "product": {
+      "allOf": [{ "$ref": "#/definitions/inputSettingsStandardAttributes" }],
+      "properties": {
+        "type": {
+          "const": "product",
+          "description": "A setting of type product outputs a product picker field that's automatically populated with the available products for the store. You can use these fields to capture a product selection, such as the product to feature on the homepage.",
+          "markdownDescription": "A setting of type `product` outputs a product picker field that's automatically populated with the available products for the store. You can use these fields to capture a product selection, such as the product to feature on the homepage.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#product)"
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true
+      },
+      "additionalProperties": false
+    },
+
+    "product_list": {
+      "allOf": [{ "$ref": "#/definitions/inputSettingsStandardAttributes" }],
+      "properties": {
+        "type": {
+          "const": "product_list",
+          "description": "A setting of type product_list outputs a product picker field that's automatically populated with the available products for the store. You can use these fields to capture multiple products, such as a group of products to feature on the homepage.",
+          "markdownDescription": "A setting of type `product_list` outputs a product picker field that's automatically populated with the available products for the store. You can use these fields to capture multiple products, such as a group of products to feature on the homepage.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#product_list)"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "The maximum number that the merchant can select. The default limit, and the maximum limit you can set, is 50."
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true
+      },
+      "additionalProperties": false
+    },
+
+    "radio": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "radio",
+          "description": "A setting of type radio outputs a radio option field.",
+          "markdownDescription": "A setting of type `radio` outputs a radio option field.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#radio)"
+        },
+        "default": {
+          "type": "string",
+          "description": "The value of the default option"
+        },
+        "options": { "$ref": "#/definitions/options" },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "required": ["options"],
+      "additionalProperties": false
+    },
+
+    "range": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "range",
+          "description": "A setting of type range outputs a range slider field with an input field.",
+          "markdownDescription": "A setting of type `range` outputs a range slider field with an input field.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#range)"
+        },
+        "default": {
+          "type": "number"
+        },
+        "min": {
+          "type": "number",
+          "description": "The minimum value of the input"
+        },
+        "max": {
+          "type": "number",
+          "description": "The maximum value of the input"
+        },
+        "step": {
+          "type": "number",
+          "multipleOf": 0.1,
+          "description": "The increment size between steps of the slider"
+        },
+        "unit": {
+          "type": "string",
+          "description": "The unit for the input. For example, you can set \"px\" for a font-size slider",
+          "markdownDescription": "The unit for the input. For example, you can set `px` for a font-size slider"
+        },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "required": ["default", "min", "max"],
+      "additionalProperties": false
+    },
+
+    "richtext": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "richtext",
+          "description": "A setting of type richtext outputs a multi-line text field.",
+          "markdownDescription": "A setting of type `richtext` outputs a multi-line text field with the following basic formatting options:\n\n- Bold\n- Italic\n- Underline\n- Link\n- Paragraph\n- Unordered list\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#richtext)"
+        },
+        "default": { "type": "string" },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "select": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "select",
+          "description": "A setting of type select outputs different selector fields, depending on certain criteria.",
+          "markdownDescription": "A setting of type `select` outputs [different selector fields](https://shopify.dev/docs/themes/architecture/settings/input-settings#selector-fields), depending on certain criteria.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#select)"
+        },
+        "default": {
+          "type": "string",
+          "description": "The value of the default option"
+        },
+        "options": { "$ref": "#/definitions/selectOptions" },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "required": ["options"],
+      "additionalProperties": false
+    },
+
+    "lengthPattern": {
+      "type": "string",
+      "pattern": "^[0-9]+(px|%)$"
+    },
+
+    "lengthAutoPattern": {
+      "type": "string",
+      "pattern": "^([0-9]+(px|%)|auto|fit-content)$"
+    },
+
+    "lengthNonePattern": {
+      "type": "string",
+      "pattern": "^([0-9]+(px|%)|none|fit-content)$"
+    },
+
+    "negativeLengthPattern": {
+      "type": "string",
+      "pattern": "^-?[0-9]+(px|%)$"
+    },
+
+    "numberPattern": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+
+    "negativeNumberPattern": {
+      "type": "string",
+      "pattern": "^-?[0-9]+$"
+    },
+    "text": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "text",
+          "description": "A setting of type text outputs a single-line text field.",
+          "markdownDescription": "A setting of type `text` outputs a single-line text field.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#text)"
+        },
+        "default": {
+          "type": "string"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "A placeholder value for the input."
+        },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "text_alignment": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "text_alignment",
+          "description": "A setting of type text_alignment outputs a SegmentedControl field with icons.",
+          "markdownDescription": "A setting of type `text_alignment` outputs a `SegmentedControl` field with icons.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#text_alignment)"
+        },
+        "default": {
+          "type": "string",
+          "enum": ["left", "right", "center"]
+        },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "textarea": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "textarea",
+          "description": "A setting of type textarea outputs a multi-line text field.",
+          "markdownDescription": "A setting of type `textarea` outputs a multi-line text field\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#textarea)"
+        },
+        "default": {
+          "type": "string"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "A placeholder value for the input."
+        },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "url": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "url",
+          "description": "A setting of type url outputs a URL entry field where you can manually enter external URLs and relative paths.",
+          "markdownDescription": "A setting of type `url` outputs a URL entry field where you can manually enter external URLs and relative paths.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#url)"
+        },
+        "default": { "type": "string" },
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "video": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "video",
+          "description": "A setting of type video outputs a video picker that's automatically populated with the available videos from the Files section of the Shopify admin. The merchant also has the option to upload new videos.",
+          "markdownDescription": "A setting of type `video` outputs a video picker that's automatically populated with the available videos from the [Files](https://help.shopify.com/en/manual/shopify-admin/productivity-tools/file-uploads) section of the Shopify admin. The merchant also has the option to upload new videos.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#video)"
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "video_url": {
+      "allOf": [
+        { "$ref": "#/definitions/inputSettingsStandardAttributes" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "video_url",
+          "description": "A setting of type video_url outputs a URL entry field.",
+          "markdownDescription": "A setting of type `video_url` outputs a URL entry field.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#video_url)"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "A placeholder value for the input."
+        },
+        "accept": {
+          "description": "Takes an array of accepted video providers. Valid values are youtube, vimeo, or both.",
+          "markdownDescription": "Takes an array of accepted video providers. Valid values are `youtube`, `vimeo`, or both.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["youtube", "vimeo"]
+          }
+        },
+        "default": true,
+        "label": true,
+        "info": true,
+        "id": true,
+        "visible_if": true
+      },
+      "required": ["accept"],
+      "additionalProperties": false
+    },
+
+    "header": {
+      "allOf": [
+        { "$ref": "#/definitions/sidebarStandardSettings" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "header",
+          "description": "A setting of type `header` outputs a header element to help you better organize your input settings.",
+          "markdownDescription": "A setting of type `header` outputs a header element to help you better organize your input settings.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/sidebar-settings#header)"
+        },
+        "info": { "$ref": "#/definitions/info" },
+        "content": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "paragraph": {
+      "allOf": [
+        { "$ref": "#/definitions/sidebarStandardSettings" },
+        { "$ref": "#/definitions/conditionalSetting" }
+      ],
+      "properties": {
+        "type": {
+          "const": "paragraph",
+          "description": "A setting of type paragraph outputs a text element to help you better describe your input settings.",
+          "markdownDescription": "A setting of type `paragraph` outputs a text element to help you better describe your input settings.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/sidebar-settings#paragraph)"
+        },
+        "content": true,
+        "visible_if": true
+      },
+      "additionalProperties": false
+    },
+
+    "sidebarStandardSettings": {
+      "$comment": "Sidebar standard settings",
+      "required": ["type", "content"],
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "The setting content, which will show in the theme editor."
+        }
+      }
+    },
+
+    "conditionalSetting": {
+      "$comment": "Conditional setting property",
+      "properties": {
+        "visible_if": {
+          "type": "string",
+          "description": "A liquid expression that determines whether the setting should be visible.",
+          "markdownDescription": "A liquid expression that determines whether the setting should be visible.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#visible_if)"
+        }
+      }
+    },
+
+    "inputSettingsStandardAttributes": {
+      "required": ["type", "id", "label"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the setting, which is used to access the setting value.",
+          "markdownDescription": "The unique identifier for the setting, which is used to access the setting value.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#standard-attributes)"
+        },
+        "label": {
+          "type": "string",
+          "description": "The label for the setting, which will show in the theme editor."
+        },
+        "default": {
+          "description": "The default value for the setting."
+        },
+        "info": {
+          "$ref": "#/definitions/info"
+        }
+      }
+    },
+
+    "colorSchemeGroupStandardAttributes": {
+      "required": ["type", "id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the setting, which is used to access the setting value.",
+          "markdownDescription": "The unique identifier for the setting, which is used to access the setting value.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/settings/input-settings#standard-attributes)"
+        }
+      }
+    },
+
+    "info": {
+      "type": "string",
+      "description": "An option for informational text about the setting."
+    },
+
+    "gradient": {
+      "type": "object",
+      "required": ["solid", "gradient"],
+      "properties": {
+        "solid": { "type": "string" },
+        "gradient": { "type": "string" }
+      }
+    },
+
+    "style.flex_layout_properties": {
+      "type": "object",
+      "properties": {
+        "flex-direction": {
+          "type": "string",
+          "description": "Determines how flex items are arranged within the flex container by specifying the main axis and direction. Valid values are row (default), row-reverse, column, and column-reverse.",
+          "enum": ["row", "row-reverse", "column", "column-reverse"]
+        },
+        "flex-wrap": {
+          "type": "string",
+          "description": "Specifies whether flex items are confined to a single line or can flow onto multiple lines. If wrapping is allowed, it defines the stacking direction of the lines. Valid values are nowrap (default), wrap, and wrap-reverse.",
+          "enum": ["nowrap", "wrap", "wrap-reverse"]
+        },
+        "row-gap": {
+          "$ref": "#/definitions/lengthPattern",
+          "description": "Defines the size of the gap between the rows of a wrapped flex container."
+        },
+        "column-gap": {
+          "$ref": "#/definitions/lengthPattern",
+          "description": "Defines the size of the gap between flex items."
+        },
+        "gap": {
+          "type": "string",
+          "description": "Shorthand for row-gap and column-gap. Defines the gaps between flex items.",
+          "pattern": "^([0-9]+(px|%) ?){1,2}$"
+        },
+        "justify-content": {
+          "type": "string",
+          "description": "Defines the alignment of flex items along the main axis of the flex container. Valid values are flex-start (default), flex-end, start, end, left, right, center, space-between, space-around and space-evenly.",
+          "enum": [
+            "flex-start",
+            "flex-end",
+            "start",
+            "end",
+            "left",
+            "right",
+            "center",
+            "space-between",
+            "space-around",
+            "space-evenly"
+          ]
+        },
+        "align-items": {
+          "type": "string",
+          "description": "Defines the alignment of flex items along the cross axis of the flex container. Valid values are stretch (default), flex-start / start / self-start, flex-end / end / self-end, center and baseline.",
+          "enum": [
+            "stretch",
+            "flex-start",
+            "start",
+            "self-start",
+            "flex-end",
+            "end",
+            "self-end",
+            "center",
+            "baseline"
+          ]
+        },
+        "align-content": {
+          "type": "string",
+          "description": "Defines the distribution of space between and around flex items along the cross axis. Valid values are stretch, flex-start / start, flex-end / end, center, space-between, space-around, and space-evenly.",
+          "enum": [
+            "stretch",
+            "flex-start",
+            "start",
+            "flex-end",
+            "end",
+            "center",
+            "space-between",
+            "space-around",
+            "space-evenly"
+          ]
+        }
+      }
+    },
+
+    "style.size_properties": {
+      "type": "object",
+      "properties": {
+        "flex-grow": {
+          "$ref": "#/definitions/numberPattern",
+          "description": "Defines the flex grow factor of a flex item, determining how much of the available space in the flex container the item should occupy."
+        },
+        "flex-shrink": {
+          "$ref": "#/definitions/numberPattern",
+          "description": "Defines the flex shrink factor of a flex item, determining how much the item should reduce in size compared to the other flex items when space is insufficient."
+        },
+        "flex-basis": {
+          "$ref": "#/definitions/lengthAutoPattern",
+          "description": "Defines the initial main size of a flex item, determining the size of the content-box unless otherwise specified by box-sizing."
+        },
+        "width": {
+          "$ref": "#/definitions/lengthAutoPattern",
+          "description": "Defines the width of an item."
+        },
+        "min-width": {
+          "$ref": "#/definitions/lengthAutoPattern",
+          "description": "Defines the minimum width of an item."
+        },
+        "max-width": {
+          "$ref": "#/definitions/lengthNonePattern",
+          "description": "Defines the maximum width of an item."
+        },
+        "height": {
+          "$ref": "#/definitions/lengthAutoPattern",
+          "description": "Defines the height of an item."
+        },
+        "min-height": {
+          "$ref": "#/definitions/lengthAutoPattern",
+          "description": "Defines the minimum height of an item."
+        },
+        "max-height": {
+          "$ref": "#/definitions/lengthNonePattern",
+          "description": "Defines the maximum height of an item."
+        }
+      }
+    },
+
+    "style.spacing_properties": {
+      "type": "object",
+      "properties": {
+        "padding": {
+          "description": "Shorthand that defines the padding on all four sides of an element.",
+          "pattern": "^([0-9]+(px|%) ?){1,4}$"
+        },
+        "padding-top": {
+          "description": "Defines the padding on the top side of an element.",
+          "$ref": "#/definitions/lengthPattern"
+        },
+        "padding-right": {
+          "description": "Defines the padding on the right side of an element.",
+          "$ref": "#/definitions/lengthPattern"
+        },
+        "padding-bottom": {
+          "description": "Defines the padding on the bottom side of an element.",
+          "$ref": "#/definitions/lengthPattern"
+        },
+        "padding-left": {
+          "description": "Defines the padding on the left side of an element.",
+          "$ref": "#/definitions/lengthPattern"
+        },
+        "padding-block-start": {
+          "description": "Defines the logical block start padding of an element, translating to physical padding based on the element's writing mode, text direction, and text orientation.",
+          "$ref": "#/definitions/lengthPattern"
+        },
+        "padding-block-end": {
+          "description": "Defines the logical block end padding of an element, translating to physical padding based on the element's writing mode, text direction, and text orientation.",
+          "$ref": "#/definitions/lengthPattern"
+        },
+        "padding-block": {
+          "type": "string",
+          "description": "Shorthand for padding-block-start and padding-block end. Defines the logical block start and end padding of an element, translating to physical padding based on the element's writing mode, text direction, and text orientation.",
+          "pattern": "^([0-9]+(px|%) ?){1,2}$"
+        },
+        "padding-inline-start": {
+          "description": "Defines the logical inline start padding of an element, translating to physical padding based on the element's writing mode, text direction, and text orientation.",
+          "$ref": "#/definitions/lengthPattern"
+        },
+        "padding-inline-end": {
+          "description": "Defines the logical inline end padding of an element, translating to physical padding based on the element's writing mode, text direction, and text orientation.",
+          "$ref": "#/definitions/lengthPattern"
+        },
+        "padding-inline": {
+          "type": "string",
+          "description": "Shorthand that defines the logical inline start and end padding of an element, translating to physical padding based on the element's writing mode, text direction, and text orientation.",
+          "pattern": "^([0-9]+(px|%) ?){1,2}$"
+        },
+        "margin": {
+          "type": "string",
+          "description": "Shorthand that defines the margin on all four sides of an element.",
+          "pattern": "^(-?[0-9]+(px|%) ?){1,4}$"
+        },
+        "margin-top": {
+          "description": "Defines the margin on the top side of an element.",
+          "$ref": "#/definitions/negativeLengthPattern"
+        },
+        "margin-right": {
+          "description": "Defines the margin on the right side of an element.",
+          "$ref": "#/definitions/negativeLengthPattern"
+        },
+        "margin-bottom": {
+          "description": "Defines the margin on the bottom side of an element.",
+          "$ref": "#/definitions/negativeLengthPattern"
+        },
+        "margin-left": {
+          "description": "Defines the margin on the left side of an element.",
+          "$ref": "#/definitions/negativeLengthPattern"
+        },
+        "margin-block-start": {
+          "description": "Defines the logical block start margin of an element, translating to physical margin based on the element's writing mode, text direction, and text orientation.",
+          "$ref": "#/definitions/negativeLengthPattern"
+        },
+        "margin-block-end": {
+          "description": "Defines the logical block end margin of an element, translating to physical margin based on the element's writing mode, text direction, and text orientation.",
+          "$ref": "#/definitions/negativeLengthPattern"
+        },
+        "margin-block": {
+          "type": "string",
+          "description": "Shorthand that defines the logical block start and end margins of an element, translating to physical margin based on the element's writing mode, text direction, and text orientation.",
+          "pattern": "^(-?[0-9]+(px|%) ?){1,2}$"
+        },
+        "margin-inline-start": {
+          "description": "Defines the logical inline start margin of an element, translating to physical margin based on the element's writing mode, text direction, and text orientation.",
+          "$ref": "#/definitions/negativeLengthPattern"
+        },
+        "margin-inline-end": {
+          "description": "Defines the logical inline end margin of an element, translating to physical margin based on the element's writing mode, text direction, and text orientation.",
+          "$ref": "#/definitions/negativeLengthPattern"
+        },
+        "margin-inline": {
+          "type": "string",
+          "description": "Shorthand that defines both the logical inline start and end margins of an element, translating to physical margin based on the element's writing mode, text direction, and text orientation.",
+          "pattern": "^(-?[0-9]+(px|%) ?){1,2}$"
+        }
+      }
+    },
+
+    "options": {
+      "description": "Takes an array of `value`/`label` definitions.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "description": "The value of the option.",
+            "type": "string"
+          },
+          "label": {
+            "description": "The label of the option.",
+            "type": "string"
+          }
+        },
+        "required": ["value", "label"]
+      }
+    },
+
+    "selectOptions": {
+      "description": "Takes an array of `value`/`label`/`group` definitions for select fields.",
+      "type": "array",
+      "items": {
+        "allOf": [
+          { "$ref": "#/definitions/options/items" },
+          {
+            "type": "object",
+            "properties": {
+              "group": {
+                "type": "string",
+                "description": "An optional attribute that you can add to each option to create option groups in the drop-down."
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

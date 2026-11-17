@@ -1,0 +1,24 @@
+# WARNING:
+# This file was generated automatically by running "scripts/generate-factory-configs"
+# Do not modify manually. Your changes will be overwritten.
+extends: theme-check:recommended
+context: app
+ignore:
+  - node_modules/**
+AppBlockMissingSchema:
+  enabled: true
+  severity: 0
+AppBlockValidTags:
+  enabled: true
+  severity: 0
+AssetSizeAppBlockCSS:
+  enabled: true
+  severity: 0
+  thresholdInBytes: 100000
+AssetSizeAppBlockJavaScript:
+  enabled: true
+  severity: 0
+  thresholdInBytes: 10000
+RequiredLayoutThemeObject:
+  enabled: false
+  severity: 0

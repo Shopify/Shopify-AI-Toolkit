@@ -1,0 +1,19 @@
+{
+  "$schema": "manifest_schema.json",
+  "$comment": "Declares all the JSON schemas you need to validate themes",
+  "schemas": [
+    { "fileMatch": ["locales/*.json"], "uri": "theme/translations.json" },
+    { "fileMatch": ["blocks/*.liquid"], "uri": "theme/theme_block.json" },
+    { "fileMatch": ["config/settings_schema.json"], "uri": "theme/theme_settings.json" },
+    { "fileMatch": ["sections/*.liquid"], "uri": "theme/section.json" },
+    { "uri": "theme/settings.json" },
+    { "uri": "theme/setting.json" },
+    { "uri": "theme/default_setting_values.json" },
+    { "uri": "theme/app_block_entry.json" },
+    { "uri": "theme/theme_block_entry.json" },
+    { "uri": "theme/targetted_block_entry.json" },
+    { "uri": "theme/preset_blocks.json" },
+    { "uri": "theme/preset.json" },
+    { "uri": "theme/local_block_entry.json" }
+  ]
+}

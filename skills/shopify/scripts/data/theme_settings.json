@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON schema for config/settings_schema.json files.",
+  "description": "The settings that merchants can configure in the theme editor.",
+  "markdownDescription": "The settings that merchants can configure in the theme editor.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/config/settings-schema-json)",
+  "type": "array",
+  "items": {
+    "anyOf": [
+      {
+        "title": "Theme metadata",
+        "markdownDescription": "Additional metadata for your theme that shows up in the Theme actions menu of the theme editor.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/config/settings-schema-json#add-theme-metadata)",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "You may use the 'theme_info' object for theme metadata.",
+            "markdownDescription": "[Shopify reference](https://shopify.dev/docs/themes/architecture/config/settings-schema-json#add-theme-metadata)",
+            "const": "theme_info"
+          },
+          "theme_name": {
+            "type": "string",
+            "description": "The name of the theme."
+          },
+          "theme_author": {
+            "type": "string",
+            "description": "The author of the theme."
+          },
+          "theme_version": {
+            "type": "string",
+            "description": "The version number of the theme."
+          },
+          "theme_documentation_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "A URL where merchants can find documentation for the theme."
+          },
+          "theme_support_email": {
+            "type": "string",
+            "format": "email",
+            "description": "An email address that merchants can contact for support for the theme."
+          },
+          "theme_support_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "A URL where merchants can find support for the theme."
+          }
+        },
+        "required": [
+          "name",
+          "theme_name",
+          "theme_author",
+          "theme_version",
+          "theme_documentation_url"
+        ],
+        "oneOf": [
+          {
+            "required": ["theme_support_email"],
+            "not": { "required": ["theme_support_url"] }
+          },
+          {
+            "required": ["theme_support_url"],
+            "not": { "required": ["theme_support_email"] }
+          }
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the category of settings.",
+            "markdownDescription": "The name of the category of settings.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/config/settings-schema-json#schema)",
+            "not": {
+              "const": "theme_info"
+            }
+          },
+          "settings": {
+            "$ref": "./settings.json"
+          }
+        }
+      }
+    ]
+  }
+}

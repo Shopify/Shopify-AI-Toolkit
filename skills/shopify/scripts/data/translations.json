@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": {
+    "anyOf": [
+      {
+        "type": "string"
+      },
+      {
+        "$ref": "#/definitions/pluralizedString"
+      },
+      {
+        "$ref": "#"
+      }
+    ]
+  },
+  "patternProperties": {
+    ".*_html$": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "A string that can contain HTML content, typically used for translations that include HTML tags."
+        },
+        {
+          "$ref": "#/definitions/pluralizedString"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "pluralizedString": {
+      "type": "object",
+      "properties": {
+        "one": {
+          "type": "string",
+          "description": "Translation for the singular form"
+        },
+        "other": {
+          "type": "string",
+          "description": "Translation for the plural form"
+        },
+        "few": {
+          "type": "string",
+          "description": "Translation for 'few' form, used in some languages"
+        },
+        "many": {
+          "type": "string",
+          "description": "Translation for 'many' form, used in some languages"
+        },
+        "two": {
+          "type": "string",
+          "description": "Translation for 'two' form, used in some languages"
+        },
+        "zero": {
+          "type": "string",
+          "description": "Translation for 'zero' form, used in some languages"
+        }
+      },
+      "additionalProperties": false,
+      "description": "An object representing a pluralized translation string"
+    }
+  }
+}

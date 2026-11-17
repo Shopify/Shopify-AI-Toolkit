@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "For block definitions that are local to the file.",
+  "type": "object",
+  "required": ["type", "name"],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The block type. This is a free-form string that you can use as an identifier.",
+      "markdownDescription": "The block type. This is a free-form string that you can use as an identifier.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/sections/section-schema#blocks)"
+    },
+    "name": {
+      "type": "string",
+      "description": "The block name, which will show as the block title in the theme editor."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "The number of blocks of this type that can be used."
+    },
+    "settings": {
+      "$ref": "./settings.json"
+    }
+  }
+}
