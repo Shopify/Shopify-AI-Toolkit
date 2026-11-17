@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "An @app block entry",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "const": "@app",
+      "description": "The \"@app\" type is used to denote that this container accepts app blocks. App blocks enable app developers to create blocks for merchants to add app content to their theme without having to directly edit theme code.",
+      "markdownDescription": "The `@app` type is used to denote that this container accepts app blocks. [App blocks](/docs/themes/architecture/sections/app-blocks) enable app developers to create blocks for merchants to add app content to their theme without having to directly edit theme code.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/blocks/app-blocks#supporting-app-blocks)"
+    }
+  }
+}

@@ -24,12 +24,12 @@ Polaris web components load from the Shopify CDN with a script tag in the app's 
 <head>
   <meta name="shopify-api-key" content="%SHOPIFY_API_KEY%" />
   <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js"></script>
-  <script src="https://cdn.shopify.com/shopifycloud/polaris-1.js"></script>
+  <script src="https://cdn.shopify.com/shopifycloud/polaris-2.js"></script>
 </head>
 ```
 
-- `polaris-1.js` is the stable channel and the production default. It always serves the newest stable Polaris 1 release. The legacy unversioned `polaris.js` tracks the same 1.x line and never serves 2.x.
-- `polaris-2.js` is the stable Polaris 2 channel. It always serves the newest stable Polaris 2 release, and `polaris-2.0.js` pins an app to exactly 2.0. Polaris 2 matches the updated Shopify admin (Admin Next) and follows whichever admin theme the merchant uses. Adopting it is explicit: apps on `polaris-1.js` or `polaris.js` never move to 2.x on their own, so suggest Polaris 2 when the developer asks for it or for the new admin look. Guide: https://shopify.dev/docs/apps/build/app-home/polaris2
+- `polaris-2.js` is the stable channel and the production recommendation. It always serves the newest stable Polaris 2 release, and `polaris-2.0.js` pins an app to exactly 2.0. Polaris 2 matches the updated Shopify admin (Admin Next) and follows whichever admin theme the merchant uses.
+- `polaris-1.js` always serves the newest stable Polaris 1 release. The legacy unversioned `polaris.js` tracks the same 1.x line and never serves 2.x. Apps on either never move to 2.x on their own, so moving an existing app is the developer's decision: keep the release an app already loads unless the developer asks to move it. Guide: https://shopify.dev/docs/apps/build/app-home/polaris2
 - Apps scaffolded with Shopify CLI have no script tag to edit: `AppProvider` from `@shopify/shopify-app-react-router` renders it. To change versions, set the same `polarisUrl` on `AppProvider` and in `shopifyApp()` in `app/shopify.server.ts`; both need `@shopify/shopify-app-react-router` 2.1.0 or later. Never add a second Polaris script tag: two Polaris bundles on one page make the app throw.
 - Match `@shopify/polaris-types` to the script: `^1.1.0` for `polaris-1.js`, `^2.0.0` for `polaris-2.js`, and `~2.0.0` for `polaris-2.0.js`.
 

@@ -1,0 +1,10 @@
+{
+  "$schema": "manifest_schema.json",
+  "$comment": "Declares all the JSON schemas you need to validate themes",
+  "schemas": [
+    {
+      "uri": "theme/translations.json",
+      "fileMatch": ["locales/*.json"]
+    }
+  ]
+}

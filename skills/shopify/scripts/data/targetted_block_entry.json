@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "A targetted private or public theme block from the blocks/ folder.",
+  "type": "object",
+  "required": ["type"],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$",
+      "description": "The name of a theme block found in the blocks/ folder of the theme.",
+      "markdownDescription": "The name of a theme block found in the `blocks/` folder of the theme.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/blocks/theme-blocks/schema#blocks)"
+    }
+  }
+}

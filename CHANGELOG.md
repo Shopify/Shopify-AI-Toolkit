@@ -1,5 +1,20 @@
 # shopify-plugin
 
+## 2.4.0
+
+### Minor Changes
+
+- b47e813: `learn_shopify_api` for Functions and the generated Functions skill state the latest stable, supported, and release candidate Functions `api_version` values, derived from the supported versions catalog, and name the Function APIs that accept only `unstable`.
+
+### Patch Changes
+
+- a1fcf46: Liquid validation now works right after a plugin or Git install, without installing any packages.
+- 4b60f1e: Skill telemetry and feedback now record Codex session and tool-call ids, and host-provided ids take precedence over agent-supplied ones.
+- 9106fd6: The ChatGPT plugin's starter prompts now cover creating a store, viewing the last 30 days of sales, and building an app for custom discounts.
+- ba9ccfc: Hydrogen routing text now describes the 2026-10 SDK instead of the old cookbook recipes, and the cart search example is `createCartComponents`.
+- e5d320d: Hydrogen doc searches at 2026-10 and newer skip legacy Hydrogen guides.
+- 43e226e: Hydrogen code validation now fails imports of modules removed in 2026-10, and says "⚠️ PARTLY CHECKED" instead of a plain pass when it couldn't check every import.
+
 ## 2.3.0
 
 ### Minor Changes

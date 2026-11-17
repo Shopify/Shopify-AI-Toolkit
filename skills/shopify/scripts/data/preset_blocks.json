@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Shopify Liquid Preset Blocks Schema",
+  "definitions": {
+    "blocksArray": {
+      "type": "array",
+      "description": "A list of child blocks that you might want to include.",
+      "markdownDescription": "A list of child blocks that you might want to include.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/sections/section-schema#presets)",
+      "items": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/commonBlockAttributes"
+          }
+        ],
+        "properties": {
+          "static": true,
+          "type": true,
+          "name": true,
+          "settings": true,
+          "blocks": {
+            "$ref": "#/definitions/blocksArray"
+          },
+          "id": {
+            "type": "string",
+            "description": "A unique identifier for the block."
+          }
+        },
+        "additionalProperties": false,
+        "if": {
+          "properties": {
+            "static": {
+              "const": true
+            }
+          },
+          "required": ["static"]
+        },
+        "then": {
+          "required": ["id"]
+        }
+      }
+    },
+    "blocksHash": {
+      "type": "object",
+      "description": "A list of child blocks that you might want to include.",
+      "markdownDescription": "A list of child blocks that you might want to include.\n\n---\n\n[Shopify reference](https://shopify.dev/docs/themes/architecture/sections/section-schema#presets)",
+      "additionalProperties": {
+        "allOf": [
+          {
+            "$ref": "#/definitions/commonBlockAttributes"
+          }
+        ],
+        "properties": {
+          "static": true,
+          "type": true,
+          "name": true,
+          "settings": true,
+          "blocks": {
+            "$ref": "#/definitions/blocksHash"
+          },
+          "block_order": {
+            "type": "array",
+            "description": "The order of the blocks in the section."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "commonBlockAttributes": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The block type."
+        },
+        "name": {
+          "type": "string",
+          "description": "The block name."
+        },
+        "settings": {
+          "$ref": "./default_setting_values.json"
+        },
+        "static": {
+          "type": "boolean",
+          "description": "If the block is rendered statically or not."
+        }
+      }
+    }
+  }
+}
