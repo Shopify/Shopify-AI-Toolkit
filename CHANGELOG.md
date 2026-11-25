@@ -1,5 +1,19 @@
 # shopify-plugin
 
+## 2.5.0
+
+### Minor Changes
+
+- b0e8c16: Feedback scorecards now capture a primary topic without counting as topic-skill usage.
+
+### Patch Changes
+
+- d8a1c14: Component validation for App Home and admin UI extensions now fails a `slot="aside"` child of an `s-page` with `inlineSize="large"` or `"small"`, since the aside is only rendered at `base`.
+- 6dfd1f0: Fix App Bridge validation in isolated installs, including refs, navigation, page slots, and save-bar actions, without narrowing native signal props.
+- 177117c: Hydrogen doc searches at 2026-10 and newer also skip Hydrogen and Hydrogen React reference pages for older versions, including version landing pages.
+- 5556ffb: `@shopify/hydrogen` and `@shopify/hydrogen-react` are no longer installed as dependencies; Hydrogen validation uses only the bundled types for the requested version.
+- 0d9b6d3: Hydrogen code validation now fails the removed `hydrogen` Vite plugin from `@shopify/hydrogen/vite` at 2026-10 and newer (named, namespace or re-exported), and reports `@shopify/mini-oxygen` as not checked instead of failing.
+
 ## 2.4.0
 
 ### Minor Changes

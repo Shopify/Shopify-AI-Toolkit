@@ -55,12 +55,38 @@ Hydrogen `2026-10` works in any framework that runs server code, such as Next.js
 - **Money and images:** Format money with `formatMoney` and the `hydrogen-money` skill. Render images with an `<img>` element or the framework's image component, and size them with the `hydrogen-image` skill.
 - **Docs:** Pass version `2026-10` to the docs search. Use the [Hydrogen 2026-10 reference](https://shopify.dev/docs/api/hydrogen/2026-10) and the [Hydrogen guides](https://shopify.dev/docs/storefronts/hydrogen). Skip pages under `https://shopify.dev/docs/storefronts/headless/legacy`.
 - **Setup:** To add Hydrogen to an existing project, run `npx @shopify/hydrogen@latest setup` in the folder that contains `package.json`. The command installs `@shopify/hydrogen` and copies Hydrogen's skills into `.claude/skills/` and `.agents/skills/`. Then follow the `hydrogen-setup` skill to wire Hydrogen into the app. Follow [Add Hydrogen to an existing project](https://shopify.dev/docs/storefronts/hydrogen/getting-started/add-to-existing-project).
-- **Feature guides:** Before you build a feature, fetch its whole guide by adding `.md` to the URL, instead of relying on search results: [products](https://shopify.dev/docs/storefronts/hydrogen/products.md), [cart](https://shopify.dev/docs/storefronts/hydrogen/cart/build-cart.md), [cart drawer](https://shopify.dev/docs/storefronts/hydrogen/cart/cart-drawer.md), [collections and search](https://shopify.dev/docs/storefronts/hydrogen/collections-search.md), [analytics](https://shopify.dev/docs/storefronts/hydrogen/analytics.md), or [customer accounts](https://shopify.dev/docs/storefronts/hydrogen/customer-accounts.md).
+- **Feature guides:** Before you build a feature, fetch its whole guide from the list in the next section, instead of relying on search results.
 - **Skills:** Before you write code for a feature, read the skill for that feature, such as `hydrogen-cart-ui` for a cart UI. In a project, the skills are in `.claude/skills/<name>/SKILL.md` or `.agents/skills/<name>/SKILL.md`. The package copy is in `node_modules/@shopify/hydrogen/skills/<name>/SKILL.md`. Without a project, follow the feature's guide in the [Hydrogen guides](https://shopify.dev/docs/storefronts/hydrogen) instead. If a project on Hydrogen `2026-10` is missing the skills, run `npx @shopify/hydrogen skills sync`. To update a project on Hydrogen `2026-10`, update `@shopify/hydrogen` to the latest `2026.10` release, and then run `npx @shopify/hydrogen skills sync`.
 - **New storefronts:** Shopify maintains the React Router template, which deploys to Oxygen. Vercel maintains Vercel Shop, a Next.js template that deploys to Vercel. Use Vercel Shop when the developer asks for Next.js or Vercel. Use the React Router template when the developer asks for React Router or names no framework. Follow [Deploy a template](https://shopify.dev/docs/storefronts/hydrogen/getting-started/deploy-a-template). For any other framework, create the app with the framework's own tool, and turn on server rendering, such as with an Astro server adapter. Then run the setup command in the app's folder. Without a store, ask the developer to run `npx @shopify/hydrogen@latest setup` in an empty folder in their own terminal and choose the React Router storefront. When the command can't show its menu, it installs only the skills.
 - **Examples:** The [Hydrogen examples directory](https://github.com/Shopify/hydrogen/tree/main/examples) has examples for Next.js, Nuxt, Astro, SvelteKit, and SolidStart. For React Router, read the [React Router template](https://github.com/Shopify/hydrogen/tree/dist-preview/templates/react-router). The examples aren't starter kits. Don't copy code from `examples/hydrogen`, which imports `@shopify/hydrogen-react` version `2026.4`.
 - **mock.shop:** Without a store or a Storefront API access token, build against mock.shop, a public Storefront API with mock catalogs. In `.env`, set `PUBLIC_STORE_DOMAIN` to a mock.shop host such as `pets.mock.shop`, and leave `PUBLIC_STOREFRONT_API_TOKEN` commented out. If the framework needs a prefix for browser variables, add the prefix to each name, such as `NEXT_PUBLIC_STORE_DOMAIN` in Next.js. Create the client with `type: 'public'`, and set `publicStorefrontToken` to the token variable. The token stays undefined while its line in `.env` is commented out. The client rejects an empty token, and mock.shop rejects any token. mock.shop doesn't support customer accounts or a real checkout. Follow [Use mock.shop](https://shopify.dev/docs/storefronts/hydrogen/getting-started/add-to-existing-project#use-mockshop).
 - **Migration:** To move a storefront from Hydrogen `2026-04` or earlier, follow [Migrate to the latest version of Hydrogen](https://shopify.dev/docs/storefronts/hydrogen/migrate). Update `@shopify/hydrogen` to the latest `2026.10` release and reinstall the dependencies as the guide describes. Then run `npx @shopify/hydrogen skills sync`, and follow the `migrate-to-hydrogen-2026-10` skill. Write the new code with Hydrogen `2026-10` exports only.
+
+## Hydrogen 2026-10 guides by feature
+
+Before you write code for a feature, fetch its guide whole with `curl -sL <url>` and follow it. A search shows only fragments of a guide, and the rules you must follow are in the whole page. Each feature has one guide:
+
+- **Add Hydrogen to a project:** https://shopify.dev/docs/storefronts/hydrogen/getting-started/add-to-existing-project.md. For a new storefront from a template: https://shopify.dev/docs/storefronts/hydrogen/getting-started/deploy-a-template.md
+- **Request handlers and handler groups:** https://shopify.dev/docs/storefronts/hydrogen/request-handlers.md
+- **Routing and route templates:** https://shopify.dev/docs/storefronts/hydrogen/routing.md
+- **Storefront API client and data fetching:** https://shopify.dev/docs/storefronts/hydrogen/data-fetching.md. Caching: https://shopify.dev/docs/storefronts/hydrogen/data-fetching/caching.md. Typed queries: https://shopify.dev/docs/storefronts/hydrogen/data-fetching/typed-queries.md
+- **Product pages, variants, and add to cart:** https://shopify.dev/docs/storefronts/hydrogen/products.md
+- **Cart UI and cart forms:** https://shopify.dev/docs/storefronts/hydrogen/cart/build-cart.md
+- **Cart drawer:** https://shopify.dev/docs/storefronts/hydrogen/cart/cart-drawer.md
+- **Cart metafields:** https://shopify.dev/docs/storefronts/hydrogen/cart/metafields.md
+- **Collections, filters, and search:** https://shopify.dev/docs/storefronts/hydrogen/collections-search.md. Predictive search is a step in this guide.
+- **Customer accounts:** https://shopify.dev/docs/storefronts/hydrogen/customer-accounts.md. Local HTTPS for sign-in is a step in this guide.
+- **Analytics and consent:** https://shopify.dev/docs/storefronts/hydrogen/analytics.md
+- **Markets and localization:** https://shopify.dev/docs/storefronts/hydrogen/markets.md
+- **Shop Pay:** https://shopify.dev/docs/storefronts/hydrogen/shop-pay.md
+- **Installed apps, app blocks, and app proxies:** https://shopify.dev/docs/storefronts/hydrogen/installed-apps.md
+- **Deploy to Oxygen:** https://shopify.dev/docs/storefronts/hydrogen/deploy/oxygen.md. Runtime: https://shopify.dev/docs/storefronts/hydrogen/deploy/oxygen/runtime.md. Environments: https://shopify.dev/docs/storefronts/hydrogen/deploy/oxygen/environments.md
+- **Deploy to Vercel, Node, Cloudflare Workers, Deno, or another runtime:** https://shopify.dev/docs/storefronts/hydrogen/deploy/other-runtimes.md
+- **Smoke-test a storefront before launch:** https://shopify.dev/docs/storefronts/hydrogen/production-checklist.md
+- **Point a domain at a storefront and go live:** https://shopify.dev/docs/storefronts/hydrogen/deploy/go-live.md
+- **Migrate from Hydrogen 2026-04 or earlier:** https://shopify.dev/docs/storefronts/hydrogen/migrate.md
+
+There's no guide for money formatting or images. Follow the **Money and images** bullet.
 
 ## Hydrogen 2026-04 and earlier
 
