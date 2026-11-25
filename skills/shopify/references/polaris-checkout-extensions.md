@@ -119,7 +119,7 @@ The full list of official libraries and app templates lives at [shopify.dev/docs
 
 ## Components available for checkout UI extensions.
 
-These examples have all the props available for the component. Some example values for these props are provided.
+These examples show common props for each component, with example values. They do not list every prop: a prop missing from an example can still exist on the component.
 Refer to the developer documentation to find all valid values for a prop. Ensure the component is available for the target you are using.
 
 ```html

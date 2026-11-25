@@ -92,7 +92,7 @@ When the extension makes authenticated calls to the app's own backend (using the
 The full list of official libraries and app templates lives at [shopify.dev/docs/api/libraries-and-templates](https://shopify.dev/docs/api/libraries-and-templates).
 
 Components available for customer account UI extensions.
-These examples have all the props available for the component. Some example values for these props are provided.
+These examples show common props for each component, with example values. They do not list every prop: a prop missing from an example can still exist on the component.
 Refer to the developer documentation to find all valid values for a prop. Ensure the component is available for the target you are using.
 
 ```html
@@ -115,8 +115,8 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
 >
 <s-button variant="primary" tone="auto" type="submit">Save</s-button>
 <s-button-group
-  ><s-button variant="primary">Save</s-button
-  ><s-button variant="secondary">Cancel</s-button></s-button-group
+  ><s-button variant="primary" slot="primary-action">Save</s-button
+  ><s-button variant="secondary" slot="secondary-actions">Cancel</s-button></s-button-group
 >
 <s-checkbox label="Accept terms" name="terms" value="accepted"></s-checkbox>
 <s-chip accessibilityLabel="Tag">Category</s-chip>

@@ -40,6 +40,8 @@ Versions and channels: https://shopify.dev/docs/api/app-home/latest/web-componen
 **Available APIs:** App, Config, Environment, Resource Fetching, ID Token, Intents, Loading, Modal API, Navigation, Picker, POS, Print, Resource Picker, Reviews, Save Bar, Scanner, Scopes, Share, Support, Toast, User, Web Vitals
 **React Hooks:** useAppBridge
 
+App Bridge APIs are on the global `shopify` object (`window.shopify`), for example `shopify.toast.show(message)` or `shopify.saveBar.show(id)`. In React, `useAppBridge()` returns the same object. When you explain how to use an App Bridge feature, name the `shopify` object, also in an answer without code. Don't refer only to "App Bridge" or "the global".
+
 ## Patterns
 
 **Compositions:** Account connection, App card, Callout card, Empty state, Footer help, Index table, Interstitial nav, Media card, Metrics card, Resource list, Setup guide
@@ -50,7 +52,7 @@ Versions and channels: https://shopify.dev/docs/api/app-home/latest/web-componen
 **Available guides:** Using Polaris web components
 
 Components available for Polaris App Home.
-These examples have all the props available for the component. Some example values for these props are provided.
+These examples show common props for each component, with example values. They do not list every prop: a prop missing from an example can still exist on the component.
 Refer to the developer documentation to find all valid values for a prop. Ensure the component is available for the target you are using.
 
 ```tsx
@@ -71,8 +73,8 @@ Refer to the developer documentation to find all valid values for a prop. Ensure
   >Save</s-button
 >
 <s-button-group gap="base"
-  ><s-button variant="primary">Save</s-button
-  ><s-button variant="secondary">Cancel</s-button></s-button-group
+  ><s-button slot="primary-action" variant="primary">Save</s-button
+  ><s-button slot="secondary-actions" variant="secondary">Cancel</s-button></s-button-group
 >
 <s-checkbox label="Accept terms" name="terms" value="accepted"></s-checkbox>
 <s-chip color="base" accessibilityLabel="Tag">Category</s-chip>
@@ -264,7 +266,7 @@ Polaris web components are custom HTML elements with an `s-` prefix. These are g
 
 ```tsx
 // No import needed — s-page, s-badge, s-button, s-box, etc. are globally available
-<s-page title="Dashboard">
+<s-page heading="Dashboard">
   <s-badge tone="success">Active</s-badge>
 </s-page>
 ```

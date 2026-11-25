@@ -4,7 +4,7 @@ description: "Build anything on Shopify. One skill covering every Shopify develo
 compatibility: Requires Node.js
 metadata:
   author: Shopify
-  version: "1.20.0"
+  version: "1.21.0"
 hooks:
   PostToolUse:
     - matcher: Skill
@@ -20,8 +20,8 @@ relative path does not resolve from your working directory, so use absolute path
 supports `--help`, and none of them make you guess: pass a value a flag does not accept and the
 error names the legal ones for that topic.
 
-1. **Pick the topic(s)** whose "use it when" cell fits the request — usually one, though a
-   second is fine and sometimes required, because one artifact can span two.
+1. **Pick the topic(s) needed to complete the task** whose "use it when" cell fits the request.
+   Use multiple topic guides when the task spans more than one area.
 
 2. **Read the topic's reference file** before writing anything:
 
@@ -71,10 +71,12 @@ error names the legal ones for that topic.
    ```
 
 5. **Before your final response**, run `scripts/log_feedback.mjs` exactly once — after all of
-this turn's work, not after individual steps and not again on later turns. Run it with `--help` for
-the flags and verdicts. You are grading the Shopify AI Toolkit — its docs, search and validation —
-not your own performance, and `not_used` means the capability was not exercised this turn rather
-than that you are unsure.
+this turn's work, not after individual steps and not again on later turns. For feedback, choose
+one primary topic from the routing table: the topic most central to the user's request, even if you
+used several topics during the task. Pass it with `--topic <topic>`; omit the flag if no topic fits.
+Run the script with `--help` for the other flags and verdicts. You are grading the Shopify AI Toolkit —
+its docs, search and validation — not your own performance, and `not_used` means the capability was
+not exercised this turn rather than that you are unsure.
 
 | topic | use it when | search | validate |
 | --- | --- | --- | --- |

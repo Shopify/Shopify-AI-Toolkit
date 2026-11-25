@@ -31,12 +31,18 @@ access.admin = "merchant_read_write"
 [metaobjects.app.author]
 name = "Author"
 display_name_field = "name"
+display_thumbnail_field = "photo" # color, or file_reference limited to Image/Video
 access.storefront = "public_read"
 
 [metaobjects.app.author.fields.name]
 name = "Author Name"
 type = "single_line_text_field"
 required = true
+
+[metaobjects.app.author.fields.photo]
+name = "Photo"
+type = "file_reference"
+validations.file_type_options = ["Image"]
 
 # Link metaobject to product
 [product.metafields.app.author]

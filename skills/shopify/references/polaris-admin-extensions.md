@@ -164,7 +164,7 @@ Use these Polaris web components only for Admin UI Extensions versions other tha
 
 Use these `s-*` examples only for versions other than `2025-07`. For `2025-07`, use the React examples above instead.
 
-These examples have all the props available for the component. Some example values for these props are provided.
+These examples show common props for each component, with example values. They do not list every prop: a prop missing from an example can still exist on the component.
 Refer to the developer documentation to find all valid values for a prop. Ensure the component is available for the target you are using.
 
 ```html
